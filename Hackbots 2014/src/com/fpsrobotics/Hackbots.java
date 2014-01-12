@@ -4,11 +4,10 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package com.fpsrobotics;
 
-
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Watchdog;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,27 +16,51 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Hackbots extends IterativeRobot {
+public class Hackbots extends IterativeRobot
+{
+
+    boolean doneBefore = true;
+
+    // Create instances of all classes here
+    DriveTrain driveTrain = new DriveTrain();
+
+    // Create instances of all threads here
+    Thread driveThread = new Thread(driveTrain);
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() {
-
+    public void robotInit()
+    {
+        System.out.println("Hackbots Aerial Assist Code");
+        Watchdog.getInstance().setEnabled(true);
     }
 
     /**
      * This function is called periodically during autonomous
      */
-    public void autonomousPeriodic() {
+    public void autonomousPeriodic()
+    {
 
     }
 
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() {
+    public void teleopPeriodic()
+    {
+        if (!doneBefore)
+        {
+            // Start all threads here
+            driveThread.start();
+
+            // So we don't start threads more than once
+            doneBefore = true;
+        }
         
+        // Feed the watchdog
+        Watchdog.getInstance().feed();
     }
-    
+
 }
