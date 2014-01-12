@@ -5,6 +5,9 @@
  */
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.Devices;
+import com.fpsrobotics.interfaces.Joysticks;
+
 /**
  *
  * @author ray

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.fpsrobotics;
+package com.fpsrobotics.interfaces;
 
 import edu.wpi.first.wpilibj.Talon;
 
