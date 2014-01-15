@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj.Watchdog;
  */
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
-    // local variables 
+    
+    // local variables here
     boolean doneBefore = true;
 
     /**

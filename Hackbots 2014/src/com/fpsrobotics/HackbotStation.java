@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class HackbotStation implements Runnable
 {
     private volatile Joystick leftJoystick, rightJoystick;
-
+    
     public HackbotStation(Joystick leftJoystick, Joystick rightJoystick)
     {
         leftJoystick = this.leftJoystick;
