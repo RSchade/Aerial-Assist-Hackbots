@@ -22,7 +22,7 @@ public interface DeviceMap
     int EXAMPLE_RELAY_MAP = 1;
     
     // DIOs
-    int ROBOT_EXAMPLE_OUTPUT_MAP = 1;
+    int ROBOT_SWITCH_INPUT_MAP = 1;
     
     // Joysticks
     int LEFT_JOYSTICK_MAP = 1;

@@ -6,7 +6,7 @@
 
 package com.fpsrobotics.interfaces;
 
-import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  *
@@ -15,5 +15,5 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 public interface DIOs extends DeviceMap
 {
     // DIOs here
-    DigitalOutput robotExampleOutput = new DigitalOutput(ROBOT_EXAMPLE_OUTPUT_MAP);
+    DigitalInput robotSwitchInput = new DigitalInput(ROBOT_SWITCH_INPUT_MAP);
 }
