@@ -1,0 +1,9 @@
+Device              Convention              Example
+-----------------------------------------------------
+Talon/Jaguar        locationUseNumber       leftDriveOne
+Relay               locationUseRelay        wheelRelay
+DIO                 locationUseI/O          screwPotInput
+Joystick            nameJoystick            gamepadJoystick
+Thread              classThread             driveTrainThread
+Class               className               driveTrain
+Device Finals       DEVICE_NAME_MAP         LEFT_DRIVE_ONE_MAP

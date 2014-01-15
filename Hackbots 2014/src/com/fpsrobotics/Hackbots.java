@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Watchdog;
 
@@ -16,16 +17,10 @@ import edu.wpi.first.wpilibj.Watchdog;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Hackbots extends IterativeRobot
+public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
-
+    // local variables here
     boolean doneBefore = true;
-
-    // Create instances of all classes here
-    DriveTrain driveTrain = new DriveTrain();
-
-    // Create instances of all threads here
-    Thread driveThread = new Thread(driveTrain);
 
     /**
      * This function is run when the robot is first started up and should be
@@ -34,7 +29,10 @@ public class Hackbots extends IterativeRobot
     public void robotInit()
     {
         System.out.println("Hackbots Aerial Assist Code");
+        
+        // Watchdog init
         Watchdog.getInstance().setEnabled(true);
+        Watchdog.getInstance().setExpiration(100);
     }
 
     /**
@@ -54,6 +52,7 @@ public class Hackbots extends IterativeRobot
         {
             // Start all threads here
             driveThread.start();
+            hackbotStationThread.start();
 
             // So we don't start threads more than once
             doneBefore = true;

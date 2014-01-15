@@ -1,33 +1,59 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+ *
+ * This class controls the drive train of the robot in a different thread. It
+ * gives the speed to the motors in a 1:1 ratio, and the left joystick input is
+ * changed to negative.
+ * 
+*/
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.Devices;
-import com.fpsrobotics.interfaces.Joysticks;
+import com.fpsrobotics.interfaces.Constants;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Talon;
 
 /**
  *
  * @author ray
  */
-public class DriveTrain implements Runnable, Joysticks, Devices
+public class DriveTrain implements Runnable, Constants
 {
-
-    DriveTrain()
-    {
-        
-    }
+    // Class creates it's own local variables
+    Talon leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo;
+    Joystick leftJoystick, rightJoystick;
     
+    // Class requires talons and joysticks as input variables
+    public DriveTrain
+            (Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo, 
+            Joystick leftJoystick, Joystick rightJoystick)
+    {
+        //Input variables are copied to local variables
+        leftDriveOne = this.leftDriveOne;
+        leftDriveTwo = this.leftDriveTwo;
+        rightDriveOne = this.rightDriveOne;
+        rightDriveTwo = this.rightDriveTwo;
+        leftJoystick = this.leftJoystick;
+        rightJoystick = this.rightJoystick;
+    }
+   
+
     public void run()
     {
         while (true)
         {
-            leftDriveOne.set(leftJoystick.getRawAxis(2));
-            leftDriveTwo.set(leftJoystick.getRawAxis(2));
-            rightDriveOne.set(-rightJoystick.getRawAxis(2));
-            rightDriveTwo.set(-rightJoystick.getRawAxis(2));
+            // Run the drive train as normal, 1:1 input with joysticks
+            leftDriveOne.set(-leftJoystick.getRawAxis(2));
+            leftDriveTwo.set(-leftJoystick.getRawAxis(2));
+            rightDriveOne.set(rightJoystick.getRawAxis(2));
+            rightDriveTwo.set(rightJoystick.getRawAxis(2));
+
+            //Turbo the drive train when button one is pressed on either joystick, 1:2 input with joysticks
+            while (leftJoystick.getRawButton(1) || rightJoystick.getRawButton(1))
+            {
+                leftDriveOne.set(TURBO_MULTIPLIER*(-leftJoystick.getRawAxis(2)));
+                leftDriveTwo.set(TURBO_MULTIPLIER*(-leftJoystick.getRawAxis(2)));
+                rightDriveOne.set(TURBO_MULTIPLIER*(rightJoystick.getRawAxis(2)));
+                rightDriveTwo.set(TURBO_MULTIPLIER*(rightJoystick.getRawAxis(2)));
+            }
         }
     }
 
