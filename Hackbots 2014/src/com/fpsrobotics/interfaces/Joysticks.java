@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
+ * Where joysticks can be instantiated, so they can be easily changed
+ * 
  */
 
 package com.fpsrobotics.interfaces;
@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.Joystick;
  *
  * @author ray
  */
-public interface Joysticks
+public interface Joysticks extends DeviceMap
 {
     // Create all joysticks here
-    Joystick leftJoystick = new Joystick(1);
-    Joystick rightJoystick = new Joystick(2);
-    Joystick gamepad = new Joystick(3);
+    Joystick leftJoystick = new Joystick(LEFT_JOYSTICK_MAP);
+    Joystick rightJoystick = new Joystick(RIGHT_JOYSTICK_MAP);
+    Joystick gamepadJoystick = new Joystick(GAMEPAD_JOYSTICK_MAP);
 }
