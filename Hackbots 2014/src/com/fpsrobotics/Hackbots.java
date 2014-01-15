@@ -21,7 +21,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
     
     // local variables here
-    boolean doneBefore = true;
+    boolean doneBefore = false;
 
     /**
      * This function is run when the robot is first started up and should be
