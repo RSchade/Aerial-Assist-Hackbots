@@ -6,4 +6,6 @@ DIO                 locationUseI/O          screwPotInput
 Joystick            nameJoystick            gamepadJoystick
 Thread              classThread             driveTrainThread
 Class               className               driveTrain
+Solenoid            locationSolenoidNumber  shooterSolenoidOne
+DoubleSolenoid      locationSolenoidNumber  shooterSolenoidOne     
 Device Finals       DEVICE_NAME_MAP         LEFT_DRIVE_ONE_MAP

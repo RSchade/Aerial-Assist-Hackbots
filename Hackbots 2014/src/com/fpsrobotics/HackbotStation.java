@@ -48,11 +48,15 @@ public class HackbotStation implements Runnable
                 previousTime = System.currentTimeMillis();
             }
             
+            if(DriverStation.getInstance().getTeamNumber() != 3414)
+            {
+                System.out.println("Come on, don't steal our code!");
+            }
+            
             // Variable outputs
             SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
             SmartDashboard.putNumber("Left Drive Train Speed", leftJoystick.getRawAxis(2));
-            
-
+            SmartDashboard.putNumber("Threads Currently Running",Thread.activeCount());
         }
         
     }

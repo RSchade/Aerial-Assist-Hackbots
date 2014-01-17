@@ -29,4 +29,15 @@ public interface DeviceMap
     int RIGHT_JOYSTICK_MAP = 2;
     int GAMEPAD_JOYSTICK_MAP = 3;
     
+    // Encoder
+    int ENCODER_ONE_MAP = 1;
+    int ENCODER_TWO_MAP = 2;
+    
+    // Potentiometers
+    int SHOOTER_POT_MAP = 1;
+    
+    // Solenoid
+    int EXAMPLE_SOLENOID_MAP_ONE = 1;
+    int EXAMPLE_SOLENOID_MAP_TWO = 2;
+    
 }

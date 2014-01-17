@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.Watchdog;
  */
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
-    
+
     // local variables here
     boolean doneBefore = false;
 
@@ -30,10 +30,10 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     public void robotInit()
     {
         System.out.println("Hackbots Aerial Assist Code");
-        
+
         // Watchdog init
         Watchdog.getInstance().setEnabled(true);
-        Watchdog.getInstance().setExpiration(100);
+        Watchdog.getInstance().setExpiration(2);
     }
 
     /**
@@ -54,11 +54,14 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             // Start all threads here
             driveThread.start();
             hackbotStationThread.start();
+            shooterThread.start();
+            spinnySticksThread.start();
+            
 
             // So we don't start threads more than once
             doneBefore = true;
         }
-        
+
         // Feed the watchdog
         Watchdog.getInstance().feed();
     }
