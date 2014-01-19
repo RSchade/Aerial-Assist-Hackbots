@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.Analog;
@@ -16,21 +11,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class HackbotStation implements Runnable, Joysticks, Analog
 {
+
+// Removed 1/18/14: Doesn't work! null pointer exception
 //    private volatile Joystick leftJoystick, rightJoystick;
-    
 //    public HackbotStation(Joystick leftJoystick, Joystick rightJoystick)
 //    {
 //        leftJoystick = this.leftJoystick;
 //        rightJoystick = this.rightJoystick;
 //    }
-
+    /**
+     *
+     * Class which outputs most variables to the SmartDashboard and gives the
+     * state of the battery through DashboardOutput's methods.
+     *
+     */
     public void run()
     {
         long previousTime = System.currentTimeMillis();
-        
+        DashboardOutputs variableOutputs = new DashboardOutputs();
+
         while (true)
         {
-            // Battery info output
+            // Battery info output (every second)
             if (System.currentTimeMillis() - previousTime >= 1000)
             {
                 if (DriverStation.getInstance().getBatteryVoltage() <= 11)
@@ -48,21 +50,15 @@ public class HackbotStation implements Runnable, Joysticks, Analog
                 }
                 previousTime = System.currentTimeMillis();
             }
-            
-            if(DriverStation.getInstance().getTeamNumber() != 3414)
+
+            if (DriverStation.getInstance().getTeamNumber() != 3414)
             {
                 System.out.println("Come on, don't steal our code!");
             }
-            
-            // Variable outputs
-            SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
-            SmartDashboard.putNumber("Left Drive Train Speed", leftJoystick.getRawAxis(2));
-            SmartDashboard.putNumber("Threads Currently Running",Thread.activeCount());
-            SmartDashboard.putNumber("Gyro angle", gyroScope.getAngle());
-            SmartDashboard.putNumber("Gyro rate", gyroScope.getRate());
-            
-        }
-        
-    }
 
+            variableOutputs.outputToDashboard(leftJoystick, rightJoystick, gyroScope);
+
+        }
+
+    }
 }
