@@ -16,6 +16,13 @@ import edu.wpi.first.wpilibj.Watchdog;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ *
+ *
+ *
+ * Main thread of the code, it starts all the threads in the beginning of
+ * enabling, as well as feeds the watchdog.
+ *
+ *
  */
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
@@ -25,7 +32,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 
     /**
      * This function is run when the robot is first started up and should be
-     * used for any initialization code.
+     * used for any initialization code. Watchdog init.
      */
     public void robotInit()
     {
@@ -37,26 +44,26 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     }
 
     /**
-     * This function is called periodically during autonomous
+     * This function is called periodically during autonomous. Autonomous code
+     * goes here. Something about shooting in the hot goal and then going back.
      */
     public void autonomousPeriodic()
     {
-
     }
 
     /**
-     * This function is called periodically during operator control
+     * This function is called periodically during operator control. Start all
+     * threads here.
      */
     public void teleopPeriodic()
     {
         if (!doneBefore)
         {
-            // Start all threads here
             driveThread.start();
             hackbotStationThread.start();
             pistonShooterThread.start();
             spinnySticksThread.start();
-            
+            robotCameraThread.start();
 
             // So we don't start threads more than once
             doneBefore = true;
@@ -65,5 +72,4 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         // Feed the watchdog
         Watchdog.getInstance().feed();
     }
-
 }
