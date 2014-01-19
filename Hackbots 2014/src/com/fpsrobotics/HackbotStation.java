@@ -5,23 +5,24 @@
  */
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.Analog;
+import com.fpsrobotics.interfaces.Joysticks;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  * @author ray
  */
-public class HackbotStation implements Runnable
+public class HackbotStation implements Runnable, Joysticks, Analog
 {
-    private volatile Joystick leftJoystick, rightJoystick;
+//    private volatile Joystick leftJoystick, rightJoystick;
     
-    public HackbotStation(Joystick leftJoystick, Joystick rightJoystick)
-    {
-        leftJoystick = this.leftJoystick;
-        rightJoystick = this.rightJoystick;
-    }
+//    public HackbotStation(Joystick leftJoystick, Joystick rightJoystick)
+//    {
+//        leftJoystick = this.leftJoystick;
+//        rightJoystick = this.rightJoystick;
+//    }
 
     public void run()
     {
@@ -57,6 +58,9 @@ public class HackbotStation implements Runnable
             SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
             SmartDashboard.putNumber("Left Drive Train Speed", leftJoystick.getRawAxis(2));
             SmartDashboard.putNumber("Threads Currently Running",Thread.activeCount());
+            SmartDashboard.putNumber("Gyro angle", gyroScope.getAngle());
+            SmartDashboard.putNumber("Gyro rate", gyroScope.getRate());
+            
         }
         
     }

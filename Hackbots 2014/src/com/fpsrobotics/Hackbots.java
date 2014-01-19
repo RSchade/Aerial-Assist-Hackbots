@@ -54,7 +54,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             // Start all threads here
             driveThread.start();
             hackbotStationThread.start();
-            shooterThread.start();
+            pistonShooterThread.start();
             spinnySticksThread.start();
             
 

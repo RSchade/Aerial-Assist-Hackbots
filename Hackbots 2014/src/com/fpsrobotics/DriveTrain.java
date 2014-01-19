@@ -7,33 +7,33 @@
 */
 package com.fpsrobotics;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Talon;
+import com.fpsrobotics.interfaces.Joysticks;
+import com.fpsrobotics.interfaces.Talons;
 
 /**
  *
  * @author ray
  */
-public class DriveTrain implements Runnable
+public class DriveTrain implements Runnable, Talons, Joysticks
 {
     // Class creates it's own local variables
-    private volatile Talon leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo;
-    private volatile Joystick leftJoystick, rightJoystick;
+//    private volatile Talon leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo;
+//    private volatile Joystick leftJoystick, rightJoystick;
     
     
     // Class requires talons and joysticks as input variables
-    public DriveTrain
-            (Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo, 
-            Joystick leftJoystick, Joystick rightJoystick)
-    {
-        //Input variables are copied to local variables
-        leftDriveOne = this.leftDriveOne;
-        leftDriveTwo = this.leftDriveTwo;
-        rightDriveOne = this.rightDriveOne;
-        rightDriveTwo = this.rightDriveTwo;
-        leftJoystick = this.leftJoystick;
-        rightJoystick = this.rightJoystick;
-    }
+//    public DriveTrain()
+//            (Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo, 
+//            Joystick leftJoystick, Joystick rightJoystick)
+//    {
+//        //Input variables are copied to local variables
+//        leftDriveOne = this.leftDriveOne;
+//        leftDriveTwo = this.leftDriveTwo;
+//        rightDriveOne = this.rightDriveOne;
+//        rightDriveTwo = this.rightDriveTwo;
+//        leftJoystick = this.leftJoystick;
+//        rightJoystick = this.rightJoystick;
+//    }
    
 
     public void run()

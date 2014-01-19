@@ -16,21 +16,21 @@ import com.fpsrobotics.*;
 public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids
 {
     // Classes here
-    DriveTrain driveTrain = new DriveTrain
-            (leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo, 
-            leftJoystick, rightJoystick);
+    DriveTrain driveTrain = new DriveTrain();
+//            (leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo, 
+//            leftJoystick, rightJoystick);
     
-    HackbotStation hackbotStation = new HackbotStation
-            (leftJoystick, rightJoystick);
+    HackbotStation hackbotStation = new HackbotStation();
+//            (leftJoystick, rightJoystick);
     
-    Shooter shooter = new Shooter();
+    PistonShooter pistonShooter = new PistonShooter();
     
     SpinnySticks spinnySticks = new SpinnySticks();
     
     //Threads here
     Thread driveThread = new Thread(driveTrain);
     Thread hackbotStationThread = new Thread(hackbotStation);
-    Thread shooterThread = new Thread(shooter);
+    Thread pistonShooterThread = new Thread(pistonShooter);
     Thread spinnySticksThread = new Thread(spinnySticks);
     
 }
