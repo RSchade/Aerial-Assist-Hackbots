@@ -3,7 +3,6 @@ package com.fpsrobotics;
 import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.Joysticks;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *

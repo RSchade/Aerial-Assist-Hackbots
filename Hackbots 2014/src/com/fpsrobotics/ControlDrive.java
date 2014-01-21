@@ -1,7 +1,9 @@
 package com.fpsrobotics;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -29,10 +31,10 @@ public class ControlDrive
     public void drive(Joystick leftJoystick, Joystick rightJoystick, Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo)
     {
 
-        leftDriveOne.set(-leftJoystick.getRawAxis(2));
-        leftDriveTwo.set(-leftJoystick.getRawAxis(2));
-        rightDriveOne.set(rightJoystick.getRawAxis(2));
-        rightDriveTwo.set(rightJoystick.getRawAxis(2));
+        leftDriveOne.set(this.batterySpeed()*(-leftJoystick.getRawAxis(2)));
+        leftDriveTwo.set(this.batterySpeed()*(-leftJoystick.getRawAxis(2)));
+        rightDriveOne.set(this.batterySpeed()*(rightJoystick.getRawAxis(2)));
+        rightDriveTwo.set(this.batterySpeed()*(rightJoystick.getRawAxis(2)));
     }
 
     /**
@@ -57,5 +59,21 @@ public class ControlDrive
             rightDriveOne.set(constrainTurbo.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
             rightDriveTwo.set(constrainTurbo.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
         }
+    }
+    
+    /**
+     *
+     * Create a number to multiply the input joystick value by to make the robot respond to dropping battery voltage  
+     * @return 
+     */
+    public double batterySpeed()
+    {  
+        if(DriverStation.getInstance().getBatteryVoltage() >= 12)
+        {
+            return 1;
+        }
+        
+        return (12/DriverStation.getInstance().getBatteryVoltage())*(12/DriverStation.getInstance().getBatteryVoltage());
+        
     }
 }
