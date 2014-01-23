@@ -14,7 +14,7 @@ public class DriveTrain implements Runnable, Talons, Joysticks
 // Class creates it's own local variables
 //    private volatile Talon leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo;
 //    private volatile Joystick leftJoystick, rightJoystick;
-    // Class requires talons and joysticks as input variables
+//     Class requires talons and joysticks as input variables
 //    public DriveTrain()
 //            (Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo, 
 //            Joystick leftJoystick, Joystick rightJoystick)
