@@ -1,14 +1,17 @@
 package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.Analog;
+import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
+import com.fpsrobotics.interfaces.Relays;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Relay;
 
 /**
  *
  * @author ray
  */
-public class HackbotStation implements Runnable, Joysticks, Analog
+public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
 {
 
 // Removed 1/18/14: Doesn't work! null pointer exception
@@ -55,8 +58,20 @@ public class HackbotStation implements Runnable, Joysticks, Analog
                 System.out.println("Come on, don't steal our code!");
             }
 
-            variableOutputs.outputToDashboard(leftJoystick, rightJoystick, gyroScope);
+            variableOutputs.outputToDashboard(leftJoystick, rightJoystick, gyroScope, breadboardPot, robotSwitchInput);
 
+            
+            /**
+             * Temporary code
+             */
+            
+            while (!robotSwitchInput.get() || leftJoystick.getRawButton(4))
+            {
+                robotRelay.set(Relay.Value.kForward);
+            }
+            
+            robotRelay.set(Relay.Value.kOff);
+            
         }
 
     }

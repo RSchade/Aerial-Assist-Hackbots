@@ -3,7 +3,6 @@ package com.fpsrobotics;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -73,7 +72,7 @@ public class ControlDrive
             return 1;
         }
         
-        return (12/DriverStation.getInstance().getBatteryVoltage())*(12/DriverStation.getInstance().getBatteryVoltage());
+        return (12/DriverStation.getInstance().getBatteryVoltage());
         
     }
 }

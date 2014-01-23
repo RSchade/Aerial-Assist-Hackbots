@@ -4,6 +4,9 @@
  */
 package com.fpsrobotics;
 
+import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
@@ -22,8 +25,10 @@ public class DashboardOutputs
      * @param leftJoystick
      * @param rightJoystick
      * @param gyroScope
+     * @param shooterPot
+     * @param buttonInput
      */
-    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Gyro gyroScope)
+    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Gyro gyroScope, AnalogChannel shooterPot, DigitalInput buttonInput)
     {
         // Variable outputs
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
@@ -32,5 +37,9 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Battery Voltage", DriverStation.getInstance().getBatteryVoltage());
         SmartDashboard.putNumber("Gyro angle", gyroScope.getAngle());
         SmartDashboard.putNumber("Gyro rate", gyroScope.getRate());
+        SmartDashboard.putNumber("Potentiometer", shooterPot.getValue());
+        SmartDashboard.putBoolean("Button Value", buttonInput.get());
+        
+        
     }
 }

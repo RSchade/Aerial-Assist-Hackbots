@@ -72,4 +72,17 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         // Feed the watchdog
         Watchdog.getInstance().feed();
     }
+    
+    public void test()
+    {
+        while(true)
+        {
+            Watchdog.getInstance().feed();
+        }
+    }
+    
+    public void testPeriodic()
+    {
+        Watchdog.getInstance().feed();
+    }
 }

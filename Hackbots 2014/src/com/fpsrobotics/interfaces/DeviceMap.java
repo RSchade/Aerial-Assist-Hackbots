@@ -14,6 +14,7 @@ public interface DeviceMap
     int RIGHT_DRIVE_ONE_MAP = 2;
     int RIGHT_DRIVE_TWO_MAP = 4;
     // Relays
+    int ROBOT_RELAY_MAP = 1;
     // DIOs
     int ROBOT_SWITCH_INPUT_MAP = 1;
     // Joysticks
@@ -21,12 +22,12 @@ public interface DeviceMap
     int RIGHT_JOYSTICK_MAP = 2;
     int GAMEPAD_JOYSTICK_MAP = 3;
     // Encoder
-    int ENCODER_ONE_MAP = 1;
-    int ENCODER_TWO_MAP = 2;
+    int ENCODER_ONE_MAP = 3;
+    int ENCODER_TWO_MAP = 4;
     // Potentiometers
-    int SHOOTER_POT_MAP = 7;
+    int BREADBOARD_POT_MAP = 6;
     // Solenoid
-    int SHOOTER_SOLENOID_ONE_MAP_ONE = 1;
+    int SHOOTER_SOLENOID_ONE_MAP_ONE = 5;
     int SHOOTER_SOLENOID_ONE_MAP_TWO = 2;
     int SHOOTER_SOLENOID_TWO_MAP_ONE = 3;
     int SHOOTER_SOLENOID_TWO_MAP_TWO = 4;

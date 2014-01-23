@@ -9,4 +9,5 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public interface Relays extends DeviceMap
 {
+    Relay robotRelay = new Relay(ROBOT_RELAY_MAP);
 }
