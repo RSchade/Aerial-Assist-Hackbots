@@ -26,17 +26,17 @@ import edu.wpi.first.wpilibj.Watchdog;
  */
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
-
-    // local variables here
-    boolean doneBefore = false;
-
     /**
      * This function is run when the robot is first started up and should be
-     * used for any initialization code. Watchdog init.
+     * used for any initialization code. Watchdog init. Start camera thread
+     * here, so we don't have to enable the robot to get a camera feed.
      */
     public void robotInit()
     {
         System.out.println("Hackbots Aerial Assist Code");
+
+        // Start camera thread
+        robotCameraThread.start();
 
         // Watchdog init
         Watchdog.getInstance().setEnabled(true);
@@ -52,36 +52,29 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     }
 
     /**
-     * This function is called periodically during operator control. Start all
-     * threads here.
+     * This function is called periodically during operator control.
+     *
      */
     public void teleopPeriodic()
     {
-        if (!doneBefore)
-        {
-            driveThread.start();
-            hackbotStationThread.start();
-            pistonShooterThread.start();
-            spinnySticksThread.start();
-            robotCameraThread.start();
-
-            // For breadboard compatibility
-            breadBoardThread.start();
-
-            // So we don't start threads more than once
-            doneBefore = true;
-        }
 
         // Feed the watchdog
         Watchdog.getInstance().feed();
     }
 
-    public void test()
+    /**
+     * Start all threads here.
+     */
+    public void teleopInit()
     {
-        while (true)
-        {
-            Watchdog.getInstance().feed();
-        }
+        driveThread.start();
+        hackbotStationThread.start();
+        pistonShooterThread.start();
+        spinnySticksThread.start();
+
+        // For breadboard compatibility
+        breadBoardThread.start();
+
     }
 
     public void testPeriodic()

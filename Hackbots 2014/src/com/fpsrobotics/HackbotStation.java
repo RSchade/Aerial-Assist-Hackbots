@@ -11,14 +11,6 @@ import com.fpsrobotics.interfaces.Relays;
  */
 public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
 {
-
-// Removed 1/18/14: Doesn't work! null pointer exception
-//    private volatile Joystick leftJoystick, rightJoystick;
-//    public HackbotStation(Joystick leftJoystick, Joystick rightJoystick)
-//    {
-//        leftJoystick = this.leftJoystick;
-//        rightJoystick = this.rightJoystick;
-//    }
     /**
      *
      * Class which outputs most variables to the SmartDashboard and gives the
