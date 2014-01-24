@@ -4,8 +4,6 @@ import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Relays;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Relay;
 
 /**
  *
@@ -34,44 +32,16 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
 
         while (true)
         {
-            // Battery info output (every second)
+            //Everything outputs every second, to reduce lag and heat
             if (System.currentTimeMillis() - previousTime >= 1000)
             {
-                if (DriverStation.getInstance().getBatteryVoltage() <= 11)
-                {
-                    System.out.println("Warning! Battery voltage low, replace soon!");
-                } else if (DriverStation.getInstance().getBatteryVoltage() <= 10)
-                {
-                    System.out.println("Danger! Battery voltage very low, replace immediately!");
-                } else if (DriverStation.getInstance().getBatteryVoltage() <= 9)
-                {
-                    System.out.println("Battery voltage extremely low! Replace immediately, robot may malfunction");
-                } else if (DriverStation.getInstance().getBatteryVoltage() <= 8)
-                {
-                    System.out.println("Battery dead, replace now");
-                }
+                variableOutputs.batteryOutput();
+                variableOutputs.teamOutput();
+                variableOutputs.outputToDashboard(leftJoystick, rightJoystick, gyroScope, breadboardPot, robotSwitchInput);
+
                 previousTime = System.currentTimeMillis();
-            }
 
-            if (DriverStation.getInstance().getTeamNumber() != 3414)
-            {
-                System.out.println("Come on, don't steal our code!");
             }
-
-            variableOutputs.outputToDashboard(leftJoystick, rightJoystick, gyroScope, breadboardPot, robotSwitchInput);
-
-            
-            /**
-             * Temporary code
-             */
-            
-            while (!robotSwitchInput.get() || leftJoystick.getRawButton(4))
-            {
-                robotRelay.set(Relay.Value.kForward);
-            }
-            
-            robotRelay.set(Relay.Value.kOff);
-            
         }
 
     }

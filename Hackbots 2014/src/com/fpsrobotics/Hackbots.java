@@ -64,6 +64,9 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             pistonShooterThread.start();
             spinnySticksThread.start();
             robotCameraThread.start();
+            
+            // For breadboard compatibility
+            breadBoardThread.start();
 
             // So we don't start threads more than once
             doneBefore = true;

@@ -22,6 +22,7 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     PistonShooter pistonShooter = new PistonShooter();
     SpinnySticks spinnySticks = new SpinnySticks();
     RobotCamera robotCamera = new RobotCamera();
+    BreadBoard breadBoard = new BreadBoard();
     
     //Threads here
     Thread driveThread = new Thread(driveTrain);
@@ -29,4 +30,5 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     Thread pistonShooterThread = new Thread(pistonShooter);
     Thread spinnySticksThread = new Thread(spinnySticks);
     Thread robotCameraThread = new Thread(robotCamera);
+    Thread breadBoardThread = new Thread(breadBoard);
 }
