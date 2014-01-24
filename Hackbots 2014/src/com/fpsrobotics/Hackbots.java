@@ -64,7 +64,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             pistonShooterThread.start();
             spinnySticksThread.start();
             robotCameraThread.start();
-            
+
             // For breadboard compatibility
             breadBoardThread.start();
 
@@ -75,15 +75,15 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         // Feed the watchdog
         Watchdog.getInstance().feed();
     }
-    
+
     public void test()
     {
-        while(true)
+        while (true)
         {
             Watchdog.getInstance().feed();
         }
     }
-    
+
     public void testPeriodic()
     {
         Watchdog.getInstance().feed();

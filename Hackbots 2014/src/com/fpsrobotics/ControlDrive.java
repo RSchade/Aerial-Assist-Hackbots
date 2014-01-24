@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Talon;
  *
  * Class which actually controls the drive train, it's called by the drive train
  * thread in DriveTrain.
+ *
  * @author ray
  *
  *
@@ -17,8 +18,17 @@ public class ControlDrive
 
     Constrain constrainTurbo = new Constrain();
 
+//    Changed to get more modularity. (So other classes can manipulate speed) 1/24/14
+//    public void drive(Joystick leftJoystick, Joystick rightJoystick, Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo)
+//    {
+//
+//        leftDriveOne.set(this.batterySpeed()*(-leftJoystick.getRawAxis(2)));
+//        leftDriveTwo.set(this.batterySpeed()*(-leftJoystick.getRawAxis(2)));
+//        rightDriveOne.set(this.batterySpeed()*(rightJoystick.getRawAxis(2)));
+//        rightDriveTwo.set(this.batterySpeed()*(rightJoystick.getRawAxis(2)));
+//    }
     /**
-     * Run drive train as normal, 1:1 input with joysticks
+     * Run drive train as normal, 1:1 input with joysticks.
      *
      * @param leftJoystick
      * @param rightJoystick
@@ -27,13 +37,22 @@ public class ControlDrive
      * @param rightDriveOne
      * @param rightDriveTwo
      */
-    public void drive(Joystick leftJoystick, Joystick rightJoystick, Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo)
+    public void drive(double leftSpeed, double rightSpeed, Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo, boolean batteryComp)
     {
+        if (batteryComp)
+        {
 
-        leftDriveOne.set(this.batterySpeed()*(-leftJoystick.getRawAxis(2)));
-        leftDriveTwo.set(this.batterySpeed()*(-leftJoystick.getRawAxis(2)));
-        rightDriveOne.set(this.batterySpeed()*(rightJoystick.getRawAxis(2)));
-        rightDriveTwo.set(this.batterySpeed()*(rightJoystick.getRawAxis(2)));
+            leftDriveOne.set(this.batterySpeed() * (-leftSpeed));
+            leftDriveTwo.set(this.batterySpeed() * (-leftSpeed));
+            rightDriveOne.set(this.batterySpeed() * (rightSpeed));
+            rightDriveTwo.set(this.batterySpeed() * (rightSpeed));
+        } else
+        {
+            leftDriveOne.set(-leftSpeed);
+            leftDriveTwo.set(-leftSpeed);
+            rightDriveOne.set(rightSpeed);
+            rightDriveTwo.set(rightSpeed);
+        }
     }
 
     /**
@@ -59,20 +78,22 @@ public class ControlDrive
             rightDriveTwo.set(constrainTurbo.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
         }
     }
-    
+
     /**
      *
-     * Create a number to multiply the input joystick value by to make the robot respond to dropping battery voltage  
-     * @return 
+     * Create a number to multiply the input joystick value by to make the robot
+     * respond to dropping battery voltage
+     *
+     * @return
      */
     public double batterySpeed()
-    {  
-        if(DriverStation.getInstance().getBatteryVoltage() >= 12)
+    {
+        if (DriverStation.getInstance().getBatteryVoltage() >= 12)
         {
             return 1;
         }
-        
-        return (12/DriverStation.getInstance().getBatteryVoltage());
-        
+
+        return (12 / DriverStation.getInstance().getBatteryVoltage());
+
     }
 }

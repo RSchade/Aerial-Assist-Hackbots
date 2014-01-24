@@ -56,7 +56,10 @@ public class DriveTrain implements Runnable, Talons, Joysticks
 //                rightDriveOne.set(constrainTurbo.constrainDouble(2*(rightJoystick.getRawAxis(2)), 1.0, -1.0));
 //                rightDriveTwo.set(constrainTurbo.constrainDouble(2*(rightJoystick.getRawAxis(2)), 1.0, -1.0));
 //            }
-            driveMotors.drive(leftJoystick, rightJoystick, leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo);
+//            Changed to add more modularity (so other classes can manipulate)
+//            driveMotors.drive(leftJoystick, rightJoystick, leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo);
+            
+            driveMotors.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo, true);
             driveMotors.driveTurbo(leftJoystick, rightJoystick, leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo);
 
         }
