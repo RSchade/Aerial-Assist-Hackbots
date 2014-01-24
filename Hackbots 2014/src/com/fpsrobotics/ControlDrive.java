@@ -18,15 +18,6 @@ public class ControlDrive
 
     Constrain constrainTurbo = new Constrain();
 
-//    Changed to get more modularity. (So other classes can manipulate speed) 1/24/14
-//    public void drive(Joystick leftJoystick, Joystick rightJoystick, Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo)
-//    {
-//
-//        leftDriveOne.set(this.batterySpeed()*(-leftJoystick.getRawAxis(2)));
-//        leftDriveTwo.set(this.batterySpeed()*(-leftJoystick.getRawAxis(2)));
-//        rightDriveOne.set(this.batterySpeed()*(rightJoystick.getRawAxis(2)));
-//        rightDriveTwo.set(this.batterySpeed()*(rightJoystick.getRawAxis(2)));
-//    }
     /**
      * Run drive train as normal, 1:1 input with joysticks.
      *
