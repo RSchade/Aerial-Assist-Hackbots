@@ -12,22 +12,26 @@ import edu.wpi.first.wpilibj.image.NIVisionException;
 public class RobotCamera implements Runnable
 {
 
+    private AxisCamera robotCamera;
+
     public void run()
     {
-        // To be replaced with image processing code
+        robotCamera = AxisCamera.getInstance();
 
+        // To be replaced with image processing code
         // Sets axis camera stuff at the beginning of the robot
-        AxisCamera.getInstance().writeMaxFPS(15);
-        AxisCamera.getInstance().writeCompression(70);
-        AxisCamera.getInstance().writeResolution(AxisCamera.ResolutionT.k320x240);
+        robotCamera.writeMaxFPS(15);
+        robotCamera.writeCompression(70);
+        robotCamera.writeRotation(AxisCamera.RotationT.k180);
+        robotCamera.writeResolution(AxisCamera.ResolutionT.k320x240);
 
         while (true)
         {
-            if (AxisCamera.getInstance().freshImage())
+            if (robotCamera.freshImage())
             {
                 try
                 {
-                    AxisCamera.getInstance().getImage();
+                    robotCamera.getImage();
                 } catch (AxisCameraException ex)
                 {
                     ex.printStackTrace();
@@ -39,17 +43,15 @@ public class RobotCamera implements Runnable
             {
                 try
                 {
-                    try
-                    {
-                        AxisCamera.getInstance().getImage().free();
-                    } catch (NIVisionException ex)
-                    {
-                        ex.printStackTrace();
-                    }
+                    robotCamera.getImage().free();
+                } catch (NIVisionException ex)
+                {
+                    ex.printStackTrace();
                 } catch (AxisCameraException ex)
                 {
                     ex.printStackTrace();
                 }
+
             }
         }
     }

@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.Watchdog;
  */
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code. Watchdog init. Start camera thread
