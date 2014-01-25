@@ -15,6 +15,7 @@ public interface DeviceMap
     int RIGHT_DRIVE_TWO_MAP = 4;
     int LEFT_SPIN_MAP = 5;
     int RIGHT_SPIN_MAP = 6;
+    int ENCODER_MOTOR_MOTOR_MAP = 7;
     // Relays
     int ROBOT_RELAY_MAP = 1;
     // DIOs
@@ -24,6 +25,8 @@ public interface DeviceMap
     int RIGHT_JOYSTICK_MAP = 2;
     int GAMEPAD_JOYSTICK_MAP = 3;
     // Encoder
+    int ENCODER_MOTOR_MAP_ONE = 1;
+    int ENCODER_MOTOR_MAP_TWO = 2;
     // Potentiometers
     int BREADBOARD_POT_MAP = 6;
     // Solenoid

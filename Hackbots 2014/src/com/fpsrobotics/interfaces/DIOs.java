@@ -15,4 +15,5 @@ public interface DIOs extends DeviceMap
     DigitalInput robotSwitchInput = new DigitalInput(ROBOT_SWITCH_INPUT_MAP);
     
     // encoders here
+    Encoder encoderMotorEncoder = new Encoder(ENCODER_MOTOR_MAP_ONE, ENCODER_MOTOR_MAP_TWO);
 }
