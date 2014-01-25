@@ -10,7 +10,8 @@ import com.fpsrobotics.interfaces.Relays;
 import edu.wpi.first.wpilibj.Relay;
 
 /**
- *To run the BreadBoard.
+ * To run the BreadBoard.
+ *
  * @author ray
  */
 public class BreadBoard implements Runnable, DIOs, Joysticks, Relays
@@ -18,13 +19,16 @@ public class BreadBoard implements Runnable, DIOs, Joysticks, Relays
 
     public void run()
     {
-        // Switch turns on the fan
-        if (!robotSwitchInput.get())
+        while (true)
         {
-            robotRelay.set(Relay.Value.kForward);
-        } else
-        {
-            robotRelay.set(Relay.Value.kOff);
+            // Switch turns on the fan
+            if (!robotSwitchInput.get())
+            {
+                robotRelay.set(Relay.Value.kForward);
+            } else
+            {
+                robotRelay.set(Relay.Value.kOff);
+            }
         }
     }
 }
