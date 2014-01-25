@@ -39,6 +39,9 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         // Start camera thread
         robotCameraThread.start();
 
+        // Vision processing init
+        visionSample.imageFindingRobotInit();
+
         // Watchdog init
         Watchdog.getInstance().setEnabled(true);
         Watchdog.getInstance().setExpiration(2);
@@ -50,6 +53,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
      */
     public void autonomousPeriodic()
     {
+        visionSample.imageFindingAutonomous();
     }
 
     /**
@@ -61,6 +65,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 
         // Feed the watchdog
         Watchdog.getInstance().feed();
+
+        visionSample.imageFindingOperatorControl();
     }
 
     /**
