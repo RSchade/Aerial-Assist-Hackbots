@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
  *
  * @author ray
  */
-public class RobotCamera implements Runnable
+public class RobotCamera 
 {
 
     private AxisCamera robotCamera;
 
-    public void run()
+    public void init()
     {
         robotCamera = AxisCamera.getInstance();
 
