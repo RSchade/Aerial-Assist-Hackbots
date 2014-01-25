@@ -41,7 +41,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         // Watchdog init
         Watchdog.getInstance().setEnabled(true);
         Watchdog.getInstance().setExpiration(2);
-        
+
         // Camera settings
         robotCamera.init();
     }
@@ -56,8 +56,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     }
 
     /**
-     * This function is called periodically during operator control.
-     * Start all threads here.
+     * This function is called periodically during operator control. Start all
+     * threads here.
      *
      */
     public void teleopPeriodic()
@@ -73,6 +73,9 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             // For breadboard compatibility
             breadBoardThread.start();
 
+            // For PID
+//            pidLoopThread.start();
+            
             doneAlready = true;
         }
 

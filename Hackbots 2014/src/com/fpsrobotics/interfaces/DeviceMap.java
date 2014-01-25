@@ -13,6 +13,7 @@ public interface DeviceMap
     int LEFT_DRIVE_TWO_MAP = 3;
     int RIGHT_DRIVE_ONE_MAP = 2;
     int RIGHT_DRIVE_TWO_MAP = 4;
+    
     int LEFT_SPIN_MAP = 5;
     int RIGHT_SPIN_MAP = 6;
     int ENCODER_MOTOR_MOTOR_MAP = 7;
@@ -25,8 +26,8 @@ public interface DeviceMap
     int RIGHT_JOYSTICK_MAP = 2;
     int GAMEPAD_JOYSTICK_MAP = 3;
     // Encoder
-    int ENCODER_MOTOR_MAP_ONE = 1;
-    int ENCODER_MOTOR_MAP_TWO = 2;
+    int ENCODER_MAP_ONE = 3;
+    int ENCODER_MAP_TWO = 4;
     // Potentiometers
     int BREADBOARD_POT_MAP = 6;
     // Solenoid

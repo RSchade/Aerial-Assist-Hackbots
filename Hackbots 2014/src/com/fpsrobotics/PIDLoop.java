@@ -1,5 +1,7 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.Analog;
+import com.fpsrobotics.interfaces.Talons;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -9,30 +11,27 @@ import edu.wpi.first.wpilibj.Talon;
  *
  * @author ray
  */
-public class PIDLoop implements Runnable
+public class PIDLoop implements Runnable, Talons, Analog
 {
 
     public void run()
     {
-        // put input variables here
-        this.loop(null, null);
+        this.loop(encoder, leftDriveOne, 100);
+        this.loop(encoder, rightDriveOne, 100);
     }
 
-    private void loop(Encoder encoder, Talon motor)
+    private void loop(Encoder encoderThing, Talon motor, int target)
     {
-        int target = 100;
 
-        while (true)
+        if (encoderThing.getRate() < target)
         {
-            if (encoder.getRate() < target)
-            {
-                motor.set(motor.get() + 0.001);
-            }
-
-            if (encoder.getRate() > target)
-            {
-                motor.set(motor.get() - 0.001);
-            }
+            motor.set(motor.get() + 0.001);
         }
+
+        if (encoderThing.getRate() > target)
+        {
+            motor.set(motor.get() - 0.001);
+        }
+
     }
 }
