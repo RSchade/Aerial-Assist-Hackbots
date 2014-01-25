@@ -29,10 +29,10 @@ public interface DeviceMap
     // Potentiometers
     int BREADBOARD_POT_MAP = 6;
     // Solenoid
-    int SHOOTER_SOLENOID_ONE_MAP_ONE = 5;
-    int SHOOTER_SOLENOID_ONE_MAP_TWO = 2;
-    int SHOOTER_SOLENOID_TWO_MAP_ONE = 3;
-    int SHOOTER_SOLENOID_TWO_MAP_TWO = 4;
+    int SPINNY_SOLENOID_ONE_MAP_ONE = 5;
+    int SPINNY_SOLENOID_ONE_MAP_TWO = 2;
+    int SPINNY_SOLENOID_TWO_MAP_ONE = 3;
+    int SPINNY_SOLENOID_TWO_MAP_TWO = 4;
     // Gyro
     int GYRO_SCOPE_MAP = 1;
 }

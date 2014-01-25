@@ -21,13 +21,13 @@ public class PistonShooter implements Runnable, Solenoids, Joysticks
         {
             if (leftJoystick.getRawButton(11))
             {
-                shooterSolenoidOne.set(DoubleSolenoid.Value.kForward);
-                shooterSolenoidTwo.set(DoubleSolenoid.Value.kForward);
+                spinnySolenoidOne.set(DoubleSolenoid.Value.kForward);
+                spinnySolenoidTwo.set(DoubleSolenoid.Value.kForward);
             } else
             {
 
-                shooterSolenoidOne.set(DoubleSolenoid.Value.kReverse);
-                shooterSolenoidTwo.set(DoubleSolenoid.Value.kReverse);
+                spinnySolenoidOne.set(DoubleSolenoid.Value.kReverse);
+                spinnySolenoidTwo.set(DoubleSolenoid.Value.kReverse);
             }
         }
     }

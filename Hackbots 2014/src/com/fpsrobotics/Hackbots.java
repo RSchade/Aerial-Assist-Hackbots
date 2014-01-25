@@ -29,6 +29,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 
     boolean doneAlready = false;
 
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code. Watchdog init. Start camera thread
@@ -41,9 +42,10 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         // Watchdog init
         Watchdog.getInstance().setEnabled(true);
         Watchdog.getInstance().setExpiration(2);
-        
+
         // Camera settings
         robotCamera.init();
+
     }
 
     /**
@@ -52,12 +54,11 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
      */
     public void autonomousPeriodic()
     {
-
     }
 
     /**
-     * This function is called periodically during operator control.
-     * Start all threads here.
+     * This function is called periodically during operator control. Start all
+     * threads here.
      *
      */
     public void teleopPeriodic()
