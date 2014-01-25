@@ -26,6 +26,9 @@ import edu.wpi.first.wpilibj.Watchdog;
  */
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
+
+    boolean doneAlready = false;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code. Watchdog init. Start camera thread
@@ -35,12 +38,12 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     {
         System.out.println("Hackbots Aerial Assist Code");
 
-        // Start camera thread
-        robotCameraThread.start();
-
         // Watchdog init
         Watchdog.getInstance().setEnabled(true);
         Watchdog.getInstance().setExpiration(2);
+        
+        // Camera settings
+        robotCamera.init();
     }
 
     /**
@@ -49,32 +52,32 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
      */
     public void autonomousPeriodic()
     {
+
     }
 
     /**
      * This function is called periodically during operator control.
+     * Start all threads here.
      *
      */
     public void teleopPeriodic()
     {
+        if (!doneAlready)
+        {
+
+            driveThread.start();
+            hackbotStationThread.start();
+            pistonShooterThread.start();
+            spinnySticksThread.start();
+
+            // For breadboard compatibility
+            breadBoardThread.start();
+
+            doneAlready = true;
+        }
 
         // Feed the watchdog
         Watchdog.getInstance().feed();
-    }
-
-    /**
-     * Start all threads here.
-     */
-    public void teleopInit()
-    {
-        driveThread.start();
-        hackbotStationThread.start();
-        pistonShooterThread.start();
-        spinnySticksThread.start();
-
-        // For breadboard compatibility
-        breadBoardThread.start();
-
     }
 
     public void testPeriodic()
