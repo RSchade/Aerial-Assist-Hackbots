@@ -36,9 +36,6 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     {
         System.out.println("Hackbots Aerial Assist Code");
 
-        // Start camera thread
-        robotCameraThread.start();
-
         // Watchdog init
         Watchdog.getInstance().setEnabled(true);
         Watchdog.getInstance().setExpiration(2);
@@ -50,7 +47,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
      */
     public void autonomousPeriodic()
     {
-        
+
     }
 
     /**
@@ -82,5 +79,12 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     public void testPeriodic()
     {
         Watchdog.getInstance().feed();
+    }
+
+    public void disabledInit()
+    {
+        // Start camera thread
+        robotCameraThread.start();
+
     }
 }
