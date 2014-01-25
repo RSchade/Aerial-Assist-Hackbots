@@ -16,8 +16,13 @@ public class PIDLoop implements Runnable, Talons, Analog
 
     public void run()
     {
-        this.loop(encoder, leftDriveOne, 100);
-        this.loop(encoder, rightDriveOne, 100);
+        while (true)
+        {
+            encoder.start();
+
+            this.loop(encoder, leftDriveOne, 100);
+            this.loop(encoder, rightDriveOne, 100);
+        }
     }
 
     private void loop(Encoder encoderThing, Talon motor, int target)

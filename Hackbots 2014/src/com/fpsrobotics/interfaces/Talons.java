@@ -1,5 +1,6 @@
 package com.fpsrobotics.interfaces;
 
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
@@ -16,9 +17,14 @@ public interface Talons extends DeviceMap
     Talon rightDriveOne = new Talon(RIGHT_DRIVE_ONE_MAP);
     Talon rightDriveTwo = new Talon(RIGHT_DRIVE_TWO_MAP);
     
+    // Speed Controllers
+    SpeedController leftDriveOneCont = new Talon(LEFT_DRIVE_ONE_MAP);
+    SpeedController leftDriveTwoCont = new Talon(LEFT_DRIVE_TWO_MAP);
+    SpeedController rightDriveOneCont = new Talon(RIGHT_DRIVE_ONE_MAP);
+    SpeedController rightDriveTwoCont = new Talon(RIGHT_DRIVE_TWO_MAP);
+    
     Talon spinnyLeftMotor = new Talon(LEFT_SPIN_MAP);
     Talon spinnyRightMotor = new Talon(RIGHT_SPIN_MAP);
-    
     Talon encoderMotorMotor = new Talon(ENCODER_MOTOR_MOTOR_MAP);
     // Create other Talons here
 }
