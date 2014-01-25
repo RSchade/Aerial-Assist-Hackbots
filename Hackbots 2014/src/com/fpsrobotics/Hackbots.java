@@ -7,6 +7,7 @@
 package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Watchdog;
 
@@ -42,6 +43,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         Watchdog.getInstance().setEnabled(true);
         Watchdog.getInstance().setExpiration(2);
 
+        compressor.start();
+        
         // Camera settings
         robotCamera.init();
     }
