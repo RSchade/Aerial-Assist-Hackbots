@@ -24,8 +24,6 @@ public interface DeviceMap
     int RIGHT_JOYSTICK_MAP = 2;
     int GAMEPAD_JOYSTICK_MAP = 3;
     // Encoder
-    int ENCODER_ONE_MAP = 3;
-    int ENCODER_TWO_MAP = 4;
     // Potentiometers
     int BREADBOARD_POT_MAP = 6;
     // Solenoid

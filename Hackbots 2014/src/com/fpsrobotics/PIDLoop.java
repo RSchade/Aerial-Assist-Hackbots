@@ -12,16 +12,13 @@ import edu.wpi.first.wpilibj.Talon;
 public class PIDLoop implements Runnable
 {
 
-    Encoder encoder;
-    Talon motor;
-
-    public PIDLoop(Encoder encoder, Talon motor)
+    public void run()
     {
-        encoder = this.encoder;
-        motor = this.motor;
+        // put input variables here
+        this.loop(null, null);
     }
 
-    public void run()
+    private void loop(Encoder encoder, Talon motor)
     {
         int target = 100;
 
