@@ -22,10 +22,11 @@ public class ControlDrive
     /**
      * Run drive train as normal, 1:1 input with joysticks.
      *
-     * @param leftJoystick
-     * @param rightJoystick
+     * @param leftSpeed
+     * @param rightSpeed
      * @param leftDriveOne
      * @param leftDriveTwo
+     * @param batteryComp
      * @param rightDriveOne
      * @param rightDriveTwo
      */
@@ -104,6 +105,5 @@ public class ControlDrive
         }
 
     }
-    
-    
+
 }

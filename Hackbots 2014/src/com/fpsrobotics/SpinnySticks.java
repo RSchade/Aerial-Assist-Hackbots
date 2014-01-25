@@ -14,11 +14,6 @@ import edu.wpi.first.wpilibj.Talon;
  */
 public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Solenoids
 {
-
-    public SpinnySticks()
-    {
-    }
-
     public void run()
     {
         boolean spinSticksBool = false;
