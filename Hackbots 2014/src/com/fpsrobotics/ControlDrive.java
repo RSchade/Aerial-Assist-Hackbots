@@ -1,5 +1,6 @@
 package com.fpsrobotics;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Talon;
@@ -87,4 +88,22 @@ public class ControlDrive
         return (12 / DriverStation.getInstance().getBatteryVoltage());
 
     }
+
+    public void switchGears(DoubleSolenoid gearSwitchOne, DoubleSolenoid gearSwitchTwo, boolean moreLess)
+    {
+        if (moreLess)
+        {
+            gearSwitchOne.set(DoubleSolenoid.Value.kForward);
+            gearSwitchTwo.set(DoubleSolenoid.Value.kForward);
+        }
+
+        if (!moreLess)
+        {
+            gearSwitchOne.set(DoubleSolenoid.Value.kReverse);
+            gearSwitchTwo.set(DoubleSolenoid.Value.kReverse);
+        }
+
+    }
+    
+    
 }
