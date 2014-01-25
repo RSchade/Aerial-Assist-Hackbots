@@ -28,7 +28,7 @@ public class VisionProcessingSample
 {
 
     //Camera constants used for distance calculation
-    final int Y_IMAGE_RES = 480;		//X Image resolution in pixels, should be 120, 240 or 480
+    final int Y_IMAGE_RES = 240;		//X Image resolution in pixels, should be 120, 240 or 480
     final double VIEW_ANGLE = 49;		//Axis M1013
     //final double VIEW_ANGLE = 41.7;		//Axis 206 camera
     //final double VIEW_ANGLE = 37.4;  //Axis M1011 camera
