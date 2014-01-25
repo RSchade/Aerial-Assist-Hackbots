@@ -11,6 +11,7 @@ package com.fpsrobotics.interfaces;
 public interface Values
 {
     //Motor Speeds
+    double MAX_SPEED = 1.0;
     double HALF_SPEED = 0.5;
     double NO_SPEED = 0.0;
     //Put more important reusable values here
