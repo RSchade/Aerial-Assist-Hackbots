@@ -17,7 +17,7 @@ public interface Talons extends DeviceMap
     Talon rightDriveOne = new Talon(RIGHT_DRIVE_ONE_MAP);
     Talon rightDriveTwo = new Talon(RIGHT_DRIVE_TWO_MAP);
     
-    // Speed Controllers
+    // Speed Controllers (May interfere)
     SpeedController leftDriveOneCont = new Talon(LEFT_DRIVE_ONE_MAP);
     SpeedController leftDriveTwoCont = new Talon(LEFT_DRIVE_TWO_MAP);
     SpeedController rightDriveOneCont = new Talon(RIGHT_DRIVE_ONE_MAP);

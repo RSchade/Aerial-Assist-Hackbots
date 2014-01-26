@@ -24,4 +24,8 @@ public interface Values
     double Kp = 0.3;
     double Ki = 0.0;
     double Kd = 0.0;
+    
+    // Are we in PID mode?
+    boolean AdvancedPIDMode = false;
+    boolean SimplePIDMode = false;
 }

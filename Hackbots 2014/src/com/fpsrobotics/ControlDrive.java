@@ -1,5 +1,6 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
@@ -17,15 +18,8 @@ import edu.wpi.first.wpilibj.Talon;
  *
  *
  */
-public class ControlDrive implements Values
+public class ControlDrive implements Values, PID
 {
-    //This must be fully initialized in the constructor, after the settings
-    //for the encoders have been done.
-
-    private final PIDController leftPIDOne = null;
-    private final PIDController leftPIDTwo = null;
-    private final PIDController rightPIDOne = null;
-    private final PIDController rightPIDTwo = null;
     Constrain constrainTurbo = new Constrain();
 
     /**
@@ -138,11 +132,11 @@ public class ControlDrive implements Values
         rightPIDTwo.setInputRange(0, 100);
     }
 
-    public void driveToPID(double distance)
+    public void driveToPID(double leftDistance, double rightDistance)
     {
-        leftPIDOne.setSetpoint(distance);
-        leftPIDTwo.setSetpoint(distance);
-        rightPIDOne.setSetpoint(distance);
-        rightPIDTwo.setSetpoint(distance);
+        leftPIDOne.setSetpoint(leftDistance);
+        leftPIDTwo.setSetpoint(leftDistance);
+        rightPIDOne.setSetpoint(rightDistance);
+        rightPIDTwo.setSetpoint(rightDistance);
     }
 }

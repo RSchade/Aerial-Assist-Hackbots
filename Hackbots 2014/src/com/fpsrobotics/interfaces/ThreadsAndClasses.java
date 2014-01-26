@@ -9,7 +9,7 @@ import com.fpsrobotics.*;
  *
  * @author ray
  */
-public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids
+public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids, PID, Values
 {
     // 1/18/14: got rid of input variables, don't work as expected (null pointer exception)
     // Classes here
