@@ -4,13 +4,17 @@ import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Relays;
+import com.fpsrobotics.interfaces.Values;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 
 /**
  *
  * @author ray
  */
-public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
+public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays, Values
 {
+
     /**
      *
      * Class which outputs most variables to the SmartDashboard and gives the
@@ -21,6 +25,8 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
     {
         long previousTime = System.currentTimeMillis();
         DashboardOutputs variableOutputs = new DashboardOutputs();
+        LEDOutput ledOutput = new LEDOutput();
+        boolean isOn = true;
 
         while (true)
         {
@@ -31,7 +37,18 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
                 variableOutputs.teamOutput();
                 variableOutputs.outputToDashboard(leftJoystick, rightJoystick, gyroScope, breadboardPot, robotSwitchInput, encoder);
 
+                try
+                {
+                    // Pulse led
+                    ledOutput.pulseLED(DriverStation.getInstance().getEnhancedIO(), HACKBOT_STATION_LED, Thread.currentThread().isAlive());
+                } catch (DriverStationEnhancedIO.EnhancedIOException ex)
+                {
+                    ex.printStackTrace();
+                }
+
                 previousTime = System.currentTimeMillis();
+                
+                isOn = !isOn;
 
             }
         }

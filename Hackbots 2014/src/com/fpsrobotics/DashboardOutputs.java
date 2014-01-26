@@ -3,6 +3,7 @@ package com.fpsrobotics;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
@@ -65,4 +66,6 @@ public class DashboardOutputs
             System.out.println("Come on, don't steal our code!");
         }
     }
+    
+
 }

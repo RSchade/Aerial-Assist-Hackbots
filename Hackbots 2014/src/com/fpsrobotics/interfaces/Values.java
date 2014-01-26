@@ -15,4 +15,11 @@ public interface Values
     double HALF_SPEED = 0.5;
     double NO_SPEED = 0.0;
     //Put more important reusable values here
+    
+    int MAIN_THREAD_LED = 2;
+    int DRIVE_TRAIN_LED = 3;
+    int PISTON_SHOOTER_LED = 4;
+    int SPINNY_STICKS_LED = 5;
+    int HACKBOT_STATION_LED = 6;
+    
 }

@@ -20,6 +20,8 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     BreadBoard breadBoard = new BreadBoard();
     VisionProcessingSample visionSample = new VisionProcessingSample();
     PIDLoop pidloop = new PIDLoop();
+    LEDOutput ledOutput = new LEDOutput();
+    
     //Threads here
     Thread driveThread = new Thread(driveTrain);
     Thread hackbotStationThread = new Thread(hackbotStation);
@@ -27,4 +29,5 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     Thread spinnySticksThread = new Thread(spinnySticks);
     Thread breadBoardThread = new Thread(breadBoard);
     Thread pidLoopThread = new Thread(pidloop);
+    Thread LEDOutputThread = new Thread(ledOutput);
 }

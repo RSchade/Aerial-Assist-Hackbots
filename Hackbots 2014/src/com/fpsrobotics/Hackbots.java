@@ -7,6 +7,9 @@
 package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import com.fpsrobotics.interfaces.Values;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Watchdog;
 
@@ -24,10 +27,11 @@ import edu.wpi.first.wpilibj.Watchdog;
  *
  *
  */
-public class Hackbots extends IterativeRobot implements ThreadsAndClasses
+public class Hackbots extends IterativeRobot implements ThreadsAndClasses, Values
 {
 
     boolean doneAlready = false;
+    boolean isOn = true;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -52,7 +56,6 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
      */
     public void autonomousPeriodic()
     {
-
     }
 
     /**
@@ -69,15 +72,25 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             hackbotStationThread.start();
             pistonShooterThread.start();
             spinnySticksThread.start();
+            LEDOutputThread.start();
 
             // For breadboard compatibility
             breadBoardThread.start();
 
             // For PID
 //            pidLoopThread.start();
-            
+
             doneAlready = true;
         }
+        try
+        {
+            // Pulse LED
+            ledOutput.pulseLED(DriverStation.getInstance().getEnhancedIO(), MAIN_THREAD_LED, isOn);
+        } catch (DriverStationEnhancedIO.EnhancedIOException ex)
+        {
+            ex.printStackTrace();
+        }
+        isOn = !isOn;
 
         // Feed the watchdog
         Watchdog.getInstance().feed();

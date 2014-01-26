@@ -2,7 +2,10 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Solenoids;
+import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 
 /**
  *
@@ -12,11 +15,13 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  *
  * @author ray
  */
-public class PistonShooter implements Runnable, Solenoids, Joysticks
+public class PistonShooter implements Runnable, Solenoids, Joysticks, Values
 {
 
     public void run()
     {
+        LEDOutput ledOutput = new LEDOutput();
+        boolean isOn = true;
         while (true)
         {
             if (leftJoystick.getRawButton(11))
@@ -29,6 +34,17 @@ public class PistonShooter implements Runnable, Solenoids, Joysticks
                 shooterSolenoidOne.set(DoubleSolenoid.Value.kReverse);
                 shooterSolenoidTwo.set(DoubleSolenoid.Value.kReverse);
             }
+
+            try
+            {
+                ledOutput.pulseLED(DriverStation.getInstance().getEnhancedIO(), PISTON_SHOOTER_LED, isOn);
+            } catch (DriverStationEnhancedIO.EnhancedIOException ex)
+            {
+                ex.printStackTrace();
+            }
+            
+            isOn = !isOn;
+
         }
     }
 }
