@@ -16,7 +16,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
 {
     public void run()
     {
-        boolean spinSticksBool = false;
+        boolean spinnySticksOn = false;
 
         while (true)
         {
@@ -36,16 +36,16 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                 this.stopSpinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo);
             }
 
-            if (leftJoystick.getRawButton(2) && !spinSticksBool)
+            if (leftJoystick.getRawButton(2) && !spinnySticksOn)
             {
                 this.spinSticks(spinnyRightMotor, spinnyLeftMotor, HALF_SPEED);
-                spinSticksBool = !spinSticksBool;
+                spinnySticksOn = !spinnySticksOn;
             }
 
-            if (leftJoystick.getRawButton(2) && spinSticksBool)
+            if (leftJoystick.getRawButton(2) && spinnySticksOn)
             {
                 this.spinSticks(spinnyRightMotor, spinnyLeftMotor, NO_SPEED);
-                spinSticksBool = !spinSticksBool;
+                spinnySticksOn = !spinnySticksOn;
             }
         }
     }
