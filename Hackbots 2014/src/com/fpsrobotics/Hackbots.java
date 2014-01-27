@@ -52,7 +52,6 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
      */
     public void autonomousPeriodic()
     {
-
     }
 
     /**
@@ -65,7 +64,12 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         if (!doneAlready)
         {
 
-            driveThread.start();
+            // Don't start drive thread if simple PID is on
+            if (!SimplePIDMode)
+            {
+                driveThread.start();
+            }
+            
             hackbotStationThread.start();
             pistonShooterThread.start();
             spinnySticksThread.start();
@@ -73,9 +77,12 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             // For breadboard compatibility
             breadBoardThread.start();
 
-            // For PID
-//            pidLoopThread.start();
-            
+            // SimplePID
+            if (SimplePIDMode)
+            {
+                pidLoopThread.start();
+            }
+
             doneAlready = true;
         }
 

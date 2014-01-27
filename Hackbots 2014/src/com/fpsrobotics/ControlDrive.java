@@ -1,7 +1,12 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.PID;
+import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
@@ -13,20 +18,20 @@ import edu.wpi.first.wpilibj.Talon;
  *
  *
  */
-public class ControlDrive
+public class ControlDrive implements Values, PID
 {
-
     Constrain constrainTurbo = new Constrain();
 
     /**
      * Run drive train as normal, 1:1 input with joysticks.
      *
-     * @param leftJoystick
-     * @param rightJoystick
+     * @param leftSpeed
+     * @param rightSpeed
      * @param leftDriveOne
      * @param leftDriveTwo
      * @param rightDriveOne
      * @param rightDriveTwo
+     * @param batteryComp
      */
     public void drive(double leftSpeed, double rightSpeed, Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo, boolean batteryComp)
     {
