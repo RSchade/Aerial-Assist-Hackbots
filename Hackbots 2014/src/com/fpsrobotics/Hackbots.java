@@ -8,7 +8,6 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import com.fpsrobotics.interfaces.Values;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Watchdog;
@@ -85,7 +84,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, Value
         try
         {
             // Pulse LED
-            ledOutput.pulseLED(DriverStation.getInstance().getEnhancedIO(), MAIN_THREAD_LED, isOn);
+            ledOutput.pulseLED(enhancedIO, MAIN_THREAD_LED, isOn);
         } catch (DriverStationEnhancedIO.EnhancedIOException ex)
         {
             ex.printStackTrace();

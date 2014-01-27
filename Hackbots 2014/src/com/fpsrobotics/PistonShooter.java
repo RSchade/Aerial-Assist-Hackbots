@@ -20,7 +20,6 @@ public class PistonShooter implements Runnable, Solenoids, Joysticks, Values
 
     public void run()
     {
-        LEDOutput ledOutput = new LEDOutput();
         boolean isOn = true;
         while (true)
         {
@@ -37,10 +36,10 @@ public class PistonShooter implements Runnable, Solenoids, Joysticks, Values
 
             try
             {
-                ledOutput.pulseLED(DriverStation.getInstance().getEnhancedIO(), PISTON_SHOOTER_LED, isOn);
+                ledOutput.pulseLED(enhancedIO, PISTON_SHOOTER_LED, isOn);
             } catch (DriverStationEnhancedIO.EnhancedIOException ex)
             {
-                ex.printStackTrace();
+                System.out.println(ex.getMessage());
             }
             
             isOn = !isOn;

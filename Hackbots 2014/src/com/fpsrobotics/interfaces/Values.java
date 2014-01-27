@@ -4,6 +4,10 @@
  */
 package com.fpsrobotics.interfaces;
 
+import com.fpsrobotics.LEDOutput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
+
 /**
  *
  * @author Ben
@@ -16,10 +20,13 @@ public interface Values
     double NO_SPEED = 0.0;
     //Put more important reusable values here
     
-    int MAIN_THREAD_LED = 2;
-    int DRIVE_TRAIN_LED = 3;
-    int PISTON_SHOOTER_LED = 4;
-    int SPINNY_STICKS_LED = 5;
-    int HACKBOT_STATION_LED = 6;
+    int MAIN_THREAD_LED = (byte)(2);
+    int DRIVE_TRAIN_LED = (byte)(3);
+    int PISTON_SHOOTER_LED = (byte)(4);
+    int SPINNY_STICKS_LED = (byte)(5);
+    int HACKBOT_STATION_LED = (byte)(6);
+    
+    DriverStationEnhancedIO enhancedIO = DriverStation.getInstance().getEnhancedIO();
+    LEDOutput ledOutput = new LEDOutput();
     
 }

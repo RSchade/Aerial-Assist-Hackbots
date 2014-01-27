@@ -22,7 +22,6 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values
     public void run()
     {
         ControlDrive driveMotors = new ControlDrive();
-        LEDOutput ledOutput = new LEDOutput();
         boolean isOn = true;
 
         while (true)
@@ -34,12 +33,12 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values
             try
             {
                 // Pulse led
-                ledOutput.pulseLED(DriverStation.getInstance().getEnhancedIO(), HACKBOT_STATION_LED, isOn);
+                ledOutput.pulseLED(enhancedIO, HACKBOT_STATION_LED, isOn);
             } catch (DriverStationEnhancedIO.EnhancedIOException ex)
             {
                 ex.printStackTrace();
             }
-            
+
             isOn = !isOn;
         }
     }

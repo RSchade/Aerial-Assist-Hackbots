@@ -20,7 +20,6 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values
 
     public void run()
     {
-        LEDOutput ledOutput = new LEDOutput();
         boolean isOn = true;
         
         while (true)
@@ -41,7 +40,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values
             }
             try
             {
-                ledOutput.pulseLED(DriverStation.getInstance().getEnhancedIO(), SPINNY_STICKS_LED, isOn);
+                ledOutput.pulseLED(enhancedIO, SPINNY_STICKS_LED, isOn);
             } catch (DriverStationEnhancedIO.EnhancedIOException ex)
             {
                 ex.printStackTrace();

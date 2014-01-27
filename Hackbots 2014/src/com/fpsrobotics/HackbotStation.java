@@ -25,7 +25,6 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
     {
         long previousTime = System.currentTimeMillis();
         DashboardOutputs variableOutputs = new DashboardOutputs();
-        LEDOutput ledOutput = new LEDOutput();
         boolean isOn = true;
 
         while (true)
@@ -40,7 +39,7 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
                 try
                 {
                     // Pulse led
-                    ledOutput.pulseLED(DriverStation.getInstance().getEnhancedIO(), HACKBOT_STATION_LED, Thread.currentThread().isAlive());
+                    ledOutput.pulseLED(enhancedIO, HACKBOT_STATION_LED, isOn);
                 } catch (DriverStationEnhancedIO.EnhancedIOException ex)
                 {
                     ex.printStackTrace();

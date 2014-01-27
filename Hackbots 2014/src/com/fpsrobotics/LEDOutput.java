@@ -4,7 +4,7 @@
  */
 package com.fpsrobotics;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 import java.util.Random;
 
@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author ray
  */
-public class LEDOutput implements Runnable
+public class LEDOutput implements Runnable, Values
 {
 
     Random rand = new Random();
@@ -20,7 +20,7 @@ public class LEDOutput implements Runnable
     public void run()
     {
 
-        DriverStationEnhancedIO enhancedIO = DriverStation.getInstance().getEnhancedIO();
+        
 
         try
         {
@@ -42,6 +42,6 @@ public class LEDOutput implements Runnable
 
     public void pulseLED(DriverStationEnhancedIO hackbotEnhanced, int ledNumber, boolean onOff) throws DriverStationEnhancedIO.EnhancedIOException
     {
-        hackbotEnhanced.setLED(ledNumber, onOff);
+        hackbotEnhanced.setLED((byte)(ledNumber), onOff);
     }
 }
