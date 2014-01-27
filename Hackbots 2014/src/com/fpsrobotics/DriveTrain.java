@@ -23,24 +23,24 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
     {
         ControlDrive driveMotors = new ControlDrive();
 
-        if (AdvancedPIDMode)
-        {
-            driveMotors.initPID(encoder, encoder, leftPIDOne, leftPIDTwo, rightPIDOne, rightPIDTwo, leftDriveOneCont, leftDriveTwoCont, rightDriveOneCont, rightDriveTwoCont);
-        }
-        
+//        if (AdvancedPIDMode)
+//        {
+//            driveMotors.initPID(encoder, encoder, leftPIDOne, leftPIDTwo, rightPIDOne, rightPIDTwo, leftDriveOneCont, leftDriveTwoCont, rightDriveOneCont, rightDriveTwoCont);
+//        }
+//        
         while (true)
         {
-            if (!AdvancedPIDMode)
+            if (!AdvancedPIDMode || !SimplePIDMode)
             {
                 driveMotors.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo, true);
                 driveMotors.driveTurbo(leftJoystick, rightJoystick, leftDriveOne, leftDriveTwo, rightDriveOne, rightDriveTwo);
             }
             
-            if (AdvancedPIDMode)
-            {
-                System.out.println("Warning, you are in PID Mode!");
-                driveMotors.driveToPID(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2));
-            }
+//            if (AdvancedPIDMode)
+//            {
+//                System.out.println("Warning, you are in PID Mode!");
+//                driveMotors.driveToPID(10, 10);
+//            }
 
 
         }

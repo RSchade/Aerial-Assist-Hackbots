@@ -92,51 +92,51 @@ public class ControlDrive implements Values, PID
 
     }
 
-    public void initPID(Encoder leftEncoder, Encoder rightEncoder,
-            PIDController leftPIDOne, PIDController leftPIDTwo, PIDController rightPIDOne, PIDController rightPIDTwo,
-            SpeedController leftDriveOneCont, SpeedController leftDriveTwoCont, SpeedController rightDriveOneCont, SpeedController rightDriveTwoCont)
-    {
-        //Sets the distance per pulse in inches.
-        leftEncoder.setDistancePerPulse(.000623);
-        rightEncoder.setDistancePerPulse(.000623);
-
-        //Starts the encoders.
-        leftEncoder.start();
-        rightEncoder.start();
-
-        //Sets the encoders to use distance for PID.
-        //If this is not done, the robot may not go anywhere.
-        //It is also possible to use rate, by changing kDistance to kRate.
-        leftEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        rightEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-
-        //Initializes the PID Controllers
-        leftPIDOne = new PIDController(Kp, Ki, Kd, leftEncoder, leftDriveOneCont);
-        leftPIDTwo = new PIDController(Kp, Ki, Kd, leftEncoder, leftDriveTwoCont);
-        rightPIDOne = new PIDController(Kp, Ki, Kd, rightEncoder, rightDriveOneCont);
-        rightPIDTwo = new PIDController(Kp, Ki, Kd, rightEncoder, rightDriveTwoCont);
-
-        //Enables the PID Controllers.
-        leftPIDOne.enable();
-        leftPIDTwo.enable();
-        rightPIDOne.enable();
-        rightPIDTwo.enable();
-
-        //Sets the input range of the PID Controller.
-        //These will change, and you should change them based on how far
-        //your robot will be driving.
-        //For this example, we set them at 100 inches.
-        leftPIDOne.setInputRange(0, 100);
-        leftPIDTwo.setInputRange(0, 100);
-        rightPIDOne.setInputRange(0, 100);
-        rightPIDTwo.setInputRange(0, 100);
-    }
-
-    public void driveToPID(double leftDistance, double rightDistance)
-    {
-        leftPIDOne.setSetpoint(leftDistance);
-        leftPIDTwo.setSetpoint(leftDistance);
-        rightPIDOne.setSetpoint(rightDistance);
-        rightPIDTwo.setSetpoint(rightDistance);
-    }
+//    public void initPID(Encoder leftEncoder, Encoder rightEncoder,
+//            PIDController leftPIDOne, PIDController leftPIDTwo, PIDController rightPIDOne, PIDController rightPIDTwo,
+//            SpeedController leftDriveOneCont, SpeedController leftDriveTwoCont, SpeedController rightDriveOneCont, SpeedController rightDriveTwoCont)
+//    {
+//        //Sets the distance per pulse in inches.
+//        leftEncoder.setDistancePerPulse(.000623);
+//        rightEncoder.setDistancePerPulse(.000623);
+//
+//        //Starts the encoders.
+//        leftEncoder.start();
+//        rightEncoder.start();
+//
+//        //Sets the encoders to use distance for PID.
+//        //If this is not done, the robot may not go anywhere.
+//        //It is also possible to use rate, by changing kDistance to kRate.
+//        leftEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+//        rightEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+//
+//        //Initializes the PID Controllers
+//        leftPIDOne = new PIDController(Kp, Ki, Kd, leftEncoder, leftDriveOneCont);
+//        leftPIDTwo = new PIDController(Kp, Ki, Kd, leftEncoder, leftDriveTwoCont);
+//        rightPIDOne = new PIDController(Kp, Ki, Kd, rightEncoder, rightDriveOneCont);
+//        rightPIDTwo = new PIDController(Kp, Ki, Kd, rightEncoder, rightDriveTwoCont);
+//
+//        //Enables the PID Controllers.
+//        leftPIDOne.enable();
+//        leftPIDTwo.enable();
+//        rightPIDOne.enable();
+//        rightPIDTwo.enable();
+//
+//        //Sets the input range of the PID Controller.
+//        //These will change, and you should change them based on how far
+//        //your robot will be driving.
+//        //For this example, we set them at 100 inches.
+//        leftPIDOne.setInputRange(0, 100);
+//        leftPIDTwo.setInputRange(0, 100);
+//        rightPIDOne.setInputRange(0, 100);
+//        rightPIDTwo.setInputRange(0, 100);
+//    }
+//
+//    public void driveToPID(double leftDistance, double rightDistance)
+//    {
+//        leftPIDOne.setSetpoint(leftDistance);
+//   //     leftPIDTwo.setSetpoint(leftDistance);
+//        rightPIDOne.setSetpoint(rightDistance);
+//   //     rightPIDTwo.setSetpoint(rightDistance);
+//    }
 }

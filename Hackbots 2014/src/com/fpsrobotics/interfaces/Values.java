@@ -27,5 +27,5 @@ public interface Values
     
     // Are we in PID mode?
     boolean AdvancedPIDMode = false;
-    boolean SimplePIDMode = false;
+    boolean SimplePIDMode = true;
 }
