@@ -1,5 +1,6 @@
 package com.fpsrobotics.interfaces;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 
@@ -13,4 +14,8 @@ public interface DIOs extends DeviceMap
     // DIOs here
 
     DigitalInput robotSwitchInput = new DigitalInput(ROBOT_SWITCH_INPUT_MAP);
+    
+    Encoder shooterEncoder = new Encoder(SHOOTER_ENCODER_MAP_ONE, SHOOTER_ENCODER_MAP_TWO);
+    
+    Compressor compressor = new Compressor(1, 1);
 }

@@ -14,16 +14,17 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
 
     DriveTrain driveTrain = new DriveTrain();
     HackbotStation hackbotStation = new HackbotStation();
-    PistonShooter pistonShooter = new PistonShooter();
+    Shooter shooter = new Shooter();
     SpinnySticks spinnySticks = new SpinnySticks();
     RobotCamera robotCamera = new RobotCamera();
     BreadBoard breadBoard = new BreadBoard();
     VisionProcessingSample visionSample = new VisionProcessingSample();
     PIDLoop pidloop = new PIDLoop();
+    
     //Threads here
     Thread driveThread = new Thread(driveTrain);
     Thread hackbotStationThread = new Thread(hackbotStation);
-    Thread pistonShooterThread = new Thread(pistonShooter);
+    Thread shooterThread = new Thread(shooter);
     Thread spinnySticksThread = new Thread(spinnySticks);
     Thread breadBoardThread = new Thread(breadBoard);
     Thread pidLoopThread = new Thread(pidloop);

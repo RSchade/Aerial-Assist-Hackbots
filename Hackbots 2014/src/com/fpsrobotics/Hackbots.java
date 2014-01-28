@@ -7,6 +7,7 @@
 package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
@@ -43,6 +44,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         Watchdog.getInstance().setEnabled(true);
         Watchdog.getInstance().setExpiration(2);
 
+        compressor.start();
+        
         // Camera settings
         //robotCamera.init();
         visionSample.imageFindingRobotInit();
@@ -83,7 +86,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             }
 
             hackbotStationThread.start();
-            pistonShooterThread.start();
+            shooterThread.start();
             spinnySticksThread.start();
 
             // For breadboard compatibility
@@ -95,6 +98,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
                 pidLoopThread.start();
             }
 
+            breadBoardThread.start();;
+            
             doneAlready = true;
         }
 
