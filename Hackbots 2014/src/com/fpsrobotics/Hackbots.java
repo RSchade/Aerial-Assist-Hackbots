@@ -74,10 +74,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             spinnySticksThread.start();
 
             // For breadboard compatibility
-            breadBoardThread.start();
-
-            // For PID
-//            pidLoopThread.start();
+            breadBoardThread.start();;
             
             doneAlready = true;
         }

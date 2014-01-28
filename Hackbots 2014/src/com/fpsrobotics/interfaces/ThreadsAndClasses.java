@@ -19,7 +19,7 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
 //            leftJoystick, rightJoystick);
     HackbotStation hackbotStation = new HackbotStation();
 //            (leftJoystick, rightJoystick);
-    PistonShooter pistonShooter = new PistonShooter();
+    Shooter pistonShooter = new Shooter();
     SpinnySticks spinnySticks = new SpinnySticks();
     RobotCamera robotCamera = new RobotCamera();
     BreadBoard breadBoard = new BreadBoard();
