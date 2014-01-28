@@ -1,6 +1,6 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.Analog;
+import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Talons;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Talon;
  *
  * @author ray
  */
-public class PIDLoop implements Runnable, Talons, Analog
+public class PIDLoop implements Runnable, Talons, DIOs
 {
 
     public void run()
