@@ -14,7 +14,6 @@ public interface DeviceMap
     int RIGHT_DRIVE_ONE_MAP = 2;
     int RIGHT_DRIVE_TWO_MAP = 4;
     int SHOOTER_TALON_MAP = 5;
-    
     int LEFT_SPIN_MAP = 5;
     int RIGHT_SPIN_MAP = 6;
     int ENCODER_MOTOR_MOTOR_MAP = 7;
@@ -29,6 +28,8 @@ public interface DeviceMap
     // Encoder
     int ENCODER_MAP_ONE = 3;
     int ENCODER_MAP_TWO = 4;
+    int SHOOTER_ENCODER_MAP_ONE = 6;
+    int SHOOTER_ENCODER_MAP_TWO = 7;
     // Potentiometers
     int BREADBOARD_POT_MAP = 6;
     int SHOOTER_POT_MAP = 9;
