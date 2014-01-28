@@ -4,6 +4,7 @@
  */
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
@@ -34,7 +35,7 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
  * Look in the VisionImages directory inside the project that is created for the
  * sample images.
  */
-public class Autonomous implements Values
+public class Autonomous implements Values, Analog
 {
 
     AxisCamera robotCamera;     // the axis camera object (connected to the switch)
@@ -88,8 +89,8 @@ public class Autonomous implements Values
             ColorImage image = robotCamera.getImage();     // comment if using stored images
             //ColorImage image;                           // next 2 lines read image from flash on cRIO
             //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
-            BinaryImage thresholdImage = image.thresholdRGB(255, 255, 0, 255, 255, 255);   // keep only green objects
-            //thresholdImage.write("/threshold.bmp");
+            BinaryImage thresholdImage = image.thresholdRGB(255, 255, lowPot.getValue(), highPot.getValue(), 255, 255);   // keep only green objects
+            thresholdImage.write("/threshold.bmp");
             BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles
             filteredImage.write("/filteredImage.bmp");
 

@@ -1,6 +1,5 @@
 package com.fpsrobotics.interfaces;
 
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 /**

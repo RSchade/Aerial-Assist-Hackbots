@@ -4,9 +4,6 @@
  */
 package com.fpsrobotics.interfaces;
 
-import edu.wpi.first.wpilibj.camera.AxisCamera;
-import edu.wpi.first.wpilibj.image.CriteriaCollection;
-
 /**
  *
  * @author Ben

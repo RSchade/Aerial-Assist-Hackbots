@@ -28,6 +28,8 @@ public interface DeviceMap
     int ENCODER_MAP_TWO = 4;
     // Potentiometers
     int BREADBOARD_POT_MAP = 6;
+    int LOW_POT_MAP = 7;
+    int HIGH_POT_MAP = 8;
     // Solenoid
     int SHOOTER_SOLENOID_ONE_MAP_ONE = 5;
     int SHOOTER_SOLENOID_ONE_MAP_TWO = 2;
