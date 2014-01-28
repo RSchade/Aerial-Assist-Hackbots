@@ -23,7 +23,7 @@ public interface Talons extends DeviceMap
 //    
     Talon spinnyLeftMotor = new Talon(LEFT_SPIN_MAP);
     Talon spinnyRightMotor = new Talon(RIGHT_SPIN_MAP);
-    Talon encoderMotorMotor = new Talon(ENCODER_MOTOR_MOTOR_MAP);
+    Talon encoderMotorMotor = new Talon(ENCODER_MOTOR_MAP);
     
     Talon shooterTalon = new Talon(SHOOTER_TALON_MAP);
     // Create other Talons here

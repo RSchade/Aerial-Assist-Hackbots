@@ -19,4 +19,6 @@ public interface Values
     
     // Are we in PID mode?
     boolean SimplePIDMode = true;
+    // Are we in breadboard mode
+    boolean breadBoardMode = true;
 }

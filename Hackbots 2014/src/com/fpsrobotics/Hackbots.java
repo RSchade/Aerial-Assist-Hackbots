@@ -28,8 +28,8 @@ import edu.wpi.first.wpilibj.camera.AxisCameraException;
  */
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
-    boolean doneAlready = false;
 
+    boolean doneAlready = false;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -45,7 +45,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         Watchdog.getInstance().setExpiration(2);
 
         compressor.start();
-        
+
         // Camera settings
         //robotCamera.init();
         visionSample.imageFindingRobotInit();
@@ -90,7 +90,10 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             spinnySticksThread.start();
 
             // For breadboard compatibility
-            breadBoardThread.start();
+            if (breadBoardMode)
+            {
+                breadBoardThread.start();
+            }
 
             // SimplePID
             if (SimplePIDMode)
@@ -99,7 +102,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             }
 
             breadBoardThread.start();;
-            
+
             doneAlready = true;
         }
 
