@@ -9,10 +9,8 @@ public interface DeviceMap
 {
 
     // Talons
-    int LEFT_DRIVE_ONE_MAP = 1;
-    int LEFT_DRIVE_TWO_MAP = 3;
-    int RIGHT_DRIVE_ONE_MAP = 2;
-    int RIGHT_DRIVE_TWO_MAP = 4;
+    int LEFT_DRIVE_MAP = 1;
+    int RIGHT_DRIVE_MAP = 2;
     
     int LEFT_SPIN_MAP = 5;
     int RIGHT_SPIN_MAP = 6;

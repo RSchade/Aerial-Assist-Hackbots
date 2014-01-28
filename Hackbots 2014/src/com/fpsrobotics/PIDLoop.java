@@ -21,8 +21,8 @@ public class PIDLoop implements Runnable, Talons, Analog
         {
             try
             {
-                this.loop(encoder, leftDriveOne, 200);
-                this.loop(encoder, rightDriveOne, 200);
+                this.loop(encoder, leftDrive, 200);
+                this.loop(encoder, rightDrive, 200);
             } catch (InterruptedException ex)
             {
                 ex.printStackTrace();

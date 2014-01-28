@@ -2,6 +2,7 @@ package com.fpsrobotics;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.image.*;
 import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
 
@@ -44,9 +45,9 @@ public class VisionProcessingSample
     final int AREA_MINIMUM = 150;
     //Maximum number of particles to process
     final int MAX_PARTICLES = 8;
-    AxisCamera camera;          // the axis camera object (connected to the switch)
+    AxisCamera camera = AxisCamera.getInstance();          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
-
+    
     public class Scores
     {
 
@@ -75,13 +76,13 @@ public class VisionProcessingSample
         cc.addCriteria(MeasurementType.IMAQ_MT_AREA, AREA_MINIMUM, 65535, false);
     }
 
-    public void imageFindingAutonomous()
+    public void imageFindingAutonomous() throws AxisCameraException
     {
+        camera.writeColorLevel(100);
         TargetReport target = new TargetReport();
         int verticalTargets[] = new int[MAX_PARTICLES];
         int horizontalTargets[] = new int[MAX_PARTICLES];
         int verticalTargetCount, horizontalTargetCount;
-
 
         try
         {
@@ -93,14 +94,16 @@ public class VisionProcessingSample
              * "testImage.jpg"
              *
              */
-            //ColorImage image = camera.getImage();     // comment if using stored images
-            ColorImage image;                           // next 2 lines read image from flash on cRIO
-            image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
-            BinaryImage thresholdImage = image.thresholdHSV(105, 137, 230, 255, 133, 183);   // keep only green objects
+            
+            
+            ColorImage image = camera.getImage();     // comment if using stored images
+            //ColorImage image;                           // next 2 lines read image from flash on cRIO
+            //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
+            BinaryImage thresholdImage = image.thresholdRGB(255, 255, 0, 255, 255, 255);   // keep only green objects
             //thresholdImage.write("/threshold.bmp");
             BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles
-            //filteredImage.write("/filteredImage.bmp");
-
+            filteredImage.write("/filteredImage.bmp");
+          
             //iterate through each particle and score to see if it is a target
             Scores scores[] = new Scores[filteredImage.getNumberParticles()];
             horizontalTargetCount = verticalTargetCount = 0;
@@ -205,8 +208,9 @@ public class VisionProcessingSample
             thresholdImage.free();
             image.free();
 
-//            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
-//                ex.printStackTrace();
+        } catch (AxisCameraException ex)
+        {        // this is needed if the camera.getImage() is called
+            ex.printStackTrace();
         } catch (NIVisionException ex)
         {
             ex.printStackTrace();

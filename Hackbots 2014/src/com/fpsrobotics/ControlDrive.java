@@ -27,27 +27,21 @@ public class ControlDrive implements Values, PID
      *
      * @param leftSpeed
      * @param rightSpeed
-     * @param leftDriveOne
-     * @param leftDriveTwo
-     * @param rightDriveOne
-     * @param rightDriveTwo
+     * @param leftDrive
+     * @param rightDrive
      * @param batteryComp
      */
-    public void drive(double leftSpeed, double rightSpeed, Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo, boolean batteryComp)
+    public void drive(double leftSpeed, double rightSpeed, Talon leftDrive, Talon rightDrive, boolean batteryComp)
     {
         if (batteryComp)
         {
 
-            leftDriveOne.set(this.batterySpeed() * (-leftSpeed));
-            leftDriveTwo.set(this.batterySpeed() * (-leftSpeed));
-            rightDriveOne.set(this.batterySpeed() * (rightSpeed));
-            rightDriveTwo.set(this.batterySpeed() * (rightSpeed));
+            leftDrive.set(this.batterySpeed() * (-leftSpeed));
+            rightDrive.set(this.batterySpeed() * (rightSpeed));
         } else
         {
-            leftDriveOne.set(-leftSpeed);
-            leftDriveTwo.set(-leftSpeed);
-            rightDriveOne.set(rightSpeed);
-            rightDriveTwo.set(rightSpeed);
+            leftDrive.set(-leftSpeed);
+            rightDrive.set(rightSpeed);
         }
     }
 
@@ -58,20 +52,16 @@ public class ControlDrive implements Values, PID
      *
      * @param leftJoystick
      * @param rightJoystick
-     * @param leftDriveOne
-     * @param leftDriveTwo
-     * @param rightDriveOne
-     * @param rightDriveTwo
+     * @param leftDrive
+     * @param rightDrive
      */
-    public void driveTurbo(Joystick leftJoystick, Joystick rightJoystick, Talon leftDriveOne, Talon leftDriveTwo, Talon rightDriveOne, Talon rightDriveTwo)
+    public void driveTurbo(Joystick leftJoystick, Joystick rightJoystick, Talon leftDrive, Talon rightDrive)
     {
 
         while (leftJoystick.getRawButton(1) || rightJoystick.getRawButton(1))
         {
-            leftDriveOne.set(constrainTurbo.constrainDouble(2 * (-leftJoystick.getRawAxis(2)), 1.0, -1.0));
-            leftDriveTwo.set(constrainTurbo.constrainDouble(2 * (-leftJoystick.getRawAxis(2)), 1.0, -1.0));
-            rightDriveOne.set(constrainTurbo.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
-            rightDriveTwo.set(constrainTurbo.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
+            leftDrive.set(constrainTurbo.constrainDouble(2 * (-leftJoystick.getRawAxis(2)), 1.0, -1.0));
+            rightDrive.set(constrainTurbo.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
         }
     }
 

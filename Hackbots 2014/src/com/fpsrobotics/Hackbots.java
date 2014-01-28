@@ -9,6 +9,7 @@ package com.fpsrobotics;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Watchdog;
+import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +28,7 @@ import edu.wpi.first.wpilibj.Watchdog;
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
 
+    boolean doneAlreadyAuto = false;
     boolean doneAlready = false;
 
     /**
@@ -43,7 +45,9 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         Watchdog.getInstance().setExpiration(2);
 
         // Camera settings
-        robotCamera.init();
+        //robotCamera.init();
+        visionSample.imageFindingRobotInit();
+
     }
 
     /**
@@ -52,6 +56,17 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
      */
     public void autonomousPeriodic()
     {
+
+        try
+        {
+            visionSample.imageFindingAutonomous();
+            doneAlreadyAuto = true;
+        } catch (AxisCameraException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        Watchdog.getInstance().feed();
     }
 
     /**
@@ -69,7 +84,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             {
                 driveThread.start();
             }
-            
+
             hackbotStationThread.start();
             pistonShooterThread.start();
             spinnySticksThread.start();
