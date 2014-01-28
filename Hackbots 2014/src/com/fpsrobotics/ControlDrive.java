@@ -2,11 +2,9 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.Values;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
@@ -30,6 +28,11 @@ public class ControlDrive implements Values, PID
      * @param leftDrive
      * @param rightDrive
      * @param batteryComp
+     * @param leftDriveOne
+     * @param leftDriveTwo
+     * @param batteryComp
+     * @param rightDriveOne
+     * @param rightDriveTwo
      */
     public void drive(double leftSpeed, double rightSpeed, Talon leftDrive, Talon rightDrive, boolean batteryComp)
     {
@@ -82,4 +85,21 @@ public class ControlDrive implements Values, PID
         return (12 / DriverStation.getInstance().getBatteryVoltage());
 
     }
+
+    public void switchGears(DoubleSolenoid gearSwitchOne, DoubleSolenoid gearSwitchTwo, boolean moreLess)
+    {
+        if (moreLess)
+        {
+            gearSwitchOne.set(DoubleSolenoid.Value.kForward);
+            gearSwitchTwo.set(DoubleSolenoid.Value.kForward);
+        }
+
+        if (!moreLess)
+        {
+            gearSwitchOne.set(DoubleSolenoid.Value.kReverse);
+            gearSwitchTwo.set(DoubleSolenoid.Value.kReverse);
+        }
+
+    }
+
 }

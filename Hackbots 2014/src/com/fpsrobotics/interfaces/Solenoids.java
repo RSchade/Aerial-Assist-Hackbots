@@ -10,6 +10,9 @@ public interface Solenoids extends DeviceMap
 {
     //Create solenoids here
 
-    DoubleSolenoid shooterSolenoidOne = new DoubleSolenoid(SHOOTER_SOLENOID_ONE_MAP_ONE, SHOOTER_SOLENOID_ONE_MAP_TWO);
-    DoubleSolenoid shooterSolenoidTwo = new DoubleSolenoid(SHOOTER_SOLENOID_TWO_MAP_ONE, SHOOTER_SOLENOID_TWO_MAP_TWO);
+    DoubleSolenoid spinnySolenoidOne = new DoubleSolenoid(SPINNY_SOLENOID_ONE_MAP_ONE, SPINNY_SOLENOID_ONE_MAP_TWO);
+    DoubleSolenoid spinnySolenoidTwo = new DoubleSolenoid(SPINNY_SOLENOID_TWO_MAP_ONE, SPINNY_SOLENOID_TWO_MAP_TWO);
+    
+    DoubleSolenoid gearSolenoidOne = new DoubleSolenoid(GEAR_SOLENOID_ONE_MAP_ONE,GEAR_SOLENOID_ONE_MAP_TWO );
+     DoubleSolenoid gearSolenoidTwo = new DoubleSolenoid(GEAR_SOLENOID_TWO_MAP_ONE,GEAR_SOLENOID_TWO_MAP_TWO );
 }

@@ -27,9 +27,8 @@ import edu.wpi.first.wpilibj.camera.AxisCameraException;
  */
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
-
-    boolean doneAlreadyAuto = false;
     boolean doneAlready = false;
+
 
     /**
      * This function is run when the robot is first started up and should be
@@ -47,7 +46,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         // Camera settings
         //robotCamera.init();
         visionSample.imageFindingRobotInit();
-
+        robotCamera.init();
     }
 
     /**
@@ -56,11 +55,9 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
      */
     public void autonomousPeriodic()
     {
-
         try
         {
             visionSample.imageFindingAutonomous();
-            doneAlreadyAuto = true;
         } catch (AxisCameraException ex)
         {
             ex.printStackTrace();

@@ -3,6 +3,7 @@ package com.fpsrobotics;
 import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.PID;
+import com.fpsrobotics.interfaces.Solenoids;
 import com.fpsrobotics.interfaces.Talons;
 import com.fpsrobotics.interfaces.Values;
 
@@ -10,7 +11,7 @@ import com.fpsrobotics.interfaces.Values;
  *
  * @author ray
  */
-public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, PID
+public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, PID, Solenoids
 {
 
     /**
@@ -31,6 +32,15 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
                 driveMotors.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
             }
 
+            if (rightJoystick.getRawButton(7))
+            {
+                driveMotors.switchGears(gearSolenoidOne, gearSolenoidTwo, true);
+            }
+
+            if (rightJoystick.getRawButton(6))
+            {
+                driveMotors.switchGears(gearSolenoidOne, gearSolenoidTwo, false);
+            }
         }
     }
 }
