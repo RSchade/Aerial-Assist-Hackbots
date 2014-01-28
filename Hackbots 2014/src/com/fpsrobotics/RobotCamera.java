@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
  *
  * @author ray
  */
-public class RobotCamera 
+public class RobotCamera
 {
 
     private AxisCamera robotCamera;
@@ -21,7 +21,6 @@ public class RobotCamera
         robotCamera.writeMaxFPS(15);
         robotCamera.writeCompression(70);
         robotCamera.writeResolution(AxisCamera.ResolutionT.k320x240);
+        robotCamera.writeColorLevel(100);
     }
-    
-    
 }

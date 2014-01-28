@@ -1,11 +1,19 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.Values;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
-import edu.wpi.first.wpilibj.image.*;
+import edu.wpi.first.wpilibj.image.BinaryImage;
+import edu.wpi.first.wpilibj.image.ColorImage;
+import edu.wpi.first.wpilibj.image.CriteriaCollection;
+import edu.wpi.first.wpilibj.image.NIVision;
 import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
+import edu.wpi.first.wpilibj.image.NIVisionException;
+import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 
 /**
  * Sample program to use NIVision to find rectangles in the scene that are
@@ -26,13 +34,15 @@ import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
  * Look in the VisionImages directory inside the project that is created for the
  * sample images.
  */
-public class VisionProcessingSample implements Values
+public class Autonomous implements Values
 {
-    AxisCamera camera;     // the axis camera object (connected to the switch)
+
+    AxisCamera robotCamera;     // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
 
     public class Scores
     {
+
         double rectangularity;
         double aspectRatioVertical;
         double aspectRatioHorizontal;
@@ -40,6 +50,7 @@ public class VisionProcessingSample implements Values
 
     public class TargetReport
     {
+
         int verticalIndex;
         int horizontalIndex;
         boolean Hot;
@@ -50,17 +61,16 @@ public class VisionProcessingSample implements Values
         double verticalScore;
     };
 
-    public void imageFindingRobotInit()
+    public void initAutonomous()
     {
-        camera = AxisCamera.getInstance();  // get an instance of the camera
+        robotCamera = AxisCamera.getInstance();  // get an instance of the camera
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_AREA, AREA_MINIMUM, 65535, false);
     }
 
-    public void imageFindingAutonomous() throws AxisCameraException
+    public void loopVision() throws AxisCameraException
     {
-        camera.writeColorLevel(100);
-        TargetReport target = new TargetReport();
+        Autonomous.TargetReport target = new Autonomous.TargetReport();
         int verticalTargets[] = new int[MAX_PARTICLES];
         int horizontalTargets[] = new int[MAX_PARTICLES];
         int verticalTargetCount, horizontalTargetCount;
@@ -75,7 +85,7 @@ public class VisionProcessingSample implements Values
              * "testImage.jpg"
              *
              */
-            ColorImage image = camera.getImage();     // comment if using stored images
+            ColorImage image = robotCamera.getImage();     // comment if using stored images
             //ColorImage image;                           // next 2 lines read image from flash on cRIO
             //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
             BinaryImage thresholdImage = image.thresholdRGB(255, 255, 0, 255, 255, 255);   // keep only green objects
@@ -84,7 +94,7 @@ public class VisionProcessingSample implements Values
             filteredImage.write("/filteredImage.bmp");
 
             //iterate through each particle and score to see if it is a target
-            Scores scores[] = new Scores[filteredImage.getNumberParticles()];
+            Autonomous.Scores scores[] = new Autonomous.Scores[filteredImage.getNumberParticles()];
             horizontalTargetCount = verticalTargetCount = 0;
 
             if (filteredImage.getNumberParticles() > 0)
@@ -92,7 +102,7 @@ public class VisionProcessingSample implements Values
                 for (int i = 0; i < MAX_PARTICLES && i < filteredImage.getNumberParticles(); i++)
                 {
                     ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);
-                    scores[i] = new Scores();
+                    scores[i] = new Autonomous.Scores();
 
                     //Score each particle on rectangularity and aspect ratio
                     scores[i].rectangularity = scoreRectangularity(report);
@@ -128,9 +138,9 @@ public class VisionProcessingSample implements Values
                         double horizWidth, horizHeight, vertWidth, leftScore, rightScore, tapeWidthScore, verticalScore, total;
 
                         //Measure equivalent rectangle sides for use in score calculation
-                        horizWidth = NIVision.MeasureParticle(filteredImage.image, horizontalTargets[j], false, MeasurementType.IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE);
-                        vertWidth = NIVision.MeasureParticle(filteredImage.image, verticalTargets[i], false, MeasurementType.IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE);
-                        horizHeight = NIVision.MeasureParticle(filteredImage.image, horizontalTargets[j], false, MeasurementType.IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE);
+                        horizWidth = NIVision.MeasureParticle(filteredImage.image, horizontalTargets[j], false, NIVision.MeasurementType.IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE);
+                        vertWidth = NIVision.MeasureParticle(filteredImage.image, verticalTargets[i], false, NIVision.MeasurementType.IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE);
+                        horizHeight = NIVision.MeasureParticle(filteredImage.image, horizontalTargets[j], false, NIVision.MeasurementType.IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE);
 
                         //Determine if the horizontal target is in the expected location to the left of the vertical target
                         leftScore = ratioToScore(1.2 * (verticalReport.boundingRectLeft - horizontalReport.center_mass_x) / horizWidth);
@@ -195,14 +205,6 @@ public class VisionProcessingSample implements Values
             System.out.println("Camera probably not connected");
         }
 
-    }
-
-    /**
-     * This function is called once each time the robot enters operator control.
-     */
-    public void imageFindingOperatorControl()
-    {
-        Timer.delay(1);
     }
 
     /**

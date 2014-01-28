@@ -28,7 +28,6 @@ import edu.wpi.first.wpilibj.camera.AxisCameraException;
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
 
-    boolean doneAlreadyAuto = false;
     boolean doneAlready = false;
 
     /**
@@ -45,9 +44,13 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         Watchdog.getInstance().setExpiration(2);
 
         // Camera settings
-        //robotCamera.init();
-        visionSample.imageFindingRobotInit();
+        robotCamera.init();
 
+    }
+
+    public void autonomousInit()
+    {
+        auto.initAutonomous();
     }
 
     /**
@@ -59,14 +62,18 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 
         try
         {
-            visionSample.imageFindingAutonomous();
-            doneAlreadyAuto = true;
+            auto.loopVision();
         } catch (AxisCameraException ex)
         {
-            ex.printStackTrace();
+            System.out.println("Camera probably not plugged in");
         }
 
         Watchdog.getInstance().feed();
+    }
+    
+    public void teleopInit()
+    {
+        
     }
 
     /**
@@ -109,4 +116,14 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     {
         Watchdog.getInstance().feed();
     }
+    
+   public void disabledPeriodic()
+   {
+       
+   }
+   
+   public void disabledInit()
+   {
+       
+   }
 }

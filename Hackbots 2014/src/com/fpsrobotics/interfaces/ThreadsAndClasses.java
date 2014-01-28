@@ -18,8 +18,9 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     SpinnySticks spinnySticks = new SpinnySticks();
     RobotCamera robotCamera = new RobotCamera();
     BreadBoard breadBoard = new BreadBoard();
-    VisionProcessingSample visionSample = new VisionProcessingSample();
     PIDLoop pidloop = new PIDLoop();
+    Autonomous auto = new Autonomous();
+    
     //Threads here
     Thread driveThread = new Thread(driveTrain);
     Thread hackbotStationThread = new Thread(hackbotStation);
