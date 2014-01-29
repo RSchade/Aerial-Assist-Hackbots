@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 
 /**
  *
@@ -105,6 +104,8 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs
         {
             shooterPID.setSetpoint(setpoint);
         }
+
+        shooterPID.setSetpoint(0);
 
     }
 }
