@@ -79,6 +79,14 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         if (weAreDone)
         {
             controlDrive.driveToPID(leftDrivePID, rightDrivePID, -100);
+            
+            try
+            {
+                Thread.sleep(5000);
+            } catch (InterruptedException ex)
+            {
+                ex.printStackTrace();
+            }
         }
     }
 
