@@ -1,12 +1,12 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 
 /**
  *
@@ -17,8 +17,9 @@ import edu.wpi.first.wpilibj.Talon;
  *
  *
  */
-public class ControlDrive implements Values, PID
+public class ControlDrive implements Values
 {
+
     Constrain constrainTurbo = new Constrain();
 
     /**
@@ -102,5 +103,43 @@ public class ControlDrive implements Values, PID
         }
 
     }
+    
+    //Proportional, Integral, and Dervative constants.
+    //These values will need to be tuned for your robot.
+    private final double Kp = 0.3;
+    private final double Ki = 0.0;
+    private final double Kd = 0.0;
 
+    public void driveToPID(PIDController leftDrivePID, PIDController rightDrivePID, int distance)
+    {
+        leftDrivePID.setSetpoint(distance);
+        rightDrivePID.setSetpoint(distance);
+    }
+
+    public void initDriveToPID(SpeedController leftDrive, SpeedController rightDrive, Encoder leftDriveEncoder, Encoder rightDriveEncoder, PIDController leftDrivePID, PIDController rightDrivePID)
+    {
+        //Sets the distance per pulse in inches.
+        leftDriveEncoder.setDistancePerPulse(.000623);
+        rightDriveEncoder.setDistancePerPulse(.000623);
+        
+        //Starts the encoders.
+        leftDriveEncoder.start();
+        rightDriveEncoder.start();
+        
+        //Sets the encoders to use distance for PID.
+        //If this is not done, the robot may not go anywhere.
+        //It is also possible to use rate, by changing kDistance to kRate.
+        leftDriveEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+        rightDriveEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+        
+        //Initializes the PID Controllers
+        leftDrivePID = new PIDController(Kp, Ki, Kd, leftDriveEncoder, leftDrive);
+        rightDrivePID = new PIDController(Kp, Ki, Kd, rightDriveEncoder, rightDrive);
+        
+        leftDrivePID.enable();
+        rightDrivePID.enable();
+        
+        leftDrivePID.setInputRange(-100, 100);
+        rightDrivePID.setInputRange(-100, 100);
+    }
 }

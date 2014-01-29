@@ -9,7 +9,7 @@ import com.fpsrobotics.*;
  *
  * @author ray
  */
-public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids, PID, Values
+public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids, Values
 {
 
     DriveTrain driveTrain = new DriveTrain();

@@ -26,6 +26,10 @@ public interface DeviceMap
     // Encoder
     int ENCODER_MAP_ONE = 3;
     int ENCODER_MAP_TWO = 4;
+    int LEFT_DRIVE_ENCODER_MAP_ONE = 5;
+    int LEFT_DRIVE_ENCODER_MAP_TWO = 10;
+    int RIGHT_DRIVE_ENCODER_MAP_ONE = 9;
+    int RIGHT_DRIVE_ENCODER_MAP_TWO = 11;
     int SHOOTER_ENCODER_MAP_ONE = 6;
     int SHOOTER_ENCODER_MAP_TWO = 7;
     // Potentiometers

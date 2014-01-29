@@ -9,6 +9,7 @@ package com.fpsrobotics;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
@@ -30,6 +31,10 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
 
     boolean doneAlready = false;
+    boolean weAreDone = false;
+    ControlDrive controlDrive = new ControlDrive();
+    private PIDController leftDrivePID;
+    private PIDController rightDrivePID;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -66,7 +71,20 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             ex.printStackTrace();
         }
 
+        // turn this one when we have shot into the autonomous goal.
+        weAreDone = true;
+        
         Watchdog.getInstance().feed();
+
+        if (weAreDone)
+        {
+            controlDrive.driveToPID(leftDrivePID, rightDrivePID, -100);
+        }
+    }
+
+    public void autonomousInit()
+    {
+        controlDrive.initDriveToPID(leftDrive, rightDrive, leftDriveEncoder, rightDriveEncoder, leftDrivePID, rightDrivePID);
     }
 
     /**
