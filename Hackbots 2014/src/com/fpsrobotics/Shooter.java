@@ -23,9 +23,9 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Value
 
     public void run()
     {
+        long previousTime = System.currentTimeMillis();
         while (true)
         {
-            long previousTime = System.currentTimeMillis();
 
             if (System.currentTimeMillis() - previousTime >= THREAD_UPDATE_RATE)
             {
@@ -46,6 +46,7 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Value
 //                this.shooterPreset(shooterPot, shooterSolenoidOne, shooterSolenoidTwo, 300);
                 this.shooterPresetBoth(leftJoystick, shooterPot, shooterEncoder, shooterTalon, 300, 5, 11, 1.0);
 
+                previousTime = System.currentTimeMillis();
 
             }
         }

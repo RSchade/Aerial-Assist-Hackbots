@@ -18,10 +18,9 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
     public void run()
     {
         boolean spinnySticksOn = false;
-
+        long previousTime = System.currentTimeMillis();
         while (true)
         {
-            long previousTime = System.currentTimeMillis();
 
             if (System.currentTimeMillis() - previousTime >= THREAD_UPDATE_RATE)
             {
@@ -52,6 +51,8 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                     this.spinSticks(spinnyRightMotor, spinnyLeftMotor, NO_SPEED);
                     spinnySticksOn = !spinnySticksOn;
                 }
+
+                previousTime = System.currentTimeMillis();
             }
         }
     }

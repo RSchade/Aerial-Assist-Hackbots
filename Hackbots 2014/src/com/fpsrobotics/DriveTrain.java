@@ -23,9 +23,9 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
     public void run()
     {
         ControlDrive driveMotors = new ControlDrive();
+        long previousTime = System.currentTimeMillis();
         while (true)
         {
-            long previousTime = System.currentTimeMillis();
 
             if (System.currentTimeMillis() - previousTime >= THREAD_UPDATE_RATE)
             {
@@ -44,6 +44,8 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
                 {
                     driveMotors.switchGears(gearSolenoidOne, gearSolenoidTwo, false);
                 }
+
+                previousTime = System.currentTimeMillis();
             }
 
         }
