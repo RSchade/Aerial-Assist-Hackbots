@@ -5,7 +5,7 @@ import com.fpsrobotics.interfaces.Solenoids;
 import com.fpsrobotics.interfaces.Talons;
 import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  * Spins the sticks.
@@ -50,7 +50,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
         }
     }
 
-    public void spinSticks(Talon spinnyRightMotor, Talon spinnyLeftMotor, double speed)
+    public void spinSticks(SpeedController spinnyRightMotor, SpeedController spinnyLeftMotor, double speed)
     {
         spinnyRightMotor.set(speed);
         spinnyLeftMotor.set(speed);

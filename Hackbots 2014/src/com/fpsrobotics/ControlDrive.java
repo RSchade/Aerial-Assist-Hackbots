@@ -5,6 +5,7 @@ import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
@@ -34,7 +35,7 @@ public class ControlDrive implements Values, PID
      * @param rightDriveOne
      * @param rightDriveTwo
      */
-    public void drive(double leftSpeed, double rightSpeed, Talon leftDrive, Talon rightDrive, boolean batteryComp)
+    public void drive(double leftSpeed, double rightSpeed, SpeedController leftDrive, SpeedController rightDrive, boolean batteryComp)
     {
         if (batteryComp)
         {
@@ -58,7 +59,7 @@ public class ControlDrive implements Values, PID
      * @param leftDrive
      * @param rightDrive
      */
-    public void driveTurbo(Joystick leftJoystick, Joystick rightJoystick, Talon leftDrive, Talon rightDrive)
+    public void driveTurbo(Joystick leftJoystick, Joystick rightJoystick, SpeedController leftDrive, SpeedController rightDrive)
     {
 
         while (leftJoystick.getRawButton(1) || rightJoystick.getRawButton(1))

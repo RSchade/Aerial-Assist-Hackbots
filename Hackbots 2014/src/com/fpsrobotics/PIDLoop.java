@@ -3,6 +3,7 @@ package com.fpsrobotics;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Talons;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
@@ -30,7 +31,7 @@ public class PIDLoop implements Runnable, Talons, DIOs
         }
     }
 
-    private void loop(Encoder encoderThing, Talon motor, int target) throws InterruptedException
+    private void loop(Encoder encoderThing, SpeedController motor, int target) throws InterruptedException
     {
 
         if (encoderThing.getRate() < target)
