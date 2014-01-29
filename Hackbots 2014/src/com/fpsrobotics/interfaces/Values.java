@@ -17,6 +17,8 @@ public interface Values
     double NO_SPEED = 0.0;
     //Put more important reusable values here
     
+    int THREAD_UPDATE_RATE = 100;
+    
     // Are we in PID mode?
     boolean SimplePIDMode = true;
     // Are we in breadboard mode

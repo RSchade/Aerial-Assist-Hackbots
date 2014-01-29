@@ -23,24 +23,29 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
     public void run()
     {
         ControlDrive driveMotors = new ControlDrive();
-
         while (true)
         {
-            if (!SimplePIDMode)
+            long previousTime = System.currentTimeMillis();
+
+            if (System.currentTimeMillis() - previousTime >= THREAD_UPDATE_RATE)
             {
-                driveMotors.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
-                driveMotors.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
+                if (!SimplePIDMode)
+                {
+                    driveMotors.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
+                    driveMotors.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
+                }
+
+                if (rightJoystick.getRawButton(7))
+                {
+                    driveMotors.switchGears(gearSolenoidOne, gearSolenoidTwo, true);
+                }
+
+                if (rightJoystick.getRawButton(6))
+                {
+                    driveMotors.switchGears(gearSolenoidOne, gearSolenoidTwo, false);
+                }
             }
 
-            if (rightJoystick.getRawButton(7))
-            {
-                driveMotors.switchGears(gearSolenoidOne, gearSolenoidTwo, true);
-            }
-
-            if (rightJoystick.getRawButton(6))
-            {
-                driveMotors.switchGears(gearSolenoidOne, gearSolenoidTwo, false);
-            }
         }
     }
 }

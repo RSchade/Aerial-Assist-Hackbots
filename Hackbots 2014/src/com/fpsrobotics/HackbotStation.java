@@ -4,12 +4,13 @@ import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Relays;
+import com.fpsrobotics.interfaces.Values;
 
 /**
  *
  * @author ray
  */
-public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
+public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays, Values
 {
     /**
      *
@@ -25,7 +26,7 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
         while (true)
         {
             //Everything outputs every second, to reduce lag and heat
-            if (System.currentTimeMillis() - previousTime >= 1000)
+            if (System.currentTimeMillis() - previousTime >= THREAD_UPDATE_RATE)
             {
                 variableOutputs.batteryOutput();
                 variableOutputs.teamOutput();

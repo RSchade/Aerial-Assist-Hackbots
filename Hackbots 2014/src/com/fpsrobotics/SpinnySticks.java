@@ -14,38 +14,44 @@ import edu.wpi.first.wpilibj.Talon;
  */
 public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Solenoids
 {
+
     public void run()
     {
         boolean spinnySticksOn = false;
 
         while (true)
         {
-            if (leftJoystick.getRawButton(7))
-            {
-                this.spinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo, true);
-            } else
-            {
-                this.stopSpinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo);
-            }
+            long previousTime = System.currentTimeMillis();
 
-            if (leftJoystick.getRawButton(6))
+            if (System.currentTimeMillis() - previousTime >= THREAD_UPDATE_RATE)
             {
-                this.spinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo, false);
-            } else
-            {
-                this.stopSpinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo);
-            }
+                if (leftJoystick.getRawButton(7))
+                {
+                    this.spinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo, true);
+                } else
+                {
+                    this.stopSpinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo);
+                }
 
-            if (leftJoystick.getRawButton(2) && !spinnySticksOn)
-            {
-                this.spinSticks(spinnyRightMotor, spinnyLeftMotor, HALF_SPEED);
-                spinnySticksOn = !spinnySticksOn;
-            }
+                if (leftJoystick.getRawButton(6))
+                {
+                    this.spinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo, false);
+                } else
+                {
+                    this.stopSpinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo);
+                }
 
-            if (leftJoystick.getRawButton(2) && spinnySticksOn)
-            {
-                this.spinSticks(spinnyRightMotor, spinnyLeftMotor, NO_SPEED);
-                spinnySticksOn = !spinnySticksOn;
+                if (leftJoystick.getRawButton(2) && !spinnySticksOn)
+                {
+                    this.spinSticks(spinnyRightMotor, spinnyLeftMotor, HALF_SPEED);
+                    spinnySticksOn = !spinnySticksOn;
+                }
+
+                if (leftJoystick.getRawButton(2) && spinnySticksOn)
+                {
+                    this.spinSticks(spinnyRightMotor, spinnyLeftMotor, NO_SPEED);
+                    spinnySticksOn = !spinnySticksOn;
+                }
             }
         }
     }
