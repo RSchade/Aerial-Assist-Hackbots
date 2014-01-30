@@ -29,7 +29,7 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
             {
                 variableOutputs.batteryOutput();
                 variableOutputs.teamOutput();
-                variableOutputs.outputToDashboard(leftJoystick, rightJoystick, gyroScope, breadboardPot, robotSwitchInput, encoder, lowPot, highPot);
+                variableOutputs.outputToDashboard(leftJoystick, rightJoystick, gyroScope, breadboardPot, robotSwitchInput, encoder);
 
                 previousTime = System.currentTimeMillis();
 

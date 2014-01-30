@@ -66,7 +66,7 @@ public class Autonomous implements Values, Analog
     {
         robotCamera = AxisCamera.getInstance();  // get an instance of the camera
         cc = new CriteriaCollection();      // create the criteria for the particle filter
-        cc.addCriteria(MeasurementType.IMAQ_MT_AREA, AREA_MINIMUM, 65535, false);
+        cc.addCriteria(MeasurementType.IMAQ_MT_AREA, AREA_MINIMUM, 65535, true);
     }
 
     public void loopVision() throws AxisCameraException
@@ -89,7 +89,7 @@ public class Autonomous implements Values, Analog
             ColorImage image = robotCamera.getImage();     // comment if using stored images
             //ColorImage image;                           // next 2 lines read image from flash on cRIO
             //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
-            BinaryImage thresholdImage = image.thresholdRGB(255, 255, lowPot.getValue(), highPot.getValue(), 255, 255);   // keep only green objects
+            BinaryImage thresholdImage = image.thresholdRGB(255, 255, 0, 255, 255, 255);   // keep only green objects
             thresholdImage.write("/threshold.bmp");
             BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles
             filteredImage.write("/filteredImage.bmp");
@@ -246,8 +246,6 @@ public class Autonomous implements Values, Analog
      * perform additional measurements
      * @param report The Particle Analysis Report for the particle, used for the
      * width, height, and particle number
-     * @param outer	Indicates whether the particle aspect ratio should be
-     * compared to the ratio for the inner target or the outer
      * @return The aspect ratio score (0-100)
      */
     public double scoreAspectRatio(BinaryImage image, ParticleAnalysisReport report, int particleNumber, boolean vertical) throws NIVisionException

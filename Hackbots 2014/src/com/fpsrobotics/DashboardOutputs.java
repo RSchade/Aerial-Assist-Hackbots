@@ -23,8 +23,11 @@ public class DashboardOutputs
      * @param gyroScope
      * @param shooterPot
      * @param buttonInput
+     * @param encoder
+     * @param lowPot
+     * @param highPot
      */
-    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Gyro gyroScope, AnalogChannel shooterPot, DigitalInput buttonInput, Encoder encoder, AnalogChannel lowPot, AnalogChannel highPot)
+    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Gyro gyroScope, AnalogChannel shooterPot, DigitalInput buttonInput, Encoder encoder)
     {
         // Variable outputs to dashboard
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
@@ -37,8 +40,6 @@ public class DashboardOutputs
         SmartDashboard.putBoolean("Button Value", buttonInput.get());
         SmartDashboard.putNumber("Encoder Rate", encoder.getRate());
         SmartDashboard.putNumber("Encoder Value", encoder.getRaw());
-        SmartDashboard.putNumber("Low Pot", lowPot.getValue());
-        SmartDashboard.putNumber("High pot", highPot.getValue());
     }
 
     public void batteryOutput()

@@ -3,10 +3,7 @@ package com.fpsrobotics;
 import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 
 /**

@@ -14,7 +14,6 @@ public interface DeviceMap
     
     int LEFT_SPIN_MAP = 5;
     int RIGHT_SPIN_MAP = 6;
-    int ENCODER_MOTOR_MOTOR_MAP = 7;
     // Relays
     int ROBOT_RELAY_MAP = 1;
     // DIOs
@@ -27,14 +26,12 @@ public interface DeviceMap
     int ENCODER_MAP_ONE = 3;
     int ENCODER_MAP_TWO = 4;
     // Potentiometers
-    int BREADBOARD_POT_MAP = 6;
-    int LOW_POT_MAP = 7;
-    int HIGH_POT_MAP = 8;
+    int BREADBOARD_POT_MAP = 5;
     // Solenoid
-    int SHOOTER_SOLENOID_ONE_MAP_ONE = 5;
-    int SHOOTER_SOLENOID_ONE_MAP_TWO = 2;
-    int SHOOTER_SOLENOID_TWO_MAP_ONE = 3;
-    int SHOOTER_SOLENOID_TWO_MAP_TWO = 4;
+    int SHOOTER_SOLENOID_ONE_MAP_ONE = 2;
+    int SHOOTER_SOLENOID_ONE_MAP_TWO = 3;
+    int SHOOTER_SOLENOID_TWO_MAP_ONE = 4;
+    int SHOOTER_SOLENOID_TWO_MAP_TWO = 5;
     // Gyro
-    int GYRO_SCOPE_MAP = 1;
+    int GYRO_SCOPE_MAP = 2;
 }
