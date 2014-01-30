@@ -40,8 +40,8 @@ public interface DeviceMap
     int SPINNY_SOLENOID_MAP_ONE = 1;
     int SPINNY_SOLENOID_MAP_TWO = 2;
     // Gear Shifter Slenoids
-    int GEAR_SOLENOID_MAP_ONE = 5;
-    int GEAR_SOLENOID_MAP_TWO = 6;
+    int GEAR_SOLENOID_MAP_ONE = 3;
+    int GEAR_SOLENOID_MAP_TWO = 4;
     
     // USB
     // Joysticks
