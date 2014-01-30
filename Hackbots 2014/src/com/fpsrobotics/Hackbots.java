@@ -79,20 +79,12 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         {
 
             // Don't start drive thread if simple PID is on
-            if (!SimplePIDMode)
-            {
-                driveThread.start();
-            }
+            driveThread.start();
 
             hackbotStationThread.start();
             shooterThread.start();
             spinnySticksThread.start();
 
-            // SimplePID
-            if (SimplePIDMode)
-            {
-                pidLoopThread.start();
-            }
             doneAlready = true;
         }
 

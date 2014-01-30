@@ -37,15 +37,11 @@ public interface DeviceMap
     
     // Breakout Board
     // Spinny Stick Solenoid
-    int SPINNY_SOLENOID_LEFT_MAP_ONE = 1;
-    int SPINNY_SOLENOID_LEFT_MAP_TWO = 2;
-    int SPINNY_SOLENOID_RIGHT_MAP_ONE = 3;
-    int SPINNY_SOLENOID_RIGHT_MAP_TWO = 4;
+    int SPINNY_SOLENOID_MAP_ONE = 1;
+    int SPINNY_SOLENOID_MAP_TWO = 2;
     // Gear Shifter Slenoids
-    int GEAR_SOLENOID_LEFT_MAP_ONE = 5;
-    int GEAR_SOLENOID_LEFT_MAP_TWO = 6;
-    int GEAR_SOLENOID_RIGHT_MAP_ONE = 7;
-    int GEAR_SOLENOID_RIGHT_MAP_TWO = 8;
+    int GEAR_SOLENOID_MAP_ONE = 5;
+    int GEAR_SOLENOID_MAP_TWO = 6;
     
     // USB
     // Joysticks

@@ -22,18 +22,18 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
         {
             if (leftJoystick.getRawButton(7))
             {
-                this.spinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo, true);
+                this.spinnySticksMovement(spinnySolenoidOne, true);
             } else
             {
-                this.stopSpinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo);
+                this.stopSpinnySticksMovement(spinnySolenoidOne);
             }
 
             if (leftJoystick.getRawButton(6))
             {
-                this.spinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo, false);
+                this.spinnySticksMovement(spinnySolenoidOne, false);
             } else
             {
-                this.stopSpinnySticksMovement(spinnySolenoidOne, spinnySolenoidTwo);
+                this.stopSpinnySticksMovement(spinnySolenoidOne);
             }
 
             if (leftJoystick.getRawButton(2) && !spinnySticksOn)
@@ -56,24 +56,21 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
         spinnyLeftMotor.set(speed);
     }
 
-    public void spinnySticksMovement(DoubleSolenoid spinnyStickSolenoidOne, DoubleSolenoid spinnyStickSolenoidTwo, boolean forwardBackward)
+    public void spinnySticksMovement(DoubleSolenoid spinnyStickSolenoid, boolean forwardBackward)
     {
         if (forwardBackward)
         {
-            spinnyStickSolenoidOne.set(DoubleSolenoid.Value.kForward);
-            spinnyStickSolenoidTwo.set(DoubleSolenoid.Value.kForward);
+            spinnyStickSolenoid.set(DoubleSolenoid.Value.kForward);
         }
 
         if (!forwardBackward)
         {
-            spinnyStickSolenoidOne.set(DoubleSolenoid.Value.kReverse);
-            spinnyStickSolenoidTwo.set(DoubleSolenoid.Value.kReverse);
+            spinnyStickSolenoid.set(DoubleSolenoid.Value.kReverse);
         }
     }
 
-    public void stopSpinnySticksMovement(DoubleSolenoid spinnyStickSolenoidOne, DoubleSolenoid spinnyStickSolenoidTwo)
+    public void stopSpinnySticksMovement(DoubleSolenoid spinnyStickSolenoid)
     {
-        spinnyStickSolenoidOne.set(DoubleSolenoid.Value.kOff);
-        spinnyStickSolenoidTwo.set(DoubleSolenoid.Value.kOff);
+        spinnyStickSolenoid.set(DoubleSolenoid.Value.kOff);
     }
 }

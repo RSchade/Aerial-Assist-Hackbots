@@ -25,20 +25,18 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
 
         while (true)
         {
-            if (!SimplePIDMode)
-            {
-                driveMotors.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
-                driveMotors.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
-            }
+
+            driveMotors.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
+            driveMotors.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
 
             if (rightJoystick.getRawButton(7))
             {
-                driveMotors.switchGears(gearSolenoidOne, gearSolenoidTwo, true);
+                driveMotors.switchGears(gearSolenoidOne, true);
             }
 
             if (rightJoystick.getRawButton(6))
             {
-                driveMotors.switchGears(gearSolenoidOne, gearSolenoidTwo, false);
+                driveMotors.switchGears(gearSolenoidOne, false);
             }
         }
     }

@@ -81,18 +81,16 @@ public class ControlDrive implements Values
 
     }
 
-    public void switchGears(DoubleSolenoid gearSwitchOne, DoubleSolenoid gearSwitchTwo, boolean moreLess)
+    public void switchGears(DoubleSolenoid gearSwitch, boolean lowHigh)
     {
-        if (moreLess)
+        if (lowHigh)
         {
-            gearSwitchOne.set(DoubleSolenoid.Value.kForward);
-            gearSwitchTwo.set(DoubleSolenoid.Value.kForward);
+            gearSwitch.set(DoubleSolenoid.Value.kForward);
         }
 
-        if (!moreLess)
+        if (!lowHigh)
         {
-            gearSwitchOne.set(DoubleSolenoid.Value.kReverse);
-            gearSwitchTwo.set(DoubleSolenoid.Value.kReverse);
+            gearSwitch.set(DoubleSolenoid.Value.kReverse);
         }
 
     }

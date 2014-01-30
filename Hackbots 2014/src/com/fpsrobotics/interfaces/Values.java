@@ -16,7 +16,4 @@ public interface Values
     double HALF_SPEED = 0.5;
     double NO_SPEED = 0.0;
     //Put more important reusable values here
-    
-    // Are we in PID mode?
-    boolean SimplePIDMode = false;
 }
