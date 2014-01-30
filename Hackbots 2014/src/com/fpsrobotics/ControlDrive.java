@@ -28,11 +28,6 @@ public class ControlDrive implements Values
      * @param leftDrive
      * @param rightDrive
      * @param batteryComp
-     * @param leftDriveOne
-     * @param leftDriveTwo
-     * @param batteryComp
-     * @param rightDriveOne
-     * @param rightDriveTwo
      */
     public void drive(double leftSpeed, double rightSpeed, SpeedController leftDrive, SpeedController rightDrive, boolean batteryComp)
     {

@@ -17,9 +17,7 @@ public class DashboardOutputs
      *
      * @param leftJoystick
      * @param rightJoystick
-     * @param gyroScope
-     * @param shooterPot
-     * @param buttonInput
+     * @param encoder
      */
     public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder)
     {
