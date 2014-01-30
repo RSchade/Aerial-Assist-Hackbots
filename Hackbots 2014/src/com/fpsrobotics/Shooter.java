@@ -1,6 +1,7 @@
 package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.Analog;
+import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Talons;
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author ray
  */
-public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs
+public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, ControlMap
 {
 
     //Proportional, Integral, and Dervative constants.
@@ -44,7 +45,7 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs
 
         while (true)
         {
-            if (leftJoystick.getRawButton(11))
+            if (leftJoystick.getRawButton(SHOOTER_MANUAL))
             {
                 shooterTalon.set(1.0);
 
@@ -54,8 +55,8 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs
                 shooterTalon.set(0.0);
             }
 
-            this.shooterPresetBoth(leftJoystick, shooterPot, shooterEncoder, shooterTalon, 300, 5, 11, 1.0);
-            this.shooterPresetPID(leftJoystick, shooterPID, 10, 10);
+            this.shooterPresetBoth(leftJoystick, shooterPot, shooterEncoder, shooterTalon, 300, 5, SHOOTER_PRESET_ONE, 1.0);
+            this.shooterPresetPID(leftJoystick, shooterPID, SHOOTER_PRESET_TWO, 10);
 
         }
     }

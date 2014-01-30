@@ -1,5 +1,6 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Solenoids;
 import com.fpsrobotics.interfaces.Talons;
@@ -12,7 +13,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author ray
  */
-public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Solenoids
+public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Solenoids, ControlMap
 {
     public void run()
     {
@@ -20,7 +21,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
 
         while (true)
         {
-            if (leftJoystick.getRawButton(7))
+            if (leftJoystick.getRawButton(SPINNY_EXTEND))
             {
                 this.spinnySticksMovement(spinnySolenoidOne, true);
             } else
@@ -28,7 +29,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                 this.stopSpinnySticksMovement(spinnySolenoidOne);
             }
 
-            if (leftJoystick.getRawButton(6))
+            if (leftJoystick.getRawButton(SPINNY_RETRACT))
             {
                 this.spinnySticksMovement(spinnySolenoidOne, false);
             } else
@@ -36,13 +37,13 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                 this.stopSpinnySticksMovement(spinnySolenoidOne);
             }
 
-            if (leftJoystick.getRawButton(2) && !spinnySticksOn)
+            if (leftJoystick.getRawButton(SPINNY_TOGGLE) && !spinnySticksOn)
             {
                 this.spinSticks(spinnyRightMotor, spinnyLeftMotor, HALF_SPEED);
                 spinnySticksOn = !spinnySticksOn;
             }
 
-            if (leftJoystick.getRawButton(2) && spinnySticksOn)
+            if (leftJoystick.getRawButton(SPINNY_TOGGLE) && spinnySticksOn)
             {
                 this.spinSticks(spinnyRightMotor, spinnyLeftMotor, NO_SPEED);
                 spinnySticksOn = !spinnySticksOn;
