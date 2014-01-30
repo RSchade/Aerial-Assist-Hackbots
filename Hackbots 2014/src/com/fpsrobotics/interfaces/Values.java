@@ -18,7 +18,5 @@ public interface Values
     //Put more important reusable values here
     
     // Are we in PID mode?
-    boolean SimplePIDMode = true;
-    // Are we in breadboard mode
-    boolean breadBoardMode = true;
+    boolean SimplePIDMode = false;
 }
