@@ -2,7 +2,6 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.Joysticks;
-import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.Solenoids;
 import com.fpsrobotics.interfaces.Talons;
 import com.fpsrobotics.interfaces.Values;
@@ -11,7 +10,7 @@ import com.fpsrobotics.interfaces.Values;
  *
  * @author ray
  */
-public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, PID, Solenoids
+public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, Solenoids
 {
 
     /**

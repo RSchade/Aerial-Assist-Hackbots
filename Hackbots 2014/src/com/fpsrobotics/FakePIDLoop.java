@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Talon;
  *
  * @author ray
  */
-public class PIDLoop implements Runnable, Talons, DIOs
+public class FakePIDLoop implements Runnable, Talons, DIOs
 {
 
     public void run()

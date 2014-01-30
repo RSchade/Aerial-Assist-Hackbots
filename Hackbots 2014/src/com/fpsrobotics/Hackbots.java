@@ -7,7 +7,6 @@
 package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
@@ -89,20 +88,11 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             shooterThread.start();
             spinnySticksThread.start();
 
-            // For breadboard compatibility
-            if (breadBoardMode)
-            {
-                breadBoardThread.start();
-            }
-
             // SimplePID
             if (SimplePIDMode)
             {
                 pidLoopThread.start();
             }
-
-            breadBoardThread.start();;
-
             doneAlready = true;
         }
 
