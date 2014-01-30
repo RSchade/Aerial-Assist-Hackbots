@@ -9,7 +9,7 @@ import com.fpsrobotics.*;
  *
  * @author ray
  */
-public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids, PID, Values
+public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids, Values
 {
 
     DriveTrain driveTrain = new DriveTrain();
@@ -17,15 +17,13 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     Shooter shooter = new Shooter();
     SpinnySticks spinnySticks = new SpinnySticks();
     RobotCamera robotCamera = new RobotCamera();
-    BreadBoard breadBoard = new BreadBoard();
     VisionProcessingSample visionSample = new VisionProcessingSample();
-    PIDLoop pidloop = new PIDLoop();
+    FakePIDLoop pidloop = new FakePIDLoop();
     
     //Threads here
     Thread driveThread = new Thread(driveTrain);
     Thread hackbotStationThread = new Thread(hackbotStation);
     Thread shooterThread = new Thread(shooter);
     Thread spinnySticksThread = new Thread(spinnySticks);
-    Thread breadBoardThread = new Thread(breadBoard);
     Thread pidLoopThread = new Thread(pidloop);
 }

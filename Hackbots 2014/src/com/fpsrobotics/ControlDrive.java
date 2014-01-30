@@ -1,6 +1,5 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -16,7 +15,7 @@ import edu.wpi.first.wpilibj.Talon;
  *
  *
  */
-public class ControlDrive implements Values, PID
+public class ControlDrive implements Values
 {
     Constrain constrainTurbo = new Constrain();
 
