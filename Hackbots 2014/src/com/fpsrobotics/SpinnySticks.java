@@ -15,13 +15,15 @@ import edu.wpi.first.wpilibj.SpeedController;
  */
 public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Solenoids, ControlMap
 {
+
     public void run()
     {
-        boolean spinnySticksOn = false;
+        boolean spinnySticksForwardOn = false;
+        boolean spinnySticksBackwardOn = false;
 
         while (true)
         {
-            if (leftJoystick.getRawButton(SPINNY_EXTEND))
+            if (gamepadJoystick.getRawButton(SPINNY_EXTEND))
             {
                 this.spinnySticksMovement(spinnySolenoidOne, true);
             } else
@@ -29,7 +31,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                 this.stopSpinnySticksMovement(spinnySolenoidOne);
             }
 
-            if (leftJoystick.getRawButton(SPINNY_RETRACT))
+            if (gamepadJoystick.getRawButton(SPINNY_RETRACT))
             {
                 this.spinnySticksMovement(spinnySolenoidOne, false);
             } else
@@ -37,16 +39,28 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                 this.stopSpinnySticksMovement(spinnySolenoidOne);
             }
 
-            if (leftJoystick.getRawButton(SPINNY_TOGGLE) && !spinnySticksOn)
+            if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && !spinnySticksForwardOn)
             {
                 this.spinSticks(spinnyRightMotor, spinnyLeftMotor, HALF_SPEED);
-                spinnySticksOn = !spinnySticksOn;
+                spinnySticksForwardOn = !spinnySticksForwardOn;
             }
 
-            if (leftJoystick.getRawButton(SPINNY_TOGGLE) && spinnySticksOn)
+            if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && spinnySticksForwardOn)
             {
                 this.spinSticks(spinnyRightMotor, spinnyLeftMotor, NO_SPEED);
-                spinnySticksOn = !spinnySticksOn;
+                spinnySticksForwardOn = !spinnySticksForwardOn;
+            }
+
+            if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && !spinnySticksBackwardOn)
+            {
+                this.spinSticks(spinnyRightMotor, spinnyLeftMotor, -HALF_SPEED);
+                spinnySticksBackwardOn = !spinnySticksBackwardOn;
+            }
+
+            if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && spinnySticksBackwardOn)
+            {
+                this.spinSticks(spinnyRightMotor, spinnyLeftMotor, NO_SPEED);
+                spinnySticksBackwardOn = !spinnySticksBackwardOn;
             }
         }
     }

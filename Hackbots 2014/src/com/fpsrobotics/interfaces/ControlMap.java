@@ -14,13 +14,14 @@ public interface ControlMap
 {
     // Gear Switching
     int GEAR_SWITCH_ONE = 1;
-    int GEAR_SWITCH_TWO = 2;
+    int GEAR_SWITCH_TWO = 1;
     // Shooting
-    int SHOOTER_MANUAL = 3;
-    int SHOOTER_PRESET_ONE = 4;
-    int SHOOTER_PRESET_TWO = 5;
+    int SHOOTER_MANUAL = 8;
+    int SHOOTER_PRESET_ONE = 1;
+    int SHOOTER_PRESET_TWO = 2;
     // Spinny Sticks
-    int SPINNY_EXTEND = 6;
-    int SPINNY_RETRACT = 7;
-    int SPINNY_TOGGLE = 8;
+    int SPINNY_EXTEND = 9;
+    int SPINNY_RETRACT = 10;
+    int SPINNY_FORWARD_TOGGLE = 7;
+    int SPINNY_BACKWARD_TOGGLE = 5;
 }

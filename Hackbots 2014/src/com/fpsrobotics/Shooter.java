@@ -45,7 +45,7 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
 
         while (true)
         {
-            if (leftJoystick.getRawButton(SHOOTER_MANUAL))
+            if (gamepadJoystick.getRawButton(SHOOTER_MANUAL))
             {
                 shooterTalon.set(1.0);
 
@@ -55,8 +55,8 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
                 shooterTalon.set(0.0);
             }
 
-            this.shooterPresetBoth(leftJoystick, shooterPot, shooterEncoder, shooterTalon, 300, 5, SHOOTER_PRESET_ONE, 1.0);
-            this.shooterPresetPID(leftJoystick, shooterPID, SHOOTER_PRESET_TWO, 10);
+            this.shooterPresetBoth(gamepadJoystick, shooterPot, shooterEncoder, shooterTalon, 300, 5, SHOOTER_PRESET_ONE, 1.0);
+            this.shooterPresetPID(gamepadJoystick, shooterPID, SHOOTER_PRESET_TWO, 10);
 
         }
     }
