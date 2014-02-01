@@ -23,7 +23,7 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
     {
         PIDController shooterPID = shooterControl.PIDInit(shooterEncoder, shooterTalon, LOW_SHOOTER_PID_VALUE, HIGH_SHOOTER_PID_VALUE, shooterP, shooterI, shooterD);
 
-        while (control.isOperatorControl())
+        while (true)
         {
             shooterControl.shootManual(gamepadJoystick, shooterTalon, SHOOTER_MANUAL);
 

@@ -22,7 +22,7 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
     {
         long previousTime = System.currentTimeMillis();
 
-        while (control.isOperatorControl())
+        while (true)
         {
             //Everything outputs every second, to reduce lag and heat
             if (System.currentTimeMillis() - previousTime >= 1000)
