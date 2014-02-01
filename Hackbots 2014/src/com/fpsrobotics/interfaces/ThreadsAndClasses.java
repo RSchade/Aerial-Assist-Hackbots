@@ -28,6 +28,7 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     SpinnySticks spinnySticks = new SpinnySticks();
     DriveControl driveControl = new DriveControl();
     ShooterControl shooterControl = new ShooterControl();
+    Control control = new Control();
 
     //Threads here
     Thread driveThread = new Thread(driveTrain);

@@ -23,7 +23,7 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
      */
     public void run()
     {
-        while (true)
+        while (control.isOperatorControl())
         {
             // Check if we need to adjust speed, or switch to turbo
             driveControl.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);

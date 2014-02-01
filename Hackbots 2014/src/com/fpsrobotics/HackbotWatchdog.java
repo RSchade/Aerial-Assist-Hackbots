@@ -7,12 +7,11 @@ import edu.wpi.first.wpilibj.Watchdog;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author ray
  */
-public class HackbotWatchdog 
+public class HackbotWatchdog
 {
 
     public void feed(Watchdog dog)
@@ -25,5 +24,6 @@ public class HackbotWatchdog
         dog.setEnabled(true);
         dog.setExpiration(expire);
     }
+
 
 }

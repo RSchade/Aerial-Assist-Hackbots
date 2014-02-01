@@ -19,7 +19,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
         boolean spinnySticksForwardOn = false;
         boolean spinnySticksBackwardOn = false;
 
-        while (true)
+        while (control.isOperatorControl())
         {
             // Check if we need to extend or retract the spinny sticks
             if (gamepadJoystick.getRawButton(SPINNY_EXTEND))
