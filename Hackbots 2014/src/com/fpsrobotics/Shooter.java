@@ -5,11 +5,9 @@ import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Talons;
-import edu.wpi.first.wpilibj.AnalogChannel;
+import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  *
@@ -19,9 +17,8 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author ray
  */
-public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, ControlMap
+public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, ControlMap, ThreadsAndClasses
 {
-
     //Proportional, Integral, and Dervative constants.
     //These values will need to be tuned for your robot.
     private final double Kp = 0.3;
@@ -45,68 +42,19 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
 
         while (true)
         {
+            // Manual shooting
             if (gamepadJoystick.getRawButton(SHOOTER_MANUAL))
             {
                 shooterTalon.set(1.0);
-
             } else
             {
-
                 shooterTalon.set(0.0);
             }
 
-            this.shooterPresetBoth(gamepadJoystick, shooterPot, shooterEncoder, shooterTalon, 300, 5, SHOOTER_PRESET_ONE, 1.0);
-            this.shooterPresetPID(gamepadJoystick, shooterPID, SHOOTER_PRESET_TWO, 10);
+            // Presets (dummy, real presets to be added later)
+            presets.shooterPresetBoth(gamepadJoystick, shooterPot, shooterEncoder, shooterTalon, 300, 5, SHOOTER_PRESET_ONE, 1.0);
+            presets.shooterPresetPID(gamepadJoystick, shooterPID, SHOOTER_PRESET_TWO, 10);
 
         }
-    }
-
-    private void shooterPresetPot(Joystick joystick, AnalogChannel shooterPot, SpeedController shooterTalon, int presetValue, int button, double speed)
-    {
-        while (shooterPot.getValue() < presetValue && joystick.getRawButton(button))
-        {
-            shooterTalon.set(speed);
-            shooterTalon.set(speed);
-        }
-
-        shooterTalon.set(0.0);
-        shooterTalon.set(0.0);
-
-    }
-
-    private void shooterPresetEncoder(Joystick joystick, Encoder shooterEncoder, SpeedController shooterTalon, int presetValue, int button, double speed)
-    {
-        while (shooterEncoder.getDistance() < presetValue && joystick.getRawButton(button))
-        {
-            shooterTalon.set(speed);
-            shooterTalon.set(speed);
-        }
-
-        shooterTalon.set(0.0);
-        shooterTalon.set(0.0);
-
-    }
-
-    private void shooterPresetBoth(Joystick joystick, AnalogChannel shooterPot, Encoder shooterEncoder, SpeedController shooterTalon, int presetValuePot, int presetValueEncoder, int button, double speed)
-    {
-        while ((shooterPot.getValue() < presetValuePot && joystick.getRawButton(button)) || (shooterEncoder.getDistance() < presetValueEncoder && joystick.getRawButton(button)))
-        {
-            shooterTalon.set(speed);
-            shooterTalon.set(speed);
-        }
-
-        shooterTalon.set(0.0);
-        shooterTalon.set(0.0);
-    }
-
-    private void shooterPresetPID(Joystick joystick, PIDController shooterPID, int setpoint, int button)
-    {
-        if (joystick.getRawButton(button))
-        {
-            shooterPID.setSetpoint(setpoint);
-        }
-
-        shooterPID.setSetpoint(0);
-
     }
 }

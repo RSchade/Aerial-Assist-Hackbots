@@ -1,6 +1,7 @@
 package com.fpsrobotics.interfaces;
 
 import com.fpsrobotics.*;
+import edu.wpi.first.wpilibj.Watchdog;
 
 /**
  * Where threads and classes can be instantiated, so they can be easily changed.
@@ -19,11 +20,20 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     RobotCamera robotCamera = new RobotCamera();
     VisionProcessingSample visionSample = new VisionProcessingSample();
     FakePIDLoop pidloop = new FakePIDLoop();
-    
+    Pneumatics pneumatics = new Pneumatics();
+    ControlSpinSticks controlSpinSticks = new ControlSpinSticks();
+    Presets presets = new Presets();
+    DrivingControl drivingControl = new DrivingControl();
+    DashboardOutputs dashboardOutputs = new DashboardOutputs();
+    HackbotWatchdog hackbotWatch = new HackbotWatchdog();
+
     //Threads here
     Thread driveThread = new Thread(driveTrain);
     Thread hackbotStationThread = new Thread(hackbotStation);
     Thread shooterThread = new Thread(shooter);
     Thread spinnySticksThread = new Thread(spinnySticks);
     Thread pidLoopThread = new Thread(pidloop);
+
+    // Watchdog
+    Watchdog dog = Watchdog.getInstance();
 }

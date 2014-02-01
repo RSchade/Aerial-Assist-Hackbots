@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.Talon;
  *
  *
  */
-public class ControlDrive implements Values
+public class DrivingControl implements Values
 {
     Constrain constrainTurbo = new Constrain();
 

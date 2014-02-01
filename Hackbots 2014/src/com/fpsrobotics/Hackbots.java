@@ -8,7 +8,6 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
 /**
@@ -27,7 +26,7 @@ import edu.wpi.first.wpilibj.camera.AxisCameraException;
  */
 public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
-
+    // Local variables
     boolean doneAlready = false;
 
     /**
@@ -39,14 +38,13 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     {
         System.out.println("Hackbots Aerial Assist Code");
 
-        // Watchdog init
-        Watchdog.getInstance().setEnabled(true);
-        Watchdog.getInstance().setExpiration(2);
+        // Init watchdog with 2 second timeout
+        hackbotWatch.watchdogInit(dog, 2);
+        
+        // Init pneumatics
+        pneumatics.init(compressor);
 
-        compressor.start();
-
-        // Camera settings
-        //robotCamera.init();
+        // Camera settings init
         visionSample.imageFindingRobotInit();
         robotCamera.init();
     }
@@ -65,7 +63,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             ex.printStackTrace();
         }
 
-        Watchdog.getInstance().feed();
+        // Feed watchdog during auton
+        hackbotWatch.feed(dog);
     }
 
     /**
@@ -75,10 +74,9 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
      */
     public void teleopPeriodic()
     {
+        // Start all threads (only once)
         if (!doneAlready)
         {
-
-            // Don't start drive thread if simple PID is on
             driveThread.start();
 
             hackbotStationThread.start();
@@ -89,11 +87,12 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         }
 
         // Feed the watchdog
-        Watchdog.getInstance().feed();
+        hackbotWatch.feed(dog);
     }
 
     public void testPeriodic()
     {
-        Watchdog.getInstance().feed();
+        // Feed watchdog during test
+        hackbotWatch.feed(dog);
     }
 }

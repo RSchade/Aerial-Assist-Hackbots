@@ -5,13 +5,14 @@ import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Solenoids;
 import com.fpsrobotics.interfaces.Talons;
+import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import com.fpsrobotics.interfaces.Values;
 
 /**
  *
  * @author ray
  */
-public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, Solenoids, ControlMap
+public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, Solenoids, ControlMap, ThreadsAndClasses
 {
 
     /**
@@ -22,22 +23,21 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
      */
     public void run()
     {
-        ControlDrive driveMotors = new ControlDrive();
-
         while (true)
         {
+            // Check if we need to adjust speed, or switch to turbo
+            drivingControl.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
+            drivingControl.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
 
-            driveMotors.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
-            driveMotors.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
-
+            // Check if we need to switch gears
             if (leftJoystick.getRawButton(GEAR_SWITCH_ONE))
             {
-                driveMotors.switchGears(gearSolenoidOne, true);
+                drivingControl.switchGears(gearSolenoidOne, true);
             }
 
             if (rightJoystick.getRawButton(GEAR_SWITCH_TWO))
             {
-                driveMotors.switchGears(gearSolenoidOne, false);
+                drivingControl.switchGears(gearSolenoidOne, false);
             }
         }
     }
