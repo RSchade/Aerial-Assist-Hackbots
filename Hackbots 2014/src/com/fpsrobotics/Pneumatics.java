@@ -5,7 +5,6 @@
  */
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.DIOs;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -32,10 +31,11 @@ public class Pneumatics
         {
             // code to sense compressor value maybe?
         }
-        
+
         return false;
     }
 
+    // Spinny Sticks
     public void spinnySticksMovement(DoubleSolenoid spinnyStickSolenoid, boolean forwardBackward)
     {
         if (forwardBackward)
@@ -52,5 +52,18 @@ public class Pneumatics
     public void stopSpinnySticksMovement(DoubleSolenoid spinnyStickSolenoid)
     {
         spinnyStickSolenoid.set(DoubleSolenoid.Value.kOff);
+    }
+
+    // Drive Train
+    public void switchGears(DoubleSolenoid gearSwitch, boolean lowHigh)
+    {
+        if (lowHigh)
+        {
+            gearSwitch.set(DoubleSolenoid.Value.kForward);
+        }
+        if (!lowHigh)
+        {
+            gearSwitch.set(DoubleSolenoid.Value.kReverse);
+        }
     }
 }

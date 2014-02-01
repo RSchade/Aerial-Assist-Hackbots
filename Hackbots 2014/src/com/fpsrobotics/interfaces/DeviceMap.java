@@ -24,12 +24,14 @@ public interface DeviceMap
     // DIOs
     // Compressor
     int COMPRESSOR_DIO_MAP = 1;
-    // Encoder for Drive Train
-    int ENCODER_MAP_ONE = 2;
-    int ENCODER_MAP_TWO = 3;
+    // Encoders for Drive Train
+    int LEFT_DRIVE_ENCODER_MAP_ONE = 2;
+    int LEFT_DRIVE_ENCODER_MAP_TWO = 3;
+    int RIGHT_DRIVE_ENCODER_MAP_ONE = 4;
+    int RIGHT_DRIVE_ENCODER_MAP_TWO = 5;
     // Shooter Encoders
-    int SHOOTER_ENCODER_MAP_ONE = 4;// depricated
-    int SHOOTER_ENCODER_MAP_TWO = 5;// depricated
+    int SHOOTER_ENCODER_MAP_ONE = 6;// depricated
+    int SHOOTER_ENCODER_MAP_TWO = 7;// depricated
     
     // Analog
     // Potentiometers

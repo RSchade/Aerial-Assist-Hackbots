@@ -1,11 +1,12 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import com.fpsrobotics.interfaces.Values;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 
 /**
  *
@@ -16,10 +17,8 @@ import edu.wpi.first.wpilibj.Talon;
  *
  *
  */
-public class DrivingControl implements Values
+public class DrivingControl implements Values, ThreadsAndClasses
 {
-    Constrain constrainTurbo = new Constrain();
-
     /**
      * Run drive train as normal, 1:1 input with joysticks.
      *
@@ -81,18 +80,33 @@ public class DrivingControl implements Values
 
     }
 
-    public void switchGears(DoubleSolenoid gearSwitch, boolean lowHigh)
+    public void driveToPID(PIDController drivePID, int distance)
     {
-        if (lowHigh)
-        {
-            gearSwitch.set(DoubleSolenoid.Value.kForward);
-        }
-
-        if (!lowHigh)
-        {
-            gearSwitch.set(DoubleSolenoid.Value.kReverse);
-        }
-
+        drivePID.setSetpoint(distance);
     }
 
+    public PIDController initDrivePID(SpeedController drive, Encoder driveEncoder, int lowInput, int highInput, double Kp, double Ki, double Kd)
+    {
+        PIDController drivePID;
+
+        //Sets the distance per pulse in inches.
+        driveEncoder.setDistancePerPulse(.000623);
+
+        //Starts the encoders.
+        driveEncoder.start();
+
+        //Sets the encoders to use distance for PID.
+        //If this is not done, the robot may not go anywhere.
+        //It is also possible to use rate, by changing kDistance to kRate.
+        driveEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
+
+        //Initializes the PID Controllers
+        drivePID = new PIDController(Kp, Ki, Kd, driveEncoder, drive);
+
+        drivePID.enable();
+
+        drivePID.setInputRange(lowInput, highInput);
+        
+        return drivePID;
+    }
 }

@@ -32,12 +32,12 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
             // Check if we need to switch gears
             if (leftJoystick.getRawButton(GEAR_SWITCH_ONE))
             {
-                drivingControl.switchGears(gearSolenoidOne, true);
+                pneumatics.switchGears(gearSolenoidOne, true);
             }
 
             if (rightJoystick.getRawButton(GEAR_SWITCH_TWO))
             {
-                drivingControl.switchGears(gearSolenoidOne, false);
+                pneumatics.switchGears(gearSolenoidOne, false);
             }
         }
     }

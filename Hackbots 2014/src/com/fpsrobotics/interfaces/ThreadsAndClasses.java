@@ -13,19 +13,20 @@ import edu.wpi.first.wpilibj.Watchdog;
 public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids, Values
 {
 
+    Constrain constrainTurbo = new Constrain();
+    ControlSpinSticks controlSpinSticks = new ControlSpinSticks();
+    DashboardOutputs dashboardOutputs = new DashboardOutputs();
     DriveTrain driveTrain = new DriveTrain();
+    FakePIDLoop pidloop = new FakePIDLoop();
     HackbotStation hackbotStation = new HackbotStation();
-    Shooter shooter = new Shooter();
-    SpinnySticks spinnySticks = new SpinnySticks();
+    HackbotWatchdog hackbotWatch = new HackbotWatchdog();
+    Pneumatics pneumatics = new Pneumatics();
+    Presets presets = new Presets();
     RobotCamera robotCamera = new RobotCamera();
     VisionProcessingSample visionSample = new VisionProcessingSample();
-    FakePIDLoop pidloop = new FakePIDLoop();
-    Pneumatics pneumatics = new Pneumatics();
-    ControlSpinSticks controlSpinSticks = new ControlSpinSticks();
-    Presets presets = new Presets();
+    Shooter shooter = new Shooter();
+    SpinnySticks spinnySticks = new SpinnySticks();
     DrivingControl drivingControl = new DrivingControl();
-    DashboardOutputs dashboardOutputs = new DashboardOutputs();
-    HackbotWatchdog hackbotWatch = new HackbotWatchdog();
 
     //Threads here
     Thread driveThread = new Thread(driveTrain);

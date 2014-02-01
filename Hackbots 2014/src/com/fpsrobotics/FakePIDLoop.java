@@ -17,13 +17,14 @@ public class FakePIDLoop implements Runnable, Talons, DIOs
 
     public void run()
     {
-        encoder.start();
+        leftDriveEncoder.start();
+        rightDriveEncoder.start();
         while (true)
         {
             try
             {
-                this.loop(encoder, leftDrive, 200);
-                this.loop(encoder, rightDrive, 200);
+                this.loop(leftDriveEncoder, leftDrive, 200);
+                this.loop(rightDriveEncoder, rightDrive, 200);
             } catch (InterruptedException ex)
             {
                 ex.printStackTrace();
