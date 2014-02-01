@@ -6,9 +6,9 @@
 /*----------------------------------------------------------------------------*/
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
 /**
@@ -25,20 +25,12 @@ import edu.wpi.first.wpilibj.camera.AxisCameraException;
  *
  *
  */
-public class Hackbots extends IterativeRobot implements ThreadsAndClasses
+public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 {
 
     // Local variables
     boolean doneAlready = false;
     boolean doneEverythingAuto = false;
-
-    final int LOW_SETPOINT_PID_AUTO = -100;
-    final int HIGH_SETPOINT_PID_AUTO = 100;
-    //Proportional, Integral, and Dervative constants.
-    //These values will need to be tuned for your robot.
-    final double pAuto = 0.3;
-    final double iAuto = 0.0;
-    final double dAuto = 0.0;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -79,8 +71,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 
         if (doneEverythingAuto)
         {
-            drivingControl.driveToPID(drivingControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, pAuto, iAuto, dAuto), -100);
-            drivingControl.driveToPID(drivingControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, pAuto, iAuto, dAuto), -100);
+            driveControl.driveToPID(driveControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
+            driveControl.driveToPID(driveControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
         }
 
         // Feed watchdog during auton

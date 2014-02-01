@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  *
  */
-public class DrivingControl implements Values, ThreadsAndClasses
+public class DriveControl implements Values, ThreadsAndClasses
 {
     /**
      * Run drive train as normal, 1:1 input with joysticks.

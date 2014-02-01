@@ -26,8 +26,8 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
         while (true)
         {
             // Check if we need to adjust speed, or switch to turbo
-            drivingControl.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
-            drivingControl.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
+            driveControl.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
+            driveControl.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
 
             // Check if we need to switch gears
             if (leftJoystick.getRawButton(GEAR_SWITCH_ONE))

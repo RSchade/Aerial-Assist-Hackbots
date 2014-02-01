@@ -16,7 +16,6 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
 {
     public void run()
     {
-        
         boolean spinnySticksForwardOn = false;
         boolean spinnySticksBackwardOn = false;
 
@@ -39,7 +38,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                 pneumatics.stopSpinnySticksMovement(spinnySolenoidOne);
             }
             
-            // Check if we need to make the spinny sticks run forward or backward
+            // Check if we need to make the spinny sticks run forward or backward (toggle)
             if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && !spinnySticksForwardOn)
             {
                 controlSpinSticks.spinSticks(spinnyRightMotor, spinnyLeftMotor, HALF_SPEED);
