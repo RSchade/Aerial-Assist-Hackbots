@@ -5,6 +5,7 @@
  */
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.Values;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
@@ -14,7 +15,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author ray
  */
-public class ShooterControl 
+public class ShooterControl implements Values
 {
 
     public PIDController PIDInit(Encoder shooterEncoder, SpeedController shooterTalon, int lowValue, int highValue, double Kp, double Ki, double Kd)
@@ -38,10 +39,10 @@ public class ShooterControl
     {
         if (joystick.getRawButton(button))
         {
-            shooterTalon.set(1.0);
+            shooterTalon.set(FULL_SPEED);
         } else
         {
-            shooterTalon.set(0.0);
+            shooterTalon.set(NO_SPEED);
         }
     }
 }

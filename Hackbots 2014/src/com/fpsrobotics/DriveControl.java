@@ -33,12 +33,12 @@ public class DriveControl implements Values, ThreadsAndClasses
         if (batteryComp)
         {
 
-            leftDrive.set(this.batterySpeed() * (-leftSpeed));
-            rightDrive.set(this.batterySpeed() * (rightSpeed));
+            leftDrive.set(constrain.constrainDouble(this.batterySpeed() * (-leftSpeed), HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
+            rightDrive.set(constrain.constrainDouble(this.batterySpeed() * (-leftSpeed), HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
         } else
         {
-            leftDrive.set(-leftSpeed);
-            rightDrive.set(rightSpeed);
+            leftDrive.set(constrain.constrainDouble(-leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
+            rightDrive.set(constrain.constrainDouble(-leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
         }
     }
 
@@ -57,8 +57,8 @@ public class DriveControl implements Values, ThreadsAndClasses
 
         while (leftJoystick.getRawButton(1) || rightJoystick.getRawButton(1))
         {
-            leftDrive.set(constrainTurbo.constrainDouble(2 * (-leftJoystick.getRawAxis(2)), 1.0, -1.0));
-            rightDrive.set(constrainTurbo.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
+            leftDrive.set(constrain.constrainDouble(2 * (-leftJoystick.getRawAxis(2)), 1.0, -1.0));
+            rightDrive.set(constrain.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
         }
     }
 

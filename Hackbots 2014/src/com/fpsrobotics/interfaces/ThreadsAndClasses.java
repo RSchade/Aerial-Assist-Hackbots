@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Watchdog;
 public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids, Values
 {
 
-    Constrain constrainTurbo = new Constrain();
+    Constrain constrain = new Constrain();
     ControlSpinSticks controlSpinSticks = new ControlSpinSticks();
     DashboardOutputs dashboardOutputs = new DashboardOutputs();
     DriveTrain driveTrain = new DriveTrain();
