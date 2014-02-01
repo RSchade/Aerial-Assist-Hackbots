@@ -32,6 +32,8 @@ public interface DeviceMap
     // Shooter Encoders
     int SHOOTER_ENCODER_MAP_ONE = 6;// depricated
     int SHOOTER_ENCODER_MAP_TWO = 7;// depricated
+    // Accelerometer
+    int ACCEL_MAP = 8;
     
     // Analog
     // Potentiometers

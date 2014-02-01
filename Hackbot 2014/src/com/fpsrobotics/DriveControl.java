@@ -2,6 +2,7 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import com.fpsrobotics.interfaces.Values;
+import edu.wpi.first.wpilibj.Accelerometer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  */
 public class DriveControl implements Values, ThreadsAndClasses
 {
+
     /**
      * Run drive train as normal, 1:1 input with joysticks.
      *
@@ -106,7 +108,19 @@ public class DriveControl implements Values, ThreadsAndClasses
         drivePID.enable();
 
         drivePID.setInputRange(lowInput, highInput);
-        
+
         return drivePID;
     }
+
+    public void accelSwitchGears(Joystick leftJoystick, Joystick rightJoystick, Accelerometer accel)
+    {
+        if ((accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3) && (accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3))
+        {
+            if ((leftJoystick.getRawAxis(2) >= 0.5 || leftJoystick.getRawAxis(2) <= -0.5) || (rightJoystick.getRawAxis(2) >= 0.5 || rightJoystick.getRawAxis(2) <= -0.5))
+            {
+                pneumatics.switchGears(gearSolenoid, true);
+            }
+        }
+    }
+
 }
