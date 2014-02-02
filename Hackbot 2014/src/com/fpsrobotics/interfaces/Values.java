@@ -19,5 +19,7 @@ public interface Values
     
     double HIGH_DRIVE_SPEED = 1.0;
     double LOW_DRIVE_SPEED = -1.0;
+    
+    int THREAD_REFRESH_RATE = 50;
 
 }

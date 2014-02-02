@@ -42,6 +42,7 @@ public class DriveControl implements Values, ThreadsAndClasses
             leftDrive.set(constrain.constrainDouble(-leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
             rightDrive.set(constrain.constrainDouble(-leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
         }
+
     }
 
     /**

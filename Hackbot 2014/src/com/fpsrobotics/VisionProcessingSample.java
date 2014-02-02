@@ -78,7 +78,6 @@ public class VisionProcessingSample
 
     public void imageFindingAutonomous() throws AxisCameraException
     {
-        camera.writeColorLevel(100);
         TargetReport target = new TargetReport();
         int verticalTargets[] = new int[MAX_PARTICLES];
         int horizontalTargets[] = new int[MAX_PARTICLES];

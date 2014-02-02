@@ -67,7 +67,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
         }
 
         // something about shooting at the hot goal to turn doneEverythingAuto to turn true.
-        doneEverythingAuto = true;
+        doneEverythingAuto = false;
 
         if (doneEverythingAuto)
         {
@@ -77,6 +77,11 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 
         // Feed watchdog during auton
         hackbotWatch.feed(dog);
+    }
+
+    public void teleopInit()
+    {
+
     }
 
     /**
@@ -90,7 +95,6 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
         if (!doneAlready)
         {
             driveThread.start();
-
             hackbotStationThread.start();
             shooterThread.start();
             spinnySticksThread.start();
@@ -98,13 +102,43 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
             doneAlready = true;
         }
 
+        // Stop threads safely
+        if (!isOperatorControl())
+        {
+            try
+            {
+                driveThread.join();
+                hackbotStationThread.join();
+                shooterThread.join();
+                spinnySticksThread.join();
+            } catch (InterruptedException ex)
+            {
+                System.out.println("Can't stop threads");
+            }
+        }
+
         // Feed the watchdog
         hackbotWatch.feed(dog);
+    }
+
+    public void testInit()
+    {
+
     }
 
     public void testPeriodic()
     {
         // Feed watchdog during test
         hackbotWatch.feed(dog);
+    }
+
+    public void disabledInit()
+    {
+        
+    }
+
+    public void disabledPeriodic()
+    {
+
     }
 }

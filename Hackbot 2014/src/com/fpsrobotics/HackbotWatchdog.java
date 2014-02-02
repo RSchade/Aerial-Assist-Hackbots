@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.Watchdog;
  */
 public class HackbotWatchdog
 {
-
     public void feed(Watchdog dog)
     {
         dog.feed();
@@ -24,6 +23,4 @@ public class HackbotWatchdog
         dog.setEnabled(true);
         dog.setExpiration(expire);
     }
-
-
 }

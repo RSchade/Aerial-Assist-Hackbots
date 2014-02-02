@@ -23,24 +23,30 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
      */
     public void run()
     {
+        long previousTime = System.currentTimeMillis();
+
         while (true)
         {
-            // Check if we need to adjust speed, or switch to turbo
-            driveControl.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
-            driveControl.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
-
-            // Check if we need to switch gears
-            if (leftJoystick.getRawButton(GEAR_SWITCH_ONE))
+            if (previousTime - System.currentTimeMillis() >= THREAD_REFRESH_RATE)
             {
-                pneumatics.switchGears(gearSolenoid, true);
-            }
+                // Check if we need to adjust speed, or switch to turbo
+                driveControl.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
+                driveControl.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
+                driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
 
-            if (rightJoystick.getRawButton(GEAR_SWITCH_TWO))
-            {
-                pneumatics.switchGears(gearSolenoid, false);
+                // Check if we need to switch gears
+                if (leftJoystick.getRawButton(GEAR_SWITCH_ONE))
+                {
+                    pneumatics.switchGears(gearSolenoid, true);
+                }
+
+                if (rightJoystick.getRawButton(GEAR_SWITCH_TWO))
+                {
+                    pneumatics.switchGears(gearSolenoid, false);
+                }
+
+                previousTime = System.currentTimeMillis();
             }
-            
-            driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
         }
     }
 }
