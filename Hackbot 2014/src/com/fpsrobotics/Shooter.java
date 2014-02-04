@@ -7,7 +7,6 @@ import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.Talons;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
-import edu.wpi.first.wpilibj.PIDController;
 
 /**
  *
@@ -20,7 +19,7 @@ import edu.wpi.first.wpilibj.PIDController;
 public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, ControlMap, PID, ThreadsAndClasses
 {
 
-    PIDController shooterPID = shooterControl.PIDInit(shooterEncoder, shooterTalon, LOW_SHOOTER_PID_VALUE, HIGH_SHOOTER_PID_VALUE, shooterP, shooterI, shooterD);
+//    PIDController shooterPID = shooterControl.PIDInit(shooterEncoder, shooterTalon, LOW_SHOOTER_PID_VALUE, HIGH_SHOOTER_PID_VALUE, shooterP, shooterI, shooterD);
 
     public void run()
     {
@@ -28,13 +27,13 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
 
         while (true)
         {
-            if (previousTime - System.currentTimeMillis() >= THREAD_REFRESH_RATE)
+            if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
                 shooterControl.shootManual(gamepadJoystick, shooterTalon, SHOOTER_MANUAL);
 
                 // Presets (dummy, real presets to be added later)
                 presets.shooterPresetBoth(gamepadJoystick, shooterPot, shooterEncoder, shooterTalon, 300, 5, SHOOTER_PRESET_ONE, 1.0);
-                presets.shooterPresetPID(gamepadJoystick, shooterPID, SHOOTER_PRESET_TWO, 10);
+//                presets.shooterPresetPID(gamepadJoystick, shooterPID, SHOOTER_PRESET_TWO, 10);
 
                 previousTime = System.currentTimeMillis();
             }

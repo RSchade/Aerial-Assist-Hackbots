@@ -13,13 +13,13 @@ public interface PID
 {
 
     // PID for shooter
-    double shooterP = 0.3;
-    double shooterI = 0.0;
-    double shooterD = 0.0;
+//    double shooterP = 0.3;
+//    double shooterI = 0.0;
+//    double shooterD = 0.0;
 
     // high and low setpoint boundaries for shooter
-    int LOW_SHOOTER_PID_VALUE = 0;
-    int HIGH_SHOOTER_PID_VALUE = 100;
+//    int LOW_SHOOTER_PID_VALUE = 0;
+//    int HIGH_SHOOTER_PID_VALUE = 100;
 
     // PID for autonomous
     double autoP = 0.3;

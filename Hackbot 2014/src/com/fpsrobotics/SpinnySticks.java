@@ -25,7 +25,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
         while (true)
         {
 
-            if (previousTime - System.currentTimeMillis() >= THREAD_REFRESH_RATE)
+            if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
 
                 // Check if we need to extend or retract the spinny sticks

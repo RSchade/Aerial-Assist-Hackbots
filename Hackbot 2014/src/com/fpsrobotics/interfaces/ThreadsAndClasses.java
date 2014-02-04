@@ -37,6 +37,4 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     Thread spinnySticksThread = new Thread(spinnySticks);
     Thread pidLoopThread = new Thread(pidloop);
 
-    // Watchdog
-    Watchdog dog = Watchdog.getInstance();
 }

@@ -9,6 +9,7 @@ package com.fpsrobotics;
 import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
 /**
@@ -31,6 +32,9 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
     // Local variables
     boolean doneAlready = false;
     boolean doneEverythingAuto = false;
+
+    // Watchdog
+    Watchdog dog = Watchdog.getInstance();
 
     /**
      * This function is run when the robot is first started up and should be
@@ -65,7 +69,14 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
         {
             ex.printStackTrace();
         }
-
+        try
+        {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex)
+        {
+            ex.printStackTrace();
+        }
+        
         // something about shooting at the hot goal to turn doneEverythingAuto to turn true.
         doneEverythingAuto = false;
 
@@ -134,7 +145,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 
     public void disabledInit()
     {
-        
+
     }
 
     public void disabledPeriodic()

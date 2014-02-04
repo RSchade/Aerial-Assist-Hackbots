@@ -47,7 +47,7 @@ public class VisionProcessingSample
     final int MAX_PARTICLES = 8;
     AxisCamera camera = AxisCamera.getInstance();          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
-    
+
     public class Scores
     {
 
@@ -93,16 +93,16 @@ public class VisionProcessingSample
              * "testImage.jpg"
              *
              */
-            
-            
+
             ColorImage image = camera.getImage();     // comment if using stored images
             //ColorImage image;                           // next 2 lines read image from flash on cRIO
             //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
-            BinaryImage thresholdImage = image.thresholdRGB(255, 255, 0, 255, 255, 255);   // keep only green objects
+           // BinaryImage thresholdImage = image.thresholdRGB(0, 255, 200, 255, 0, 255);   // keep only green objects
+            BinaryImage thresholdImage = image.thresholdHSL(0, 255, 0, 255, 245, 255);
             //thresholdImage.write("/threshold.bmp");
             BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles
             filteredImage.write("/filteredImage.bmp");
-          
+
             //iterate through each particle and score to see if it is a target
             Scores scores[] = new Scores[filteredImage.getNumberParticles()];
             horizontalTargetCount = verticalTargetCount = 0;
@@ -111,7 +111,13 @@ public class VisionProcessingSample
             {
                 for (int i = 0; i < MAX_PARTICLES && i < filteredImage.getNumberParticles(); i++)
                 {
+                    System.out.println(i);
+                    
                     ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);
+
+                    System.out.println("Height " + report.boundingRectHeight);
+                    System.out.println("Width " + report.boundingRectWidth);
+
                     scores[i] = new Scores();
 
                     //Score each particle on rectangularity and aspect ratio

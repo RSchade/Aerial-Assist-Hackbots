@@ -22,6 +22,7 @@ public class RobotCamera
         robotCamera.writeCompression(70);
         robotCamera.writeColorLevel(100);
         robotCamera.writeResolution(AxisCamera.ResolutionT.k320x240);
+        robotCamera.writeBrightness(50);
     }
 
 }
