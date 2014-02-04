@@ -6,6 +6,7 @@
 package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.Values;
+import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
@@ -41,6 +42,16 @@ public class ShooterControl implements Values
         {
             shooterTalon.set(FULL_SPEED);
         } else
+        {
+            shooterTalon.set(NO_SPEED);
+        }
+    }
+    
+    public void shootAuto(SpeedController shooterTalon, AnalogChannel shooterPot)
+    {
+        shooterTalon.set(FULL_SPEED);
+        
+        if (shooterPot.getValue() >= 100)
         {
             shooterTalon.set(NO_SPEED);
         }

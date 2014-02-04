@@ -32,6 +32,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
     // Local variables
     boolean doneAlready = false;
     boolean doneEverythingAuto = false;
+    int goodImageCounter = 0;
 
     // Watchdog
     Watchdog dog = Watchdog.getInstance();
@@ -62,32 +63,48 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
      */
     public void autonomousPeriodic()
     {
+
         try
         {
-            visionSample.imageFindingAutonomous();
+
+            while (goodImageCounter <= 2)
+            {
+                if (visionSample.imageFindingAutonomous())
+                {
+                    goodImageCounter++;
+
+                    System.out.println("New Image");
+
+                }
+
+                hackbotWatch.feed(dog);
+            }
+
+            goodImageCounter = 0;
+
+            System.out.println("Shooting");
+
+            // Shoot if three in a row
+            shooterControl.shootAuto(shooterTalon, shooterPot);
+
+            hackbotWatch.feed(dog);
+
+            // Drive
+            driveControl.driveToPID(driveControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
+            driveControl.driveToPID(driveControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
+
+            // Feed watchdog during auton
+            hackbotWatch.feed(dog);
+
+            while (super.isAutonomous())
+            {
+                hackbotWatch.feed(dog);
+            }
+
         } catch (AxisCameraException ex)
         {
             ex.printStackTrace();
         }
-        try
-        {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex)
-        {
-            ex.printStackTrace();
-        }
-        
-        // something about shooting at the hot goal to turn doneEverythingAuto to turn true.
-        doneEverythingAuto = false;
-
-        if (doneEverythingAuto)
-        {
-            driveControl.driveToPID(driveControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
-            driveControl.driveToPID(driveControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
-        }
-
-        // Feed watchdog during auton
-        hackbotWatch.feed(dog);
     }
 
     public void teleopInit()

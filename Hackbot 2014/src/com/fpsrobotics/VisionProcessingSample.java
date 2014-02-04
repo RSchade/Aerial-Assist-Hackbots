@@ -48,6 +48,8 @@ public class VisionProcessingSample
     AxisCamera camera = AxisCamera.getInstance();          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
 
+    boolean shootNow;
+
     public class Scores
     {
 
@@ -76,7 +78,7 @@ public class VisionProcessingSample
         cc.addCriteria(MeasurementType.IMAQ_MT_AREA, AREA_MINIMUM, 65535, false);
     }
 
-    public void imageFindingAutonomous() throws AxisCameraException
+    public boolean imageFindingAutonomous() throws AxisCameraException
     {
         TargetReport target = new TargetReport();
         int verticalTargets[] = new int[MAX_PARTICLES];
@@ -97,9 +99,9 @@ public class VisionProcessingSample
             ColorImage image = camera.getImage();     // comment if using stored images
             //ColorImage image;                           // next 2 lines read image from flash on cRIO
             //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
-           // BinaryImage thresholdImage = image.thresholdRGB(0, 255, 200, 255, 0, 255);   // keep only green objects
-            BinaryImage thresholdImage = image.thresholdHSL(0, 255, 0, 255, 245, 255);
-            //thresholdImage.write("/threshold.bmp");
+            // BinaryImage thresholdImage = image.thresholdRGB(0, 255, 200, 255, 0, 255);   // keep only green objects
+            BinaryImage thresholdImage = image.thresholdHSL(0, 255, 0, 255, 245, 255); // HSV values need to be tuned
+//            thresholdImage.write("/threshold.bmp");
             BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles
             filteredImage.write("/filteredImage.bmp");
 
@@ -112,7 +114,7 @@ public class VisionProcessingSample
                 for (int i = 0; i < MAX_PARTICLES && i < filteredImage.getNumberParticles(); i++)
                 {
                     System.out.println(i);
-                    
+
                     ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);
 
                     System.out.println("Height " + report.boundingRectHeight);
@@ -128,18 +130,26 @@ public class VisionProcessingSample
                     //Check if the particle is a horizontal target, if not, check if it's a vertical target
                     if (scoreCompare(scores[i], false))
                     {
+                        filteredImage.free();
+                        thresholdImage.free();
+                        image.free();
+                        
                         System.out.println("particle: " + i + "is a Horizontal Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
                         horizontalTargets[horizontalTargetCount++] = i; //Add particle to target array and increment count
+                        return true;
                     } else if (scoreCompare(scores[i], true))
                     {
                         System.out.println("particle: " + i + "is a Vertical Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
                         verticalTargets[verticalTargetCount++] = i;  //Add particle to target array and increment count
+                        return true;
                     } else
                     {
                         System.out.println("particle: " + i + "is not a Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
+
                     }
                     System.out.println("rect: " + scores[i].rectangularity + "ARHoriz: " + scores[i].aspectRatioHorizontal);
                     System.out.println("ARVert: " + scores[i].aspectRatioVertical);
+
                 }
 
                 //Zero out scores and set verticalIndex to first target in case there are no horizontal targets
@@ -202,6 +212,7 @@ public class VisionProcessingSample
                         System.out.println("Distance: " + distance);
                     }
                 }
+
             }
 
             /**
@@ -220,6 +231,8 @@ public class VisionProcessingSample
         {
             ex.printStackTrace();
         }
+
+        return false;
 
     }
 
