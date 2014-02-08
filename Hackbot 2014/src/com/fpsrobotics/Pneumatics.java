@@ -7,6 +7,7 @@ package com.fpsrobotics;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  *
@@ -84,17 +85,17 @@ public class Pneumatics
      * Switch gears (sonic shifters).
      * 
      * @param gearSwitch
-     * @param lowHigh 
+     * @param areWeSwitched 
      */
-    public void switchGears(DoubleSolenoid gearSwitch, boolean lowHigh)
+    public void switchGears(Solenoid gearSwitch, boolean areWeSwitched)
     {
-        if (lowHigh)
+        if (areWeSwitched)
         {
-            gearSwitch.set(DoubleSolenoid.Value.kForward);
+            gearSwitch.set(areWeSwitched);
         }
-        if (!lowHigh)
+        if (!areWeSwitched)
         {
-            gearSwitch.set(DoubleSolenoid.Value.kReverse);
+            gearSwitch.set(areWeSwitched);
         }
     }
 }

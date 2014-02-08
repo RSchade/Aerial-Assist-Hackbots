@@ -57,6 +57,11 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
         robotCamera.init();
     }
 
+    public void autonomousInit()
+    {
+        
+    }
+    
     /**
      * This function is called periodically during autonomous. Autonomous code
      * goes here. Something about shooting in the hot goal and then going back.
