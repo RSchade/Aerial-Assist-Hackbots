@@ -13,11 +13,11 @@ public interface DeviceMap
     int LEFT_DRIVE_MAP = 2;
     int RIGHT_DRIVE_MAP = 1;
     // Shooter
-    int SHOOTER_TALON_MAP = 3;
+    int SHOOTER_TALON_MAP = 4;
     // Spinny Sticks
 //    int LEFT_SPIN_MAP = 4;
 //    int RIGHT_SPIN_MAP = 5;
-    int SPIN_MAP = 4;
+    int SPIN_MAP = 3;
 
     // Relays
     // Spike
