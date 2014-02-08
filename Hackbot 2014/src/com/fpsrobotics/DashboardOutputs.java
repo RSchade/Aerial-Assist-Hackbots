@@ -3,6 +3,7 @@ package com.fpsrobotics;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -19,8 +20,10 @@ public class DashboardOutputs
      * @param rightJoystick
      * @param encoder
      * @param shooter
+     * @param spinnySticks
+     * @param distanceSensor
      */
-    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, Shooter shooter, SpinnySticks spinnySticks)
+    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, Shooter shooter, SpinnySticks spinnySticks, Ultrasonic distanceSensor)
     {
         // Variable outputs to dashboard
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
@@ -35,6 +38,7 @@ public class DashboardOutputs
         SmartDashboard.putBoolean("Sticks Extended", spinnySticks.getAreWeExtended());
         SmartDashboard.putBoolean("Sticks Forward", spinnySticks.getAreWeForward());
         SmartDashboard.putBoolean("Sticks Backward", spinnySticks.getAreWeBackward());
+        SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getRangeInches()/12);
     }
 
     public void batteryOutput()

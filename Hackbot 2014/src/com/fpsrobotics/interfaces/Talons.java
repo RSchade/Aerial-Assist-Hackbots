@@ -15,8 +15,8 @@ public interface Talons extends DeviceMap
     SpeedController leftDrive = new Talon(LEFT_DRIVE_MAP);
     SpeedController rightDrive = new Talon(RIGHT_DRIVE_MAP);
     
-    SpeedController spinnyLeftMotor = new Talon(LEFT_SPIN_MAP);
-    SpeedController spinnyRightMotor = new Talon(RIGHT_SPIN_MAP);
+    SpeedController spinnyMotor = new Talon(SPIN_MAP);
+//    SpeedController spinnyRightMotor = new Talon(RIGHT_SPIN_MAP);
     
     SpeedController shooterTalon = new Talon(SHOOTER_TALON_MAP);
     // Create other Talons here

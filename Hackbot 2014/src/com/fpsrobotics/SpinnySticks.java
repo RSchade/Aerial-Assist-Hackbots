@@ -61,11 +61,11 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                 {
                     if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && !spinnySticksForward)
                     {
-                        controlSpinSticks.spinSticks(spinnyRightMotor, spinnyLeftMotor, HALF_SPEED);
+                        controlSpinSticks.spinSticks(spinnyMotor, HALF_SPEED);
                         spinnySticksForward = true;
                     } else if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && spinnySticksForward)
                     {
-                        controlSpinSticks.spinSticks(spinnyRightMotor, spinnyLeftMotor, NO_SPEED);
+                        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
                         spinnySticksForward = false;
                     }
 
@@ -77,11 +77,11 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                 {
                     if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && spinnySticksBackward)
                     {
-                        controlSpinSticks.spinSticks(spinnyRightMotor, spinnyLeftMotor, -HALF_SPEED);
+                        controlSpinSticks.spinSticks(spinnyMotor, -HALF_SPEED);
                         spinnySticksBackward = false;
                     } else if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && !spinnySticksBackward)
                     {
-                        controlSpinSticks.spinSticks(spinnyRightMotor, spinnyLeftMotor, NO_SPEED);
+                        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
                         spinnySticksBackward = true;
                     }
                     

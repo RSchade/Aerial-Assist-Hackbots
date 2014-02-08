@@ -10,13 +10,14 @@ public interface DeviceMap
 
     // Talons
     // Drive Thread
-    int LEFT_DRIVE_MAP = 1;
-    int RIGHT_DRIVE_MAP = 2;
+    int LEFT_DRIVE_MAP = 2;
+    int RIGHT_DRIVE_MAP = 1;
     // Shooter
     int SHOOTER_TALON_MAP = 3;
     // Spinny Sticks
-    int LEFT_SPIN_MAP = 4;
-    int RIGHT_SPIN_MAP = 5;
+//    int LEFT_SPIN_MAP = 4;
+//    int RIGHT_SPIN_MAP = 5;
+    int SPIN_MAP = 4;
 
     // Relays
     // Spike
@@ -33,6 +34,9 @@ public interface DeviceMap
     // Shooter Encoders
     int SHOOTER_ENCODER_MAP_ONE = 6;// depricated
     int SHOOTER_ENCODER_MAP_TWO = 7;// depricated
+    // Ultrasonic Sensor
+    int DISTANCE_OUTPUT_MAP = 8;
+    int DISTANCE_INPUT_MAP = 9;
 
     // Analog
     // Potentiometers
