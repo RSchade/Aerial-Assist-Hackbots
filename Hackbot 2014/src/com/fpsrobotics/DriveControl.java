@@ -83,11 +83,29 @@ public class DriveControl implements Values, ThreadsAndClasses
 
     }
 
+    /**
+     * Drive to a specified distance
+     * 
+     * @param drivePID
+     * @param distance 
+     */
     public void driveToPID(PIDController drivePID, int distance)
     {
         drivePID.setSetpoint(distance);
     }
 
+    /**
+     * Initialize the PID for driving
+     * 
+     * @param drive
+     * @param driveEncoder
+     * @param lowInput
+     * @param highInput
+     * @param Kp
+     * @param Ki
+     * @param Kd
+     * @return 
+     */
     public PIDController initDrivePID(SpeedController drive, Encoder driveEncoder, int lowInput, int highInput, double Kp, double Ki, double Kd)
     {
         PIDController drivePID;
@@ -113,6 +131,13 @@ public class DriveControl implements Values, ThreadsAndClasses
         return drivePID;
     }
 
+    /**
+     * Switch gears using accelerometer values, so if we are being rammed or are ramming we automatically switch into low gear.
+     * 
+     * @param leftJoystick
+     * @param rightJoystick
+     * @param accel 
+     */
     public void accelSwitchGears(Joystick leftJoystick, Joystick rightJoystick, Accelerometer accel)
     {
         if ((accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3) && (accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3))

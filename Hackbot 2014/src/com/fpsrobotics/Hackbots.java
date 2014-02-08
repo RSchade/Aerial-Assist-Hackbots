@@ -53,7 +53,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
         pneumatics.init(compressor);
 
         // Camera settings init
-        visionSample.imageFindingRobotInit();
+        visionSample.imageFindInit();
         robotCamera.init();
     }
 
@@ -69,7 +69,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 
             while (goodImageCounter <= 2)
             {
-                if (visionSample.imageFindingAutonomous())
+                if (visionSample.autoImageFind())
                 {
                     goodImageCounter++;
 
@@ -144,7 +144,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
                 System.out.println("Can't stop threads");
             }
         }
-
+        
         // Feed the watchdog
         hackbotWatch.feed(dog);
     }

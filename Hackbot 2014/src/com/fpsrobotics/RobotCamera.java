@@ -12,6 +12,10 @@ public class RobotCamera
 
     private AxisCamera robotCamera;
 
+    /**
+     * Initialize the camera.
+     * 
+     */
     public void init()
     {
         robotCamera = AxisCamera.getInstance();

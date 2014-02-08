@@ -17,7 +17,7 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
 
     /**
      *
-     * Controls the drive train through ControlDrive's methods in a seperate
+     * Controls the drive train through ControlDrive's methods in a separate
      * thread.
      *
      */

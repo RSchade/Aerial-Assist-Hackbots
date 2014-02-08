@@ -15,16 +15,32 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 public class Pneumatics
 {
 
+    /**
+     * Initialize the compressor.
+     * 
+     * @param compressor 
+     */
     public void init(Compressor compressor)
     {
         compressor.start();
     }
 
+    /**
+     * Stop the compressor
+     * 
+     * @param compressor 
+     */
     public void stop(Compressor compressor)
     {
         compressor.stop();
     }
 
+    /**
+     * Check if the compressor is full. (nonfunctional)
+     * 
+     * @param compressor
+     * @return 
+     */
     public boolean isItFull(Compressor compressor)
     {
         if (compressor.enabled())
@@ -35,7 +51,12 @@ public class Pneumatics
         return false;
     }
 
-    // Spinny Sticks
+    /**
+     * Move the spinny sticks.
+     * 
+     * @param spinnyStickSolenoid
+     * @param forwardBackward 
+     */
     public void spinnySticksMovement(DoubleSolenoid spinnyStickSolenoid, boolean forwardBackward)
     {
         if (forwardBackward)
@@ -49,12 +70,22 @@ public class Pneumatics
         }
     }
 
+    /**
+     * Stop the spinny sticks.
+     * 
+     * @param spinnyStickSolenoid 
+     */
     public void stopSpinnySticksMovement(DoubleSolenoid spinnyStickSolenoid)
     {
         spinnyStickSolenoid.set(DoubleSolenoid.Value.kOff);
     }
 
-    // Drive Train
+    /**
+     * Switch gears (sonic shifters).
+     * 
+     * @param gearSwitch
+     * @param lowHigh 
+     */
     public void switchGears(DoubleSolenoid gearSwitch, boolean lowHigh)
     {
         if (lowHigh)

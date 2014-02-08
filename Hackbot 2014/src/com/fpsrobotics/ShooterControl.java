@@ -19,6 +19,18 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class ShooterControl implements Values
 {
 
+    /**
+     * Initialize the shooter using PIDs.
+     * 
+     * @param shooterEncoder
+     * @param shooterTalon
+     * @param lowValue
+     * @param highValue
+     * @param Kp
+     * @param Ki
+     * @param Kd
+     * @return 
+     */
     public PIDController PIDInit(Encoder shooterEncoder, SpeedController shooterTalon, int lowValue, int highValue, double Kp, double Ki, double Kd)
     {
         PIDController shooterPID;
@@ -36,6 +48,13 @@ public class ShooterControl implements Values
         return shooterPID;
     }
 
+    /**
+     * Shoot manually.
+     * 
+     * @param joystick
+     * @param shooterTalon
+     * @param button 
+     */
     public void shootManual(Joystick joystick, SpeedController shooterTalon, int button)
     {
         if (joystick.getRawButton(button))
@@ -47,6 +66,12 @@ public class ShooterControl implements Values
         }
     }
     
+    /**
+     * Shoot in autonomous.
+     * 
+     * @param shooterTalon
+     * @param shooterPot 
+     */
     public void shootAuto(SpeedController shooterTalon, AnalogChannel shooterPot)
     {
         shooterTalon.set(FULL_SPEED);

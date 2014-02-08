@@ -36,7 +36,8 @@ public class VisionProcessingSample
     final double PI = 3.141592653;
     //Score limits used for target identification
     final int RECTANGULARITY_LIMIT = 40;
-    final int ASPECT_RATIO_LIMIT = 55;
+    final int ASPECT_RATIO_LIMIT_TARGET = 55;
+    final int ASPECT_RATIO_LIMIT_BUMPER = 40;
     //Score limits used for hot target determination
     final int TAPE_WIDTH_LIMIT = 50;
     final int VERTICAL_SCORE_LIMIT = 50;
@@ -58,6 +59,13 @@ public class VisionProcessingSample
         double aspectRatioHorizontal;
     }
 
+    public class ScoresBumper
+    {
+
+        double rectangularity;
+        double aspectRatioHorizontal;
+    }
+
     public class TargetReport
     {
 
@@ -71,14 +79,14 @@ public class VisionProcessingSample
         double verticalScore;
     };
 
-    public void imageFindingRobotInit()
+    public void imageFindInit()
     {
         //camera = AxisCamera.getInstance();  // get an instance of the camera
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_AREA, AREA_MINIMUM, 65535, false);
     }
 
-    public boolean imageFindingAutonomous() throws AxisCameraException
+    public boolean autoImageFind() throws AxisCameraException
     {
         TargetReport target = new TargetReport();
         int verticalTargets[] = new int[MAX_PARTICLES];
@@ -103,7 +111,7 @@ public class VisionProcessingSample
             BinaryImage thresholdImage = image.thresholdHSL(0, 255, 0, 255, 245, 255); // HSV values need to be tuned
 //            thresholdImage.write("/threshold.bmp");
             BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles
-            filteredImage.write("/filteredImage.bmp");
+            filteredImage.write("/filteredImageHotGoal.bmp");
 
             //iterate through each particle and score to see if it is a target
             Scores scores[] = new Scores[filteredImage.getNumberParticles()];
@@ -128,16 +136,16 @@ public class VisionProcessingSample
                     scores[i].aspectRatioHorizontal = scoreAspectRatio(filteredImage, report, i, false);
 
                     //Check if the particle is a horizontal target, if not, check if it's a vertical target
-                    if (scoreCompare(scores[i], false))
+                    if (scoreCompareTarget(scores[i], false))
                     {
                         filteredImage.free();
                         thresholdImage.free();
                         image.free();
-                        
+
                         System.out.println("particle: " + i + "is a Horizontal Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
                         horizontalTargets[horizontalTargetCount++] = i; //Add particle to target array and increment count
                         return true;
-                    } else if (scoreCompare(scores[i], true))
+                    } else if (scoreCompareTarget(scores[i], true))
                     {
                         System.out.println("particle: " + i + "is a Vertical Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
                         verticalTargets[verticalTargetCount++] = i;  //Add particle to target array and increment count
@@ -236,12 +244,84 @@ public class VisionProcessingSample
 
     }
 
-    /**
-     * This function is called once each time the robot enters operator control.
-     */
-    public void imageFindingOperatorControl()
+    public void bumperImageFind() throws AxisCameraException
     {
-        Timer.delay(1);
+        TargetReport target = new TargetReport();
+//        int horizontalTargets[] = new int[MAX_PARTICLES];
+//        int horizontalTargetCount;
+
+        try
+        {
+            /**
+             * Do the image capture with the camera and apply the algorithm
+             * described above. This sample will either get images from the
+             * camera or from an image file stored in the top level directory in
+             * the flash memory on the cRIO. The file name in this case is
+             * "testImage.jpg"
+             *
+             */
+
+            ColorImage image = camera.getImage();     // comment if using stored images
+            BinaryImage thresholdImage = image.thresholdRGB(230, 255, 0, 255, 0, 255);
+            BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles
+            filteredImage.write("/filteredImageBumper.bmp");
+
+            //iterate through each particle and score to see if it is a target
+            ScoresBumper scores[] = new ScoresBumper[filteredImage.getNumberParticles()];
+
+            if (filteredImage.getNumberParticles() > 0)
+            {
+                for (int i = 0; i < MAX_PARTICLES && i < filteredImage.getNumberParticles(); i++)
+                {
+                    System.out.println(i);
+
+                    ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);
+
+                    System.out.println("Height " + report.boundingRectHeight);
+                    System.out.println("Width " + report.boundingRectWidth);
+
+                    scores[i] = new ScoresBumper();
+
+                    //Score each particle on rectangularity and aspect ratio
+                    scores[i].rectangularity = scoreRectangularity(report);
+                    scores[i].aspectRatioHorizontal = scoreAspectRatio(filteredImage, report, i, false);
+
+                    //Check if the particle is a horizontal bumper
+                    if (scoreCompareBumper(scores[i]))
+                    {
+                        System.out.println("particle: " + i + "is a Horizontal Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
+
+                    } else
+                    {
+                        System.out.println("particle: " + i + "is not a Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
+
+                    }
+
+                    System.out.println("rect: " + scores[i].rectangularity + " ARHoriz: " + scores[i].aspectRatioHorizontal);
+
+                }
+
+                //Zero out scores and set verticalIndex to first target in case there are no horizontal targets
+                target.totalScore = target.leftScore = target.rightScore = target.tapeWidthScore = target.verticalScore = 0;
+            }
+
+            /**
+             * all images in Java must be freed after they are used since they
+             * are allocated out of C data structures. Not calling free() will
+             * cause the memory to accumulate over each pass of this loop.
+             */
+            filteredImage.free();
+            thresholdImage.free();
+            image.free();
+
+        } catch (AxisCameraException ex)
+        {        // this is needed if the camera.getImage() is called
+            ex.printStackTrace();
+        } catch (NIVisionException ex)
+        {
+            ex.printStackTrace();
+        }
+
     }
 
     /**
@@ -317,18 +397,28 @@ public class VisionProcessingSample
      *
      * @return True if the particle meets all limits, false otherwise
      */
-    boolean scoreCompare(Scores scores, boolean vertical)
+    boolean scoreCompareTarget(Scores scores, boolean vertical)
     {
         boolean isTarget = true;
 
         isTarget &= scores.rectangularity > RECTANGULARITY_LIMIT;
         if (vertical)
         {
-            isTarget &= scores.aspectRatioVertical > ASPECT_RATIO_LIMIT;
+            isTarget &= scores.aspectRatioVertical > ASPECT_RATIO_LIMIT_TARGET;
         } else
         {
-            isTarget &= scores.aspectRatioHorizontal > ASPECT_RATIO_LIMIT;
+            isTarget &= scores.aspectRatioHorizontal > ASPECT_RATIO_LIMIT_TARGET;
         }
+
+        return isTarget;
+    }
+
+    boolean scoreCompareBumper(ScoresBumper scores)
+    {
+        boolean isTarget = true;
+
+        isTarget &= scores.rectangularity > RECTANGULARITY_LIMIT;
+        isTarget &= scores.aspectRatioHorizontal > ASPECT_RATIO_LIMIT_BUMPER;
 
         return isTarget;
     }

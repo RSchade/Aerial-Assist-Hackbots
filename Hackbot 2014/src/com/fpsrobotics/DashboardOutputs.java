@@ -18,8 +18,9 @@ public class DashboardOutputs
      * @param leftJoystick
      * @param rightJoystick
      * @param encoder
+     * @param shooter
      */
-    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder)
+    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, Shooter shooter, SpinnySticks spinnySticks)
     {
         // Variable outputs to dashboard
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
@@ -28,6 +29,12 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Battery Voltage", DriverStation.getInstance().getBatteryVoltage());
         SmartDashboard.putNumber("Encoder Rate", encoder.getRate());
         SmartDashboard.putNumber("Encoder Value", encoder.getRaw());
+        SmartDashboard.putNumber("Dynamic Preset Distance", shooter.getDynamicPresetDistance());
+        SmartDashboard.putNumber("Dynamic Preset Speed", shooter.getDynamicPresetSpeed());
+        SmartDashboard.putBoolean("Is Shooting", shooter.getAreWeShooting());
+        SmartDashboard.putBoolean("Sticks Extended", spinnySticks.getAreWeExtended());
+        SmartDashboard.putBoolean("Sticks Forward", spinnySticks.getAreWeForward());
+        SmartDashboard.putBoolean("Sticks Backward", spinnySticks.getAreWeBackward());
     }
 
     public void batteryOutput()
@@ -50,7 +57,7 @@ public class DashboardOutputs
 
     public void teamOutput()
     {
-        // to make sure our driver station is configured correctly
+        // to make sure our driver station is configured correctly (team)
         if (DriverStation.getInstance().getTeamNumber() != 3414)
         {
             System.out.println("Come on, don't steal our code!");

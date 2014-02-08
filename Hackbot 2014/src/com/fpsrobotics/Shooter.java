@@ -19,8 +19,14 @@ import com.fpsrobotics.interfaces.ThreadsAndClasses;
 public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, ControlMap, PID, ThreadsAndClasses
 {
 
-//    PIDController shooterPID = shooterControl.PIDInit(shooterEncoder, shooterTalon, LOW_SHOOTER_PID_VALUE, HIGH_SHOOTER_PID_VALUE, shooterP, shooterI, shooterD);
+    double dynamicPresetDistance = 0;
+    double dynamicPresetSpeed = 0;
+    
+    boolean areWeShooting;
 
+    /**
+     * Thread to control the shooter.
+     */
     public void run()
     {
         long previousTime = System.currentTimeMillis();
@@ -29,14 +35,32 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
-                shooterControl.shootManual(gamepadJoystick, shooterTalon, SHOOTER_MANUAL);
-
                 // Presets (dummy, real presets to be added later)
-                presets.shooterPresetBoth(gamepadJoystick, shooterPot, shooterEncoder, shooterTalon, 300, 5, SHOOTER_PRESET_ONE, 1.0);
-//                presets.shooterPresetPID(gamepadJoystick, shooterPID, SHOOTER_PRESET_TWO, 10);
+                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalon, 300, SHOOTER_PRESET_ONE, 1.0);
+
+                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalon, (int) dynamicPresetDistance, SHOOTER_MANUAL, dynamicPresetSpeed);
+
+                dynamicPresetDistance += -gamepadJoystick.getRawAxis(2);
+                dynamicPresetSpeed += gamepadJoystick.getRawAxis(1);
 
                 previousTime = System.currentTimeMillis();
             }
         }
     }
+
+    public double getDynamicPresetDistance()
+    {
+        return dynamicPresetDistance;
+    }
+
+    public double getDynamicPresetSpeed()
+    {
+        return dynamicPresetSpeed;
+    }
+    
+    public boolean getAreWeShooting()
+    {
+        return presets.getAreWeShooting();
+    }
+    
 }

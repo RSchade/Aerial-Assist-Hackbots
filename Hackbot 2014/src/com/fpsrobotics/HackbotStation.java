@@ -25,12 +25,12 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
         while (true)
         {
             //Everything outputs every second, to reduce lag and heat
-            if (System.currentTimeMillis() - previousTime >= 1000)
+            if (System.currentTimeMillis() - previousTime >= THREAD_REFRESH_RATE)
             {
                 // Output variables to dashboard
                 dashboardOutputs.batteryOutput();
                 dashboardOutputs.teamOutput();
-                dashboardOutputs.outputToDashboard(leftJoystick, rightJoystick, leftDriveEncoder);
+                dashboardOutputs.outputToDashboard(leftJoystick, rightJoystick, leftDriveEncoder, shooter, spinnySticks);
 
                 // Reset timer to current time
                 previousTime = System.currentTimeMillis();

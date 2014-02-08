@@ -17,6 +17,11 @@ public class OffloadProcesses
 
     NetworkTable offload;
 
+    /**
+     * Offload some processes (undetermined) to another microprocessor, like a beaglebone or arduino.
+     * 
+     * @return 
+     */
     public boolean initOffload()
     {
         try
