@@ -1,4 +1,4 @@
 So far, in threads other than main, we create a new class to house code in the run() method when it gets more than a small amount.
-To split up a thread, you need to first asses weather or not you can break up the code in the thread in a meaningful way. 
+To split up a thread, you need to first assess weather or not you can break up the code in the thread in a meaningful way. 
 For example, all DriveTrain code should go in the same method, because it's all controls the same thing.
 There should be at least two different new methods to create if you were to split up a run() method with a new class.
