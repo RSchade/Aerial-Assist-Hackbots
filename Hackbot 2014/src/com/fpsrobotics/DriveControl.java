@@ -35,12 +35,12 @@ public class DriveControl implements Values, ThreadsAndClasses
         if (batteryComp)
         {
 
-            leftDrive.set(constrain.constrainDouble(this.batterySpeed() * (-leftSpeed), HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
-            rightDrive.set(constrain.constrainDouble(this.batterySpeed() * (-leftSpeed), HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
+            leftDrive.set(constrain.constrainDouble(this.batterySpeed() * (leftSpeed), HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
+            rightDrive.set(constrain.constrainDouble(this.batterySpeed() * (-rightSpeed), HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
         } else
         {
-            leftDrive.set(constrain.constrainDouble(-leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
-            rightDrive.set(constrain.constrainDouble(-leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
+            leftDrive.set(constrain.constrainDouble(leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
+            rightDrive.set(constrain.constrainDouble(-rightSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
         }
 
     }

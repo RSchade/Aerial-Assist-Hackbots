@@ -41,19 +41,13 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                     pneumatics.spinnySticksMovement(spinnySolenoid, true);
 
                     areWeExtended = true;
-                } else
-                {
-                    pneumatics.stopSpinnySticksMovement(spinnySolenoid);
-                }
+                } 
 
                 if (gamepadJoystick.getRawButton(SPINNY_RETRACT))
                 {
                     pneumatics.spinnySticksMovement(spinnySolenoid, false);
 
                     areWeExtended = false;
-                } else
-                {
-                    pneumatics.stopSpinnySticksMovement(spinnySolenoid);
                 }
 
                 // Check if we need to make the spinny sticks run forward or backward (toggle)

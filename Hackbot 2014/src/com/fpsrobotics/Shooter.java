@@ -36,9 +36,9 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
                 // Presets (dummy, real presets to be added later)
-                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalon, 300, SHOOTER_PRESET_ONE, 1.0);
+                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 1.0);
 
-                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalon, (int) dynamicPresetDistance, SHOOTER_MANUAL, dynamicPresetSpeed);
+                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, (int) dynamicPresetDistance, SHOOTER_MANUAL, dynamicPresetSpeed);
 
                 dynamicPresetDistance += -gamepadJoystick.getRawAxis(2);
                 dynamicPresetSpeed += gamepadJoystick.getRawAxis(1);

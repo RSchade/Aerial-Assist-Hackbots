@@ -1,7 +1,6 @@
 package com.fpsrobotics.interfaces;
 
 import com.fpsrobotics.*;
-import edu.wpi.first.wpilibj.Watchdog;
 
 /**
  * Where threads and classes can be instantiated, so they can be easily changed.

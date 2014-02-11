@@ -90,7 +90,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
             System.out.println("Shooting");
 
             // Shoot if three in a row
-            shooterControl.shootAuto(shooterTalon, shooterPot);
+            shooterControl.shootAuto(shooterTalonOne, shooterTalonTwo, shooterPot);
 
             hackbotWatch.feed(dog);
 

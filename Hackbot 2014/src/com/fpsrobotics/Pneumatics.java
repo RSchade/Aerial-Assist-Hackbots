@@ -89,13 +89,6 @@ public class Pneumatics
      */
     public void switchGears(Solenoid gearSwitch, boolean areWeSwitched)
     {
-        if (areWeSwitched)
-        {
             gearSwitch.set(areWeSwitched);
-        }
-        if (!areWeSwitched)
-        {
-            gearSwitch.set(areWeSwitched);
-        }
     }
 }

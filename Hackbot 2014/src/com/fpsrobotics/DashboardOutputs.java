@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DashboardOutputs
 {
+    int compressorCutoff;
 
     /**
      * Outputs values to SmartDashboard.
@@ -40,7 +41,7 @@ public class DashboardOutputs
         SmartDashboard.putBoolean("Sticks Backward", spinnySticks.getAreWeBackward());
         SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getRangeInches()/12);
     }
-
+    
     public void batteryOutput()
     {
         // Battery warnings to the console

@@ -25,23 +25,24 @@ public class Presets
      * 
      * @param joystick
      * @param shooterPot
-     * @param shooterTalon
+     * @param shooterTalonOne
      * @param presetValue
+     * @param shooterTalonTwo
      * @param button
      * @param speed 
      */
-    public void shooterPresetPot(Joystick joystick, AnalogChannel shooterPot, SpeedController shooterTalon, int presetValue, int button, double speed)
+    public void shooterPresetPot(Joystick joystick, AnalogChannel shooterPot, SpeedController shooterTalonOne, SpeedController shooterTalonTwo, int presetValue, int button, double speed)
     {
         while (shooterPot.getValue() < presetValue && joystick.getRawButton(button))
         {
-            shooterTalon.set(speed);
-            shooterTalon.set(speed);
+            shooterTalonOne.set(speed);
+            shooterTalonTwo.set(speed);
 
             areWeShooting = true;
         }
 
-        shooterTalon.set(0.0);
-        shooterTalon.set(0.0);
+        shooterTalonOne.set(0.0);
+        shooterTalonTwo.set(0.0);
 
         areWeShooting = false;
     }
@@ -51,23 +52,24 @@ public class Presets
      * 
      * @param joystick
      * @param shooterEncoder
-     * @param shooterTalon
+     * @param shooterTalonOne
+     * @param shooterTalonTwo
      * @param presetValue
      * @param button
      * @param speed 
      */
-    public void shooterPresetEncoder(Joystick joystick, Encoder shooterEncoder, SpeedController shooterTalon, int presetValue, int button, double speed)
+    public void shooterPresetEncoder(Joystick joystick, Encoder shooterEncoder, SpeedController shooterTalonOne, SpeedController shooterTalonTwo, int presetValue, int button, double speed)
     {
         while (shooterEncoder.getDistance() < presetValue && joystick.getRawButton(button))
         {
-            shooterTalon.set(speed);
-            shooterTalon.set(speed);
+            shooterTalonOne.set(speed);
+            shooterTalonTwo.set(speed);
 
             areWeShooting = true;
         }
 
-        shooterTalon.set(0.0);
-        shooterTalon.set(0.0);
+        shooterTalonOne.set(0.0);
+        shooterTalonTwo.set(0.0);
 
     }
 
@@ -77,24 +79,25 @@ public class Presets
      * @param joystick
      * @param shooterPot
      * @param shooterEncoder
-     * @param shooterTalon
+     * @param shooterTalonOne
+     * @param shooterTalonTwo
      * @param presetValuePot
      * @param presetValueEncoder
      * @param button
      * @param speed 
      */
-    public void shooterPresetBoth(Joystick joystick, AnalogChannel shooterPot, Encoder shooterEncoder, SpeedController shooterTalon, int presetValuePot, int presetValueEncoder, int button, double speed)
+    public void shooterPresetBoth(Joystick joystick, AnalogChannel shooterPot, Encoder shooterEncoder, SpeedController shooterTalonOne, SpeedController shooterTalonTwo, int presetValuePot, int presetValueEncoder, int button, double speed)
     {
         while ((shooterPot.getValue() < presetValuePot && joystick.getRawButton(button)) || (shooterEncoder.getDistance() < presetValueEncoder && joystick.getRawButton(button)))
         {
-            shooterTalon.set(speed);
-            shooterTalon.set(speed);
+            shooterTalonOne.set(speed);
+            shooterTalonTwo.set(speed);
 
             areWeShooting = true;
         }
 
-        shooterTalon.set(0.0);
-        shooterTalon.set(0.0);
+        shooterTalonOne.set(0.0);
+        shooterTalonTwo.set(0.0);
 
         areWeShooting = false;
     }

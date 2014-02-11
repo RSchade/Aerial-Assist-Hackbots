@@ -16,30 +16,29 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author ray
  */
-public class ShooterControl implements Values
-{
+public class ShooterControl implements Values {
 
     /**
      * Initialize the shooter using PIDs.
-     * 
+     *
      * @param shooterEncoder
-     * @param shooterTalon
+     * @param shooterTalonOne
+     * @param shooterTalonTwo
      * @param lowValue
      * @param highValue
      * @param Kp
      * @param Ki
      * @param Kd
-     * @return 
+     * @return
      */
-    public PIDController PIDInit(Encoder shooterEncoder, SpeedController shooterTalon, int lowValue, int highValue, double Kp, double Ki, double Kd)
-    {
+    public PIDController PIDInit(Encoder shooterEncoder, SpeedController shooterTalonOne, SpeedController shooterTalonTwo, int lowValue, int highValue, double Kp, double Ki, double Kd) {
         PIDController shooterPID;
 
         shooterEncoder.setDistancePerPulse(.000623);
         shooterEncoder.start();
         shooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
 
-        shooterPID = new PIDController(Kp, Ki, Kd, shooterEncoder, shooterTalon);
+        shooterPID = new PIDController(Kp, Ki, Kd, shooterEncoder, shooterTalonOne);
         shooterPID.enable();
 
         // min - max input values in inches
@@ -50,35 +49,36 @@ public class ShooterControl implements Values
 
     /**
      * Shoot manually.
-     * 
+     *
      * @param joystick
-     * @param shooterTalon
-     * @param button 
+     * @param shooterTalonOne
+     * @param shooterTalonTwo
+     * @param button
      */
-    public void shootManual(Joystick joystick, SpeedController shooterTalon, int button)
-    {
-        if (joystick.getRawButton(button))
-        {
-            shooterTalon.set(FULL_SPEED);
-        } else
-        {
-            shooterTalon.set(NO_SPEED);
+    public void shootManual(Joystick joystick, SpeedController shooterTalonOne, SpeedController shooterTalonTwo, int button) {
+        if (joystick.getRawButton(button)) {
+            shooterTalonOne.set(FULL_SPEED);
+            shooterTalonTwo.set(NO_SPEED);
+        } else {
+            shooterTalonOne.set(NO_SPEED);
+            shooterTalonTwo.set(NO_SPEED);
         }
     }
-    
+
     /**
      * Shoot in autonomous.
-     * 
-     * @param shooterTalon
-     * @param shooterPot 
+     *
+     * @param shooterTalonOne
+     * @param shooterTalonTwo
+     * @param shooterPot
      */
-    public void shootAuto(SpeedController shooterTalon, AnalogChannel shooterPot)
-    {
-        shooterTalon.set(FULL_SPEED);
-        
-        if (shooterPot.getValue() >= 100)
-        {
-            shooterTalon.set(NO_SPEED);
+    public void shootAuto(SpeedController shooterTalonOne, SpeedController shooterTalonTwo, AnalogChannel shooterPot) {
+        shooterTalonOne.set(FULL_SPEED);
+        shooterTalonTwo.set(FULL_SPEED);
+
+        if (shooterPot.getValue() >= 100) {
+            shooterTalonOne.set(NO_SPEED);
+            shooterTalonTwo.set(NO_SPEED);
         }
     }
 }
