@@ -24,4 +24,6 @@ public interface ControlMap
     int SPINNY_RETRACT = 10;
     int SPINNY_FORWARD_TOGGLE = 7;
     int SPINNY_BACKWARD_TOGGLE = 5;
+    // Turbo
+    int TURBO_BUTTON = 2;
 }

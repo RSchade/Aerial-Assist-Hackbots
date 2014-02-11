@@ -18,8 +18,8 @@ public class Pneumatics
 
     /**
      * Initialize the compressor.
-     * 
-     * @param compressor 
+     *
+     * @param compressor
      */
     public void init(Compressor compressor)
     {
@@ -28,8 +28,8 @@ public class Pneumatics
 
     /**
      * Stop the compressor
-     * 
-     * @param compressor 
+     *
+     * @param compressor
      */
     public void stop(Compressor compressor)
     {
@@ -38,25 +38,26 @@ public class Pneumatics
 
     /**
      * Check if the compressor is full. (nonfunctional)
-     * 
+     *
      * @param compressor
-     * @return 
+     * @return
      */
-    public boolean isItFull(Compressor compressor)
+    public void stopIfFull(Compressor compressor)
     {
         if (compressor.enabled())
         {
-            // code to sense compressor value maybe?
+            if (!compressor.getPressureSwitchValue())
+            {
+                compressor.stop();
+            }
         }
-
-        return false;
     }
 
     /**
      * Move the spinny sticks.
-     * 
+     *
      * @param spinnyStickSolenoid
-     * @param forwardBackward 
+     * @param forwardBackward
      */
     public void spinnySticksMovement(DoubleSolenoid spinnyStickSolenoid, boolean forwardBackward)
     {
@@ -73,8 +74,8 @@ public class Pneumatics
 
     /**
      * Stop the spinny sticks.
-     * 
-     * @param spinnyStickSolenoid 
+     *
+     * @param spinnyStickSolenoid
      */
     public void stopSpinnySticksMovement(DoubleSolenoid spinnyStickSolenoid)
     {
@@ -83,12 +84,12 @@ public class Pneumatics
 
     /**
      * Switch gears (sonic shifters).
-     * 
+     *
      * @param gearSwitch
-     * @param areWeSwitched 
+     * @param areWeSwitched
      */
     public void switchGears(Solenoid gearSwitch, boolean areWeSwitched)
     {
-            gearSwitch.set(areWeSwitched);
+        gearSwitch.set(areWeSwitched);
     }
 }

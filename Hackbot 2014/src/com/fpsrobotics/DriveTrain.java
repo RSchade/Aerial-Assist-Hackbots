@@ -31,7 +31,7 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
             {
                 // Check if we need to adjust speed, or switch to turbo
                 driveControl.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
-//                driveControl.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive);
+                driveControl.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive, TURBO_BUTTON);
 //                driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
                 
                 // Shift if we hold the button

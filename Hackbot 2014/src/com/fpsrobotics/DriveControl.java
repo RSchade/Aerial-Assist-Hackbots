@@ -55,10 +55,9 @@ public class DriveControl implements Values, ThreadsAndClasses
      * @param leftDrive
      * @param rightDrive
      */
-    public void driveTurbo(Joystick leftJoystick, Joystick rightJoystick, SpeedController leftDrive, SpeedController rightDrive)
+    public void driveTurbo(Joystick leftJoystick, Joystick rightJoystick, SpeedController leftDrive, SpeedController rightDrive, int button)
     {
-
-        while (leftJoystick.getRawButton(1) || rightJoystick.getRawButton(1))
+        while (leftJoystick.getRawButton(button) || rightJoystick.getRawButton(button))
         {
             leftDrive.set(constrain.constrainDouble(2 * (-leftJoystick.getRawAxis(2)), 1.0, -1.0));
             rightDrive.set(constrain.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
@@ -138,15 +137,15 @@ public class DriveControl implements Values, ThreadsAndClasses
      * @param rightJoystick
      * @param accel 
      */
-    public void accelSwitchGears(Joystick leftJoystick, Joystick rightJoystick, Accelerometer accel)
-    {
-        if ((accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3) && (accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3))
-        {
-            if ((leftJoystick.getRawAxis(2) >= 0.5 || leftJoystick.getRawAxis(2) <= -0.5) || (rightJoystick.getRawAxis(2) >= 0.5 || rightJoystick.getRawAxis(2) <= -0.5))
-            {
-                pneumatics.switchGears(gearSolenoid, true);
-            }
-        }
-    }
+//    public void accelSwitchGears(Joystick leftJoystick, Joystick rightJoystick, Accelerometer accel)
+//    {
+//        if ((accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3) && (accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3))
+//        {
+//            if ((leftJoystick.getRawAxis(2) >= 0.5 || leftJoystick.getRawAxis(2) <= -0.5) || (rightJoystick.getRawAxis(2) >= 0.5 || rightJoystick.getRawAxis(2) <= -0.5))
+//            {
+//                pneumatics.switchGears(gearSolenoid, true);
+//            }
+//        }
+//    }
 
 }
