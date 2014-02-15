@@ -1,9 +1,9 @@
 package com.fpsrobotics;
 
+import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -24,7 +24,7 @@ public class DashboardOutputs
      * @param spinnySticks
      * @param distanceSensor
      */
-    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, Shooter shooter, SpinnySticks spinnySticks, Ultrasonic distanceSensor)
+    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, Shooter shooter, SpinnySticks spinnySticks, AnalogChannel distanceSensor)
     {
         // Variable outputs to dashboard
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
@@ -36,7 +36,7 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Dynamic Preset Distance", shooter.getDynamicPresetDistance());
         SmartDashboard.putNumber("Dynamic Preset Speed", shooter.getDynamicPresetSpeed());
         SmartDashboard.putBoolean("Is Shooting", shooter.getAreWeShooting());
-        SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getRangeInches()/12);
+        SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getVoltage()/.1176);
     }
     
     public void batteryOutput()

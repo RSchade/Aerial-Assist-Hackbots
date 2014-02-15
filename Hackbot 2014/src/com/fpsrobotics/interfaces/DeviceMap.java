@@ -34,8 +34,7 @@ public interface DeviceMap
     int SHOOTER_ENCODER_MAP_ONE = 6;// depricated
     int SHOOTER_ENCODER_MAP_TWO = 7;// depricated
     // Ultrasonic Sensor
-    int DISTANCE_OUTPUT_MAP = 8;
-    int DISTANCE_INPUT_MAP = 9;
+    int DISTANCE_ANALOG_CHANNEL_MAP = 2;
 
     // Analog
     // Potentiometers
