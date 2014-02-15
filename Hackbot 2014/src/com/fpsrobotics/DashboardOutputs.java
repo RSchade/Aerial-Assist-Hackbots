@@ -36,9 +36,6 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Dynamic Preset Distance", shooter.getDynamicPresetDistance());
         SmartDashboard.putNumber("Dynamic Preset Speed", shooter.getDynamicPresetSpeed());
         SmartDashboard.putBoolean("Is Shooting", shooter.getAreWeShooting());
-        SmartDashboard.putBoolean("Sticks Extended", spinnySticks.getAreWeExtended());
-        SmartDashboard.putBoolean("Sticks Forward", spinnySticks.getAreWeForward());
-        SmartDashboard.putBoolean("Sticks Backward", spinnySticks.getAreWeBackward());
         SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getRangeInches()/12);
     }
     

@@ -1,5 +1,6 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.IsAThread;
 import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.DIOs;
@@ -16,11 +17,12 @@ import com.fpsrobotics.interfaces.ThreadsAndClasses;
  *
  * @author ray
  */
-public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, ControlMap, PID, ThreadsAndClasses
+public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, ControlMap, PID, ThreadsAndClasses, IsAThread
 {
 
     double dynamicPresetDistance = 0;
     double dynamicPresetSpeed = 0;
+    boolean isInterrupted = false;
     
     boolean areWeShooting;
 
@@ -30,15 +32,16 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
     public void run()
     {
         long previousTime = System.currentTimeMillis();
-
-        while (true)
+        isInterrupted = false;
+        
+        while (!isInterrupted)
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
                 // Presets (dummy, real presets to be added later)
-                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 1.0);
+                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 0.2);
 
-                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, (int) dynamicPresetDistance, SHOOTER_MANUAL, dynamicPresetSpeed);
+                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, (int) dynamicPresetDistance, SHOOTER_MANUAL, 0.2);
 
                 dynamicPresetDistance += -gamepadJoystick.getRawAxis(2);
                 dynamicPresetSpeed += gamepadJoystick.getRawAxis(1);
@@ -61,6 +64,11 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
     public boolean getAreWeShooting()
     {
         return presets.getAreWeShooting();
+    }
+
+    public void interrupt()
+    {
+        isInterrupted = true;
     }
     
 }

@@ -2,6 +2,7 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.ControlMap;
+import com.fpsrobotics.interfaces.IsAThread;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Solenoids;
 import com.fpsrobotics.interfaces.Talons;
@@ -12,9 +13,10 @@ import com.fpsrobotics.interfaces.Values;
  *
  * @author ray
  */
-public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, Solenoids, ControlMap, ThreadsAndClasses
+public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, Solenoids, ControlMap, ThreadsAndClasses, IsAThread
 {
-
+    boolean isInterrupted = false;
+    
     /**
      *
      * Controls the drive train through ControlDrive's methods in a separate
@@ -24,8 +26,9 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
     public void run()
     {
         long previousTime = System.currentTimeMillis();
-
-        while (true)
+        isInterrupted = false;
+        
+        while (!isInterrupted)
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
@@ -40,5 +43,10 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
                 previousTime = System.currentTimeMillis();
             }
         }
+    }
+    
+    public void interrupt()
+    {
+        isInterrupted = true;
     }
 }

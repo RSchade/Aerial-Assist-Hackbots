@@ -57,8 +57,8 @@ public class ShooterControl implements Values {
      */
     public void shootManual(Joystick joystick, SpeedController shooterTalonOne, SpeedController shooterTalonTwo, int button) {
         if (joystick.getRawButton(button)) {
-            shooterTalonOne.set(FULL_SPEED);
-            shooterTalonTwo.set(NO_SPEED);
+            shooterTalonOne.set(0.2);
+            shooterTalonTwo.set(0.2);
         } else {
             shooterTalonOne.set(NO_SPEED);
             shooterTalonTwo.set(NO_SPEED);
@@ -73,8 +73,8 @@ public class ShooterControl implements Values {
      * @param shooterPot
      */
     public void shootAuto(SpeedController shooterTalonOne, SpeedController shooterTalonTwo, AnalogChannel shooterPot) {
-        shooterTalonOne.set(FULL_SPEED);
-        shooterTalonTwo.set(FULL_SPEED);
+        shooterTalonOne.set(0.2);
+        shooterTalonTwo.set(0.2);
 
         if (shooterPot.getValue() >= 100) {
             shooterTalonOne.set(NO_SPEED);

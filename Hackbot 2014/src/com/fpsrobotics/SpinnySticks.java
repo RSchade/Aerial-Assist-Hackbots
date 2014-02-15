@@ -1,5 +1,6 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.IsAThread;
 import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Solenoids;
@@ -12,12 +13,11 @@ import com.fpsrobotics.interfaces.Values;
  *
  * @author ray
  */
-public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Solenoids, ControlMap, ThreadsAndClasses
+public class SpinnySticks extends Thread implements Joysticks, Talons, Values, Solenoids, ControlMap, ThreadsAndClasses, IsAThread
 {
 
-    boolean spinnySticksForward = false;
-    boolean spinnySticksBackward = false;
     boolean areWeExtended = true;
+    boolean isInterrupted = false;
 
     /**
      * Spinny sticks thread.
@@ -26,10 +26,13 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
     {
 
         long previousTime = System.currentTimeMillis();
-        boolean previousButtonValueFwd = false;
-        boolean previousButtonValueBwd = false;
+//        boolean previousButtonValueFwd = false;
+//        boolean previousButtonValueBwd = false;
+//        boolean spinnySticksForward = false;
+//        boolean spinnySticksBackward = false;
+        isInterrupted = false;
 
-        while (true)
+        while (!isInterrupted)
         {
 
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
@@ -41,7 +44,7 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                     pneumatics.spinnySticksMovement(spinnySolenoid, true);
 
                     areWeExtended = true;
-                } 
+                }
 
                 if (gamepadJoystick.getRawButton(SPINNY_RETRACT))
                 {
@@ -51,70 +54,57 @@ public class SpinnySticks implements Runnable, Joysticks, Talons, Values, Soleno
                 }
 
                 // Check if we need to make the spinny sticks run forward or backward (toggle)
-                if (!previousButtonValueFwd)
+//                if (!previousButtonValueFwd)
+//                {
+//                    if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && !spinnySticksForward)
+//                    {
+//                        controlSpinSticks.spinSticks(spinnyMotor, HALF_SPEED);
+//                        spinnySticksForward = true;
+//                    } else if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && spinnySticksForward)
+//                    {
+//                        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
+//                        spinnySticksForward = false;
+//                    }
+//
+//                }
+//                previousButtonValueFwd = gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE);
+//                if (!previousButtonValueBwd)
+//                {
+//                    if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && spinnySticksBackward)
+//                    {
+//                        controlSpinSticks.spinSticks(spinnyMotor, -0.25);
+//                        spinnySticksBackward = false;
+//                    } else if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && !spinnySticksBackward)
+//                    {
+//                        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
+//                        spinnySticksBackward = true;
+//                    }
+//
+//                }
+                if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE))
                 {
-                    if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && !spinnySticksForward)
-                    {
-                        controlSpinSticks.spinSticks(spinnyMotor, HALF_SPEED);
-                        spinnySticksForward = true;
-                    } else if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && spinnySticksForward)
-                    {
-                        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
-                        spinnySticksForward = false;
-                    }
-
+                    controlSpinSticks.spinSticks(spinnyMotor, -0.25);
                 }
-                
-                previousButtonValueFwd = gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE);
 
-                if (!previousButtonValueBwd)
+                if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE))
                 {
-                    if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && spinnySticksBackward)
-                    {
-                        controlSpinSticks.spinSticks(spinnyMotor, -HALF_SPEED);
-                        spinnySticksBackward = false;
-                    } else if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && !spinnySticksBackward)
-                    {
-                        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
-                        spinnySticksBackward = true;
-                    }
-                    
+                    controlSpinSticks.spinSticks(spinnyMotor, 0.25);
                 }
-                
-                previousButtonValueBwd = gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE);
- 
+
+                if (!gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && !gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE))
+                {
+                    controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
+                }
+
+//                previousButtonValueBwd = gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE);
                 previousTime = System.currentTimeMillis();
             }
         }
     }
 
-    /**
-     * Dashboard output.
-     * 
-     * @return 
-     */
-    public boolean getAreWeForward()
+    public void interrupt()
     {
-        return spinnySticksForward;
-    }
-
-    /**
-     * Dashboard output.
-     * 
-     * @return 
-     */
-    public boolean getAreWeBackward()
-    {
-        return spinnySticksBackward;
-    }
-
-    /**
-     * Dashboard output.
-     * 
-     * @return 
-     */
-    public boolean getAreWeExtended()
-    {
-        return areWeExtended;
+        isInterrupted = true;
+//        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
     }
 }

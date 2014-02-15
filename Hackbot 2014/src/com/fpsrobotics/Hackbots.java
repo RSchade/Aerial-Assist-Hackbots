@@ -59,9 +59,9 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 
     public void autonomousInit()
     {
-        
+
     }
-    
+
     /**
      * This function is called periodically during autonomous. Autonomous code
      * goes here. Something about shooting in the hot goal and then going back.
@@ -127,6 +127,12 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
         // Start all threads (only once)
         if (!doneAlready)
         {
+            //Threads here
+            Thread driveThread = new Thread(driveTrain);
+            Thread hackbotStationThread = new Thread(hackbotStation);
+            Thread shooterThread = new Thread(shooter);
+            Thread spinnySticksThread = new SpinnySticks();
+
             driveThread.start();
             hackbotStationThread.start();
             shooterThread.start();
@@ -134,22 +140,6 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 
             doneAlready = true;
         }
-
-        // Stop threads safely
-        if (!isOperatorControl())
-        {
-            try
-            {
-                driveThread.join();
-                hackbotStationThread.join();
-                shooterThread.join();
-                spinnySticksThread.join();
-            } catch (InterruptedException ex)
-            {
-                System.out.println("Can't stop threads");
-            }
-        }
-        
         // Feed the watchdog
         hackbotWatch.feed(dog);
     }
@@ -172,6 +162,11 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 
     public void disabledPeriodic()
     {
+        driveTrain.interrupt();
+        hackbotStation.interrupt();
+        shooter.interrupt();
+        spinnySticks.interrupt();
 
+        doneAlready = false;
     }
 }

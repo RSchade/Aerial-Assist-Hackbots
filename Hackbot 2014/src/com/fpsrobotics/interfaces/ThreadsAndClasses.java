@@ -29,11 +29,4 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     ShooterControl shooterControl = new ShooterControl();
     OffloadProcesses offloadProcesses = new OffloadProcesses();
 
-    //Threads here
-    Thread driveThread = new Thread(driveTrain);
-    Thread hackbotStationThread = new Thread(hackbotStation);
-    Thread shooterThread = new Thread(shooter);
-    Thread spinnySticksThread = new Thread(spinnySticks);
-    Thread pidLoopThread = new Thread(pidloop);
-
 }

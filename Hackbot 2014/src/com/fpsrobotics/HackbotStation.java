@@ -1,5 +1,6 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.interfaces.IsAThread;
 import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
@@ -10,8 +11,11 @@ import com.fpsrobotics.interfaces.ThreadsAndClasses;
  *
  * @author ray
  */
-public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays, ThreadsAndClasses
+public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays, ThreadsAndClasses, IsAThread
 {
+
+    boolean isInterrupted = false;
+
     /**
      *
      * Class which outputs most variables to the SmartDashboard and gives the
@@ -21,8 +25,9 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
     public void run()
     {
         long previousTime = System.currentTimeMillis();
+        isInterrupted = false;
 
-        while (true)
+        while (!isInterrupted)
         {
             //Everything outputs every second, to reduce lag and heat
             if (System.currentTimeMillis() - previousTime >= THREAD_REFRESH_RATE)
@@ -37,5 +42,10 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
             }
         }
 
+    }
+
+    public void interrupt()
+    {
+        isInterrupted = true;
     }
 }
