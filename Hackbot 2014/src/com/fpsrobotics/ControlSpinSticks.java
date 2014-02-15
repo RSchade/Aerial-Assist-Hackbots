@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class ControlSpinSticks
 {
     // Spin sticks to a speed
+
     public void spinSticks(SpeedController spinnyMotor, double speed)
     {
         spinnyMotor.set(speed);
