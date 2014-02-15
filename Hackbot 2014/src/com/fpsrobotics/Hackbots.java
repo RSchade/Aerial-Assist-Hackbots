@@ -152,8 +152,6 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
         
         // Feed the watchdog
         hackbotWatch.feed(dog);
-        // Stop the compressor if it's full (may not be necessary)
-        pneumatics.stopIfFull(compressor);
     }
 
     public void testInit()

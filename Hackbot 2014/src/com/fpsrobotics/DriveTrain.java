@@ -30,7 +30,7 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
                 // Check if we need to adjust speed, or switch to turbo
-                driveControl.drive(leftJoystick.getRawAxis(2), rightJoystick.getRawAxis(2), leftDrive, rightDrive, true);
+                driveControl.drive(driveControl.deadzoneConstrain(leftJoystick), driveControl.deadzoneConstrain(rightJoystick), leftDrive, rightDrive, true);
                 driveControl.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive, TURBO_BUTTON);
 //                driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
                 

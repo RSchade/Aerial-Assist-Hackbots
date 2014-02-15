@@ -45,7 +45,7 @@ public class DashboardOutputs
     public void batteryOutput()
     {
         // Battery warnings to the console
-        if (DriverStation.getInstance().getBatteryVoltage() <= 11)
+        if (DriverStation.getInstance().getBatteryVoltage() <= 10.5)
         {
             System.out.println("Warning! Battery voltage low, replace soon!");
         } else if (DriverStation.getInstance().getBatteryVoltage() <= 10)

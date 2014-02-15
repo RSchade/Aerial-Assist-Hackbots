@@ -44,6 +44,16 @@ public class DriveControl implements Values, ThreadsAndClasses
         }
 
     }
+    
+    public double deadzoneConstrain(Joystick joystick)
+    {
+        if (joystick.getRawAxis(2) < 0.1 && joystick.getRawAxis(2) > -0.1)
+        {
+            return 0.0;
+        }
+        
+        return joystick.getRawAxis(2);
+    }
 
     /**
      * Turbo the drive train when button one is pressed on either joystick, 1:2

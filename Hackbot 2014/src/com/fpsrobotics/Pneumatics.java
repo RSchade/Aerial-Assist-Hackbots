@@ -37,23 +37,6 @@ public class Pneumatics
     }
 
     /**
-     * Check if the compressor is full. (nonfunctional)
-     *
-     * @param compressor
-     * @return
-     */
-    public void stopIfFull(Compressor compressor)
-    {
-        if (compressor.enabled())
-        {
-            if (!compressor.getPressureSwitchValue())
-            {
-                compressor.stop();
-            }
-        }
-    }
-
-    /**
      * Move the spinny sticks.
      *
      * @param spinnyStickSolenoid
