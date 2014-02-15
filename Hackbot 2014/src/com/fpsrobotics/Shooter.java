@@ -23,7 +23,7 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
     double dynamicPresetDistance = 0;
     double dynamicPresetSpeed = 0;
     boolean isInterrupted = false;
-    
+
     boolean areWeShooting;
 
     /**
@@ -33,7 +33,8 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
     {
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
-        
+        TwinMotor shooter = new TwinMotor(new SimpleMotor(shooterTalonOne, false), new SimpleMotor(shooterTalonTwo, true));
+
         while (!isInterrupted)
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
@@ -46,6 +47,16 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
                 dynamicPresetDistance += -gamepadJoystick.getRawAxis(2);
                 dynamicPresetSpeed += gamepadJoystick.getRawAxis(1);
 
+                if (gamepadJoystick.getRawButton(4))
+                {
+                    shooter.forward(0.5);
+                }
+
+                if (gamepadJoystick.getRawButton(3))
+                {
+                    shooter.backward(0.5);
+                }
+                
                 previousTime = System.currentTimeMillis();
             }
         }
@@ -60,7 +71,7 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
     {
         return dynamicPresetSpeed;
     }
-    
+
     public boolean getAreWeShooting()
     {
         return presets.getAreWeShooting();
@@ -70,5 +81,5 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
     {
         isInterrupted = true;
     }
-    
+
 }

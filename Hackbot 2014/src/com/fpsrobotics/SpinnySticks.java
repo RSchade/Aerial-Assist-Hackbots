@@ -52,35 +52,7 @@ public class SpinnySticks extends Thread implements Joysticks, Talons, Values, S
 
                     areWeExtended = false;
                 }
-
-                // Check if we need to make the spinny sticks run forward or backward (toggle)
-//                if (!previousButtonValueFwd)
-//                {
-//                    if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && !spinnySticksForward)
-//                    {
-//                        controlSpinSticks.spinSticks(spinnyMotor, HALF_SPEED);
-//                        spinnySticksForward = true;
-//                    } else if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && spinnySticksForward)
-//                    {
-//                        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
-//                        spinnySticksForward = false;
-//                    }
-//
-//                }
-//                previousButtonValueFwd = gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE);
-//                if (!previousButtonValueBwd)
-//                {
-//                    if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && spinnySticksBackward)
-//                    {
-//                        controlSpinSticks.spinSticks(spinnyMotor, -0.25);
-//                        spinnySticksBackward = false;
-//                    } else if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE) && !spinnySticksBackward)
-//                    {
-//                        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
-//                        spinnySticksBackward = true;
-//                    }
-//
-//                }
+                
                 if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE))
                 {
                     controlSpinSticks.spinSticks(spinnyMotor, -0.25);
