@@ -75,4 +75,9 @@ public class Pneumatics
     {
         gearSwitch.set(areWeSwitched);
     }
+
+    public void switchGears(DriveMotor driveMotor, boolean switchState)
+    {
+        driveMotor.shift(switchState);
+    }
 }

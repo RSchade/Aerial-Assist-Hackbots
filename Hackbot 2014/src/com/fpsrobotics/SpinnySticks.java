@@ -16,7 +16,6 @@ import com.fpsrobotics.interfaces.Values;
 public class SpinnySticks extends Thread implements Joysticks, Talons, Values, Solenoids, ControlMap, ThreadsAndClasses, IsAThread
 {
 
-    boolean areWeExtended = true;
     boolean isInterrupted = false;
 
     /**
@@ -26,11 +25,8 @@ public class SpinnySticks extends Thread implements Joysticks, Talons, Values, S
     {
 
         long previousTime = System.currentTimeMillis();
-//        boolean previousButtonValueFwd = false;
-//        boolean previousButtonValueBwd = false;
-//        boolean spinnySticksForward = false;
-//        boolean spinnySticksBackward = false;
         isInterrupted = false;
+        SimpleMotor spinnySimpleMotor = new SimpleMotor(spinnyMotor, false);
 
         while (!isInterrupted)
         {
@@ -42,30 +38,29 @@ public class SpinnySticks extends Thread implements Joysticks, Talons, Values, S
                 if (gamepadJoystick.getRawButton(SPINNY_EXTEND))
                 {
                     pneumatics.spinnySticksMovement(spinnySolenoid, true);
-
-                    areWeExtended = true;
                 }
 
                 if (gamepadJoystick.getRawButton(SPINNY_RETRACT))
                 {
                     pneumatics.spinnySticksMovement(spinnySolenoid, false);
-
-                    areWeExtended = false;
                 }
-                
+
                 if (gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE))
                 {
-                    controlSpinSticks.spinSticks(spinnyMotor, -0.25);
+//                    controlSpinSticks.spinSticks(spinnyMotor, -0.25);
+                    spinnySimpleMotor.backward(0.25);
                 }
 
                 if (gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE))
                 {
-                    controlSpinSticks.spinSticks(spinnyMotor, 0.25);
+//                    controlSpinSticks.spinSticks(spinnyMotor, 0.25);
+                    spinnySimpleMotor.forward(0.25);
                 }
 
                 if (!gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && !gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE))
                 {
-                    controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
+//                    controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
+                    spinnySimpleMotor.stop();
                 }
 
 //                previousButtonValueBwd = gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE);
@@ -77,6 +72,5 @@ public class SpinnySticks extends Thread implements Joysticks, Talons, Values, S
     public void interrupt()
     {
         isInterrupted = true;
-//        controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
     }
 }
