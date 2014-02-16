@@ -11,9 +11,7 @@ import com.fpsrobotics.interfaces.ThreadsAndClasses;
 
 /**
  *
- * Controls the piston shooter, button 11 on the joystick causes it to fire.
- * More code will be added later as we decide how to regulate the shooter's
- * throwing arm.
+ * Controls the shooter, probably will be changed as it becomes more object oriented.
  *
  * @author ray
  */

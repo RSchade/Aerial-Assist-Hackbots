@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  *
- * Class which actually controls the drive train, it's called by the drive train
- * thread in DriveTrain.
+ * Controls the drive train.
  *
  * @author ray
  *

@@ -1,7 +1,8 @@
 package com.fpsrobotics;
 
 /**
- *
+ * Interface implemented by different types of motors.
+ * 
  * @author Hackbots
  */
 public interface Motor

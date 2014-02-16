@@ -3,7 +3,8 @@ package com.fpsrobotics;
 import edu.wpi.first.wpilibj.SpeedController;
 
 /**
- *
+ * Simple motor, extended by all complex motors.
+ * 
  * @author Hackbots
  */
 public class SimpleMotor implements Motor

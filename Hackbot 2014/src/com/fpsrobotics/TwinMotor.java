@@ -1,7 +1,8 @@
 package com.fpsrobotics;
 
 /**
- *
+ * A class which controls two motors at the same time.
+ * 
  * @author Hackbots
  */
 public class TwinMotor implements Motor

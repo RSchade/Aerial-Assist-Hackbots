@@ -10,7 +10,7 @@ import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import com.fpsrobotics.interfaces.Values;
 
 /**
- *
+ * Uses methods from other classes to control the drive train.
  * @author ray
  */
 public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, Solenoids, ControlMap, ThreadsAndClasses, IsAThread

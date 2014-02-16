@@ -3,7 +3,7 @@ package com.fpsrobotics;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 
 /**
- * Image processing later, camera settings now.
+ * Camera settings, called in robot init.
  *
  * @author ray
  */

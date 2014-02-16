@@ -9,7 +9,7 @@ import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import com.fpsrobotics.interfaces.Values;
 
 /**
- * Spins the sticks.
+ * Controls the spinny sticks either with an object oriented class or the spinny sticks class.
  *
  * @author ray
  */

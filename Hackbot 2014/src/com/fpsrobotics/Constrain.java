@@ -1,7 +1,8 @@
 package com.fpsrobotics;
 
 /**
- *
+ * Constrains variables between a high and a low value.
+ * 
  * @author ray
  */
 public class Constrain

@@ -1,13 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fpsrobotics;
 
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  *
+ * Controls the drive train in a object oriented manner.
+ * 
  * @author ray
  */
 public class DriveMotor implements Motor

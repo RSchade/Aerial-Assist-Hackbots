@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Outputs variables and other information to the smart dashboard and printlns.
  * @author ray
  */
 public class DashboardOutputs
