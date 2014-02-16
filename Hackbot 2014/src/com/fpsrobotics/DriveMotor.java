@@ -5,17 +5,17 @@ import edu.wpi.first.wpilibj.Solenoid;
 /**
  *
  * Controls the drive train in a object oriented manner.
- * 
+ *
  * @author ray
  */
 public class DriveMotor implements Motor
 {
 
-    private final Motor leftDrive;
-    private final Motor rightDrive;
+    private final SimpleMotor leftDrive;
+    private final SimpleMotor rightDrive;
     private final Solenoid gearSolenoid;
 
-    public DriveMotor(Motor leftDrive, Motor rightDrive, Solenoid gearSolenoid)
+    public DriveMotor(SimpleMotor leftDrive, SimpleMotor rightDrive, Solenoid gearSolenoid)
     {
         this.leftDrive = leftDrive;
         this.rightDrive = rightDrive;
@@ -59,40 +59,8 @@ public class DriveMotor implements Motor
 
     public void set(double speedLeft, double speedRight)
     {
-        if (speedLeft >= 0)
-        {
-            leftDrive.forward(speedLeft);
-        } else
-        {
-            leftDrive.backward(speedLeft);
-        }
-
-        if (speedRight >= 0)
-        {
-            rightDrive.forward(speedLeft);
-        } else
-        {
-            rightDrive.backward(speedLeft);
-        }
-    }
-
-    public void set(double speedLeft, double speedRight, int motorStep)
-    {
-        if (speedLeft >= 0)
-        {
-            leftDrive.forward(speedLeft, motorStep);
-        } else
-        {
-            leftDrive.backward(speedLeft, motorStep);
-        }
-
-        if (speedRight >= 0)
-        {
-            rightDrive.forward(speedLeft, motorStep);
-        } else
-        {
-            rightDrive.backward(speedLeft, motorStep);
-        }
+        leftDrive.set(speedLeft);
+        rightDrive.set(speedRight);
     }
 
     public void shift(boolean inOut)

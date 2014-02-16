@@ -70,4 +70,14 @@ public class SimpleMotor implements Motor
     {
         return inverseDirection ? -motor.get() : motor.get();
     }
+    
+    public void set(double d)
+    {
+        motor.set(d);
+    }
+    
+    public void set(double d, byte b)
+    {
+        motor.set(d, b);
+    }
 }
