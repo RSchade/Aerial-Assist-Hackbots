@@ -29,7 +29,7 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
 
-        DriveMotor driveMotor = new DriveMotor(new SimpleMotor(leftDrive, false), new SimpleMotor(rightDrive, true), gearSolenoid);
+        DriveMotor driveMotor = new DriveMotor(new SimpleMotor(leftDrive, true), new SimpleMotor(rightDrive, false), gearSolenoid);
 
         while (!isInterrupted)
         {
