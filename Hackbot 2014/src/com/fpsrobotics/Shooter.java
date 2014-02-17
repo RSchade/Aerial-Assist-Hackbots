@@ -6,8 +6,8 @@ import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.PID;
-import com.fpsrobotics.interfaces.Talons;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  *
@@ -15,7 +15,7 @@ import com.fpsrobotics.interfaces.ThreadsAndClasses;
  *
  * @author ray
  */
-public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, ControlMap, PID, ThreadsAndClasses, IsAThread
+public class Shooter implements Runnable, Joysticks, Analog, DIOs, ControlMap, PID, ThreadsAndClasses, IsAThread
 {
 
     double dynamicPresetDistance = 0;
@@ -31,6 +31,9 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
      */
     public void run()
     {
+        SpeedController shooterTalonOne = HardwareFactory.createTalon(SHOOTER_TALON_MAP_ONE);
+        SpeedController shooterTalonTwo = HardwareFactory.createTalon(SHOOTER_TALON_MAP_TWO);
+        
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
         TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(shooterTalonOne, false), new SimpleMotor(shooterTalonTwo, true));

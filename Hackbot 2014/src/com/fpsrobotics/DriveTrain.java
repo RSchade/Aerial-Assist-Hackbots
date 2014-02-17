@@ -5,17 +5,17 @@ import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.IsAThread;  // Don't use what you don't need
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.Solenoids;
-import com.fpsrobotics.interfaces.Talons;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import com.fpsrobotics.interfaces.Values;     // Don't use what you don't need
+import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  * Uses methods from other classes to control the drive train.
  * @author ray
  */
-public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, Solenoids, ControlMap, ThreadsAndClasses, IsAThread
+public class DriveTrain implements Runnable, Joysticks, Values, Analog, Solenoids, ControlMap, ThreadsAndClasses, IsAThread
 {
-
+    
     boolean isInterrupted = false;
 
     /**
@@ -26,6 +26,9 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
      */
     public void run() 
     {
+        SpeedController leftDrive = HardwareFactory.createTalon(LEFT_DRIVE_MAP);
+        SpeedController rightDrive = HardwareFactory.createTalon(RIGHT_DRIVE_MAP);
+        
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
 

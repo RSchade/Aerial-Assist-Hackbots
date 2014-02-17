@@ -9,6 +9,7 @@ package com.fpsrobotics;
 import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
@@ -69,6 +70,11 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
     public void autonomousPeriodic()
     {
 
+        SpeedController shooterTalonOne = HardwareFactory.createTalon(SHOOTER_TALON_MAP_ONE);
+        SpeedController shooterTalonTwo = HardwareFactory.createTalon(SHOOTER_TALON_MAP_TWO);
+        SpeedController leftDrive = HardwareFactory.createTalon(LEFT_DRIVE_MAP);
+        SpeedController rightDrive = HardwareFactory.createTalon(RIGHT_DRIVE_MAP);
+        
         try
         {
 

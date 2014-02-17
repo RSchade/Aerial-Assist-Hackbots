@@ -1,8 +1,8 @@
 package com.fpsrobotics;
 
 import edu.wpi.first.wpilibj.Timer;
-import com.fpsrobotics.interfaces.Talons;
 import com.fpsrobotics.interfaces.Analog;
+import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  * Launches the Catapult 3 Functions: 1) Acceleration Launch 2) Regular Launch
@@ -10,7 +10,7 @@ import com.fpsrobotics.interfaces.Analog;
  *
  * @author Josh
  */
-public class CatapultSuggestedB implements Runnable, Talons, Analog
+public class CatapultSuggestedB implements Runnable, Analog
 {
     // Variables
 
@@ -22,10 +22,12 @@ public class CatapultSuggestedB implements Runnable, Talons, Analog
     private int highPotValue = TBDint;
     // Acceleration Speed Percent
     private int stopAccelerationPercent;
-    private final boolean accelLaunch;
+    private boolean accelLaunch;
     // RESET VARIABLES
     private final int homePotValue = TBDint;
     private boolean isDone;
+    private SpeedController shooterTalonOne;
+    private SpeedController shooterTalonTwo;
 
     /**
      * ACCELERATION LAUNCH CONSTRUCTOR
@@ -33,16 +35,12 @@ public class CatapultSuggestedB implements Runnable, Talons, Analog
      * @param highPotValue
      * @param maxSpeed Make as a value between -1.00 & 1.00
      * @param stopAccelerationPercent Make as a percent between 1 & 100
-     * ** Question for Mr. Neighbour**
-     * How is Ray using the same tools from different classes? Can you do it by implementing from an interface?
      */
     public CatapultSuggestedB(int highPotValue, double maxSpeed, int stopAccelerationPercent)
     {
-        this.highPotValue = highPotValue;
-        this.maxSpeed = maxSpeed;
+        this(highPotValue, maxSpeed);
         this.stopAccelerationPercent = stopAccelerationPercent;
         this.accelLaunch = true;
-        isDone = false;
     }
 
     /**
@@ -57,6 +55,8 @@ public class CatapultSuggestedB implements Runnable, Talons, Analog
         this.maxSpeed = maxSpeed;
         this.accelLaunch = false;
         isDone = false;
+        shooterTalonOne = HardwareFactory.createTalon(SHOOTER_TALON_MAP_ONE);
+        shooterTalonTwo = HardwareFactory.createTalon(SHOOTER_TALON_MAP_TWO);
     }
 
     /**
