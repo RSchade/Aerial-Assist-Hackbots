@@ -59,8 +59,21 @@ public class DriveMotor implements Motor
 
     public void set(double speedLeft, double speedRight)
     {
-        leftDrive.set(speedLeft);
-        rightDrive.set(speedRight);
+        if (speedLeft > 0.1)
+        {
+            leftDrive.forward(speedLeft);
+        } else if (speedLeft < 0.1)
+        {
+            leftDrive.backward(Math.abs(speedLeft));
+        }
+
+        if (speedRight > 0.1)
+        {
+            rightDrive.forward(speedRight);
+        } else if (speedRight < 0.1)
+        {
+            rightDrive.backward(Math.abs(speedRight));
+        }
     }
 
     public void shift(boolean inOut)
