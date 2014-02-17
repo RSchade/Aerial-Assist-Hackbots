@@ -4,14 +4,13 @@ import com.fpsrobotics.interfaces.IsAThread;
 import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
-import com.fpsrobotics.interfaces.Relays;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
 
 /**
  * Uses methods from dashboard outputs to control what gets outputted to the smart dashboard.
  * @author ray
  */
-public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays, ThreadsAndClasses, IsAThread
+public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, ThreadsAndClasses, IsAThread
 {
 
     boolean isInterrupted = false;
@@ -35,7 +34,7 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Relays
                 // Output variables to dashboard
                 dashboardOutputs.batteryOutput();
                 dashboardOutputs.teamOutput();
-                dashboardOutputs.outputToDashboard(leftJoystick, rightJoystick, leftDriveEncoder, shooter, spinnySticks, distanceSensor);
+                dashboardOutputs.outputToDashboard(leftJoystick, rightJoystick, leftDriveEncoder, shooter, spinnySticks, distanceSensor, shooterPot);
 
                 // Reset timer to current time
                 previousTime = System.currentTimeMillis();

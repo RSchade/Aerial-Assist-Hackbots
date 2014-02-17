@@ -21,4 +21,9 @@ public interface Values
     double LOW_DRIVE_SPEED = -1.0;
     
     int THREAD_REFRESH_RATE = 50;
+    
+    int HOME_POT_VALUE = 0;
+    
+    int HIGH_POT_VALUE = 100;
+    double SHOOTER_MAX_SPEED = 0.2;
 }

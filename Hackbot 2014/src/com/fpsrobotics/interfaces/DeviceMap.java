@@ -30,11 +30,6 @@ public interface DeviceMap
     int LEFT_DRIVE_ENCODER_MAP_TWO = 2;
     int RIGHT_DRIVE_ENCODER_MAP_ONE = 3;
     int RIGHT_DRIVE_ENCODER_MAP_TWO = 4;
-    // Shooter Encoders
-    int SHOOTER_ENCODER_MAP_ONE = 6;// depricated
-    int SHOOTER_ENCODER_MAP_TWO = 7;// depricated
-    // Ultrasonic Sensor
-    int DISTANCE_ANALOG_CHANNEL_MAP = 2;
 
     // Analog
     // Potentiometers
@@ -43,6 +38,8 @@ public interface DeviceMap
     int ACCEL_MAP = 2;
     // Gyroscope
     int GYRO_MAP = 3;
+    // Ultrasonic Sensor
+    int DISTANCE_ANALOG_CHANNEL_MAP = 2;
 
     // Breakout Board
     // Spinny Stick Solenoid

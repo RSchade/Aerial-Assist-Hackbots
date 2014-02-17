@@ -1,14 +1,7 @@
 Suggestions for Code
 Hackbots:
-	1) Watchdog:
-		a) You have inputting into parameters as well as inside the class: "Department of Redundancy Department"
-		b) Just have inside the "Hackbot Watchdog Class"
-	2) Look at added comments of "Hackbot Station"
 	3) Autonomous:
 		a) Look at "AutonomousSuggested"
-	4) Disabled:
-		a) Add: "disable()" method to hackbotWatch 
-		b) Move things to "disabledInit"
 
 Drive Train:
 	1) Look at comments
@@ -25,8 +18,6 @@ Drive Train:
 Hackbot Station:
 	1) Figure out which values you would want to output to Dashboard
 	2) See Added Comment Sections
-SpinnySticks:
-	1) I'd just say "spinnyMotor.set(x)" and spinnySolenoid.set(y)"
 Catapult:
 	1) Look at "CatapultSuggestedA" and "CatapultSuggestedB"
 
@@ -60,7 +51,7 @@ Interfaces
 •	ControlMap
 •	DIOs
 •	DeviceMap
-•	IsAThread	(UNUSED)
+•	IsAThread
 •	Joysticks
 •	PID
 •	Relays		(UNUSED)

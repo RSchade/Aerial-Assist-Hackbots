@@ -9,14 +9,12 @@ import com.fpsrobotics.*;
  *
  * @author ray
  */
-public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Analog, Solenoids, Values
+public interface ThreadsAndClasses extends DIOs, Joysticks, Talons, Analog, Solenoids, Values
 {
 
     Constrain constrain = new Constrain();
-    ControlSpinSticks controlSpinSticks = new ControlSpinSticks();
     DashboardOutputs dashboardOutputs = new DashboardOutputs();
     DriveTrain driveTrain = new DriveTrain();
-    FakePIDLoop pidloop = new FakePIDLoop();
     HackbotStation hackbotStation = new HackbotStation();
     HackbotWatchdog hackbotWatch = new HackbotWatchdog();
     Pneumatics pneumatics = new Pneumatics();
@@ -24,9 +22,8 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Relays, Talons, Anal
     RobotCamera robotCamera = new RobotCamera();
     VisionProcessingSample visionSample = new VisionProcessingSample();
     Shooter shooter = new Shooter();
-    SpinnySticks spinnySticks = new SpinnySticks();
+    SpinnySticksControl spinnySticks = new SpinnySticksControl();
     DriveControl driveControl = new DriveControl();
     ShooterControl shooterControl = new ShooterControl();
-    OffloadProcesses offloadProcesses = new OffloadProcesses();
 
 }

@@ -131,7 +131,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
             Thread driveThread = new Thread(driveTrain);
             Thread hackbotStationThread = new Thread(hackbotStation);
             Thread shooterThread = new Thread(shooter);
-            Thread spinnySticksThread = new SpinnySticks();
+            Thread spinnySticksThread = new SpinnySticksControl();
 
             driveThread.start();
             hackbotStationThread.start();

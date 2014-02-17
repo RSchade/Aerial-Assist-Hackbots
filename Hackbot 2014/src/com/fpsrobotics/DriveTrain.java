@@ -29,12 +29,11 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
 
-        DriveMotor driveMotor = new DriveMotor(new SimpleMotor(leftDrive, true), new SimpleMotor(rightDrive, false), gearSolenoid);
+        DriveMotor driveMotor = new DriveMotor(new SimpleMotor(leftDrive, true), new SimpleMotor(rightDrive, false), new SingleSolenoid(gearSolenoid));
 
         while (!isInterrupted)
         {
-            if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE) // previous time will always be less than current time
-                // So: if 50 milliseconds have past...
+            if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
                 // Check if we need to adjust speed, or switch to turbo
 //                driveControl.drive(driveControl.deadzoneConstrain(leftJoystick), driveControl.deadzoneConstrain(rightJoystick), leftDrive, rightDrive, true);

@@ -24,21 +24,24 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
 
     boolean areWeShooting;
 
-    /**
+    /**    presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 0.2);
+
+                prese
      * Thread to control the shooter.
      */
     public void run()
     {
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
-        TwinMotor shooter = new TwinMotor(new SimpleMotor(shooterTalonOne, false), new SimpleMotor(shooterTalonTwo, true));
-
+        TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(shooterTalonOne, false), new SimpleMotor(shooterTalonTwo, true));
+        RobotShooter shooterCatapult = new RobotShooter(shooterTwinMotor, shooterPot);
         while (!isInterrupted)
+            
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
                 // Presets (dummy, real presets to be added later)
-                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 0.2);
+//                presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 0.2);
 
                 presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, (int) dynamicPresetDistance, SHOOTER_MANUAL, 0.2);
 
@@ -47,12 +50,12 @@ public class Shooter implements Runnable, Joysticks, Analog, Talons, DIOs, Contr
 
                 if (gamepadJoystick.getRawButton(4))
                 {
-                    shooter.forward(0.5);
+                    shooterCatapult.regularLaunch(0.2);
                 }
 
                 if (gamepadJoystick.getRawButton(3))
                 {
-                    shooter.backward(0.5);
+                    shooterCatapult.regularLaunch(200, 0.2);
                 }
                 
                 previousTime = System.currentTimeMillis();

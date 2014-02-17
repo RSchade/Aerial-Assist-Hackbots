@@ -13,9 +13,9 @@ public class DriveMotor implements Motor
 
     private final SimpleMotor leftDrive;
     private final SimpleMotor rightDrive;
-    private final Solenoid gearSolenoid;
+    private final SingleSolenoid gearSolenoid;
 
-    public DriveMotor(SimpleMotor leftDrive, SimpleMotor rightDrive, Solenoid gearSolenoid)
+    public DriveMotor(SimpleMotor leftDrive, SimpleMotor rightDrive, SingleSolenoid gearSolenoid)
     {
         this.leftDrive = leftDrive;
         this.rightDrive = rightDrive;
@@ -78,11 +78,23 @@ public class DriveMotor implements Motor
 
     public void shift(boolean inOut)
     {
-        gearSolenoid.set(inOut);
+        if (inOut)
+        {
+            gearSolenoid.solenoidOn();
+        } else
+        {
+            gearSolenoid.solenoidOff();
+        }
     }
 
     public void shift()
     {
-        gearSolenoid.set(!gearSolenoid.get());
+        if (gearSolenoid.solenoidGet())
+        {
+            gearSolenoid.solenoidOn();
+        } else
+        {
+            gearSolenoid.solenoidOff();
+        }
     }
 }

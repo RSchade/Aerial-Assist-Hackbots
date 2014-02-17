@@ -14,17 +14,17 @@ public class CatapultSuggestedB implements Runnable, Talons, Analog
 {
     // Variables
 
-    private int speedInverse = -1;      // Set for shooterTalonTwo. We inverse one of the speeds because electronically, one motor is upside-down
-    private int TBDint = 0;
+    private final int speedInverse = -1;      // Set for shooterTalonTwo. We inverse one of the speeds because electronically, one motor is upside-down
+    private final int TBDint = 0;
     // Max Speed
     private double maxSpeed;
     // Max Distance
     private int highPotValue = TBDint;
     // Acceleration Speed Percent
     private int stopAccelerationPercent;
-    private boolean accelLaunch;
+    private final boolean accelLaunch;
     // RESET VARIABLES
-    private int homePotValue = TBDint;
+    private final int homePotValue = TBDint;
     private boolean isDone;
 
     /**
