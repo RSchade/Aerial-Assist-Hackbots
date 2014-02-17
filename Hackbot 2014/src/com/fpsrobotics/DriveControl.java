@@ -31,71 +31,27 @@ public class DriveControl implements Values, ThreadsAndClasses
      */
     public void drive(double leftSpeed, double rightSpeed, SpeedController leftDrive, SpeedController rightDrive, boolean batteryComp)
     {
-        if (batteryComp)
-        {
 
-            leftDrive.set(constrain.constrainDouble(this.batterySpeed() * (leftSpeed), HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
-            rightDrive.set(constrain.constrainDouble(this.batterySpeed() * (-rightSpeed), HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
-        } else
-        {
-            leftDrive.set(constrain.constrainDouble(leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
-            rightDrive.set(constrain.constrainDouble(-rightSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
-        }
+        leftDrive.set(constrain.constrainDouble(leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
+        rightDrive.set(constrain.constrainDouble(-rightSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
 
     }
-    
+
     public double deadzoneConstrain(Joystick joystick)
     {
         if (joystick.getRawAxis(2) < 0.1 && joystick.getRawAxis(2) > -0.1)
         {
             return 0.0;
         }
-        
+
         return joystick.getRawAxis(2);
     }
 
     /**
-     * Turbo the drive train when button one is pressed on either joystick, 1:2
-     * input with joysticks ConstrianTurbo class makes any value over 1.0 or
-     * below -1.0 become 1.0 and -1.0 respectively. Just to be safe.
-     *
-     * @param leftJoystick
-     * @param rightJoystick
-     * @param leftDrive
-     * @param rightDrive
-     */
-    public void driveTurbo(Joystick leftJoystick, Joystick rightJoystick, SpeedController leftDrive, SpeedController rightDrive, int button)
-    {
-        while (leftJoystick.getRawButton(button) || rightJoystick.getRawButton(button))
-        {
-            leftDrive.set(constrain.constrainDouble(2 * (-leftJoystick.getRawAxis(2)), 1.0, -1.0));
-            rightDrive.set(constrain.constrainDouble(2 * (rightJoystick.getRawAxis(2)), 1.0, -1.0));
-        }
-    }
-
-    /**
-     *
-     * Create a number to multiply the input joystick value by to make the robot
-     * respond to dropping battery voltage
-     *
-     * @return
-     */
-    public double batterySpeed()
-    {
-        if (DriverStation.getInstance().getBatteryVoltage() >= 12)
-        {
-            return 1;
-        }
-
-        return (12 / DriverStation.getInstance().getBatteryVoltage());
-
-    }
-
-    /**
      * Drive to a specified distance
-     * 
+     *
      * @param drivePID
-     * @param distance 
+     * @param distance
      */
     public void driveToPID(PIDController drivePID, int distance)
     {
@@ -104,7 +60,7 @@ public class DriveControl implements Values, ThreadsAndClasses
 
     /**
      * Initialize the PID for driving
-     * 
+     *
      * @param drive
      * @param driveEncoder
      * @param lowInput
@@ -112,7 +68,7 @@ public class DriveControl implements Values, ThreadsAndClasses
      * @param Kp
      * @param Ki
      * @param Kd
-     * @return 
+     * @return
      */
     public PIDController initDrivePID(SpeedController drive, Encoder driveEncoder, int lowInput, int highInput, double Kp, double Ki, double Kd)
     {
@@ -140,11 +96,12 @@ public class DriveControl implements Values, ThreadsAndClasses
     }
 
     /**
-     * Switch gears using accelerometer values, so if we are being rammed or are ramming we automatically switch into low gear.
-     * 
+     * Switch gears using accelerometer values, so if we are being rammed or are
+     * ramming we automatically switch into low gear.
+     *
      * @param leftJoystick
      * @param rightJoystick
-     * @param accel 
+     * @param accel
      */
 //    public void accelSwitchGears(Joystick leftJoystick, Joystick rightJoystick, Accelerometer accel)
 //    {
@@ -156,5 +113,4 @@ public class DriveControl implements Values, ThreadsAndClasses
 //            }
 //        }
 //    }
-
 }

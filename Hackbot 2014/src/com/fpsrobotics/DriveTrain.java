@@ -24,7 +24,7 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
      * thread.
      *
      */
-    public void run()   // You say in SEVEN classes what can be said in TWO
+    public void run() 
     {
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
@@ -41,12 +41,11 @@ public class DriveTrain implements Runnable, Talons, Joysticks, Values, Analog, 
 //                driveControl.driveTurbo(leftJoystick, rightJoystick, leftDrive, rightDrive, TURBO_BUTTON);
                 
                 driveMotor.set(driveControl.deadzoneConstrain(leftJoystick), driveControl.deadzoneConstrain(rightJoystick));
-                // DeadZoneConstrain makes no sense
                 
-                if (leftJoystick.getRawButton(TURBO_BUTTON))
-                {
-                    driveMotor.set(constrain.constrainDouble(driveControl.deadzoneConstrain(leftJoystick) * 10, 1.0, 0.0), constrain.constrainDouble(driveControl.deadzoneConstrain(rightJoystick) * 10, 1.0, 0.0));
-                }
+//                if (leftJoystick.getRawButton(TURBO_BUTTON))
+//                {
+//                    driveMotor.set(constrain.constrainDouble(driveControl.deadzoneConstrain(leftJoystick) * 10, 1.0, 0.0), constrain.constrainDouble(driveControl.deadzoneConstrain(rightJoystick) * 10, 1.0, 0.0));
+//                }
 //                driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
 
                 // Shift if we hold the button
