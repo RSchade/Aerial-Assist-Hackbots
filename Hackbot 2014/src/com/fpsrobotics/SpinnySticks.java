@@ -1,12 +1,12 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.IsAThread;
+import com.fpsrobotics.interfaces.IsAThread;      // Don't use what you don't need
 import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.Joysticks;
-import com.fpsrobotics.interfaces.Solenoids;
-import com.fpsrobotics.interfaces.Talons;
+import com.fpsrobotics.interfaces.Solenoids;      // Don't use what you don't need
+import com.fpsrobotics.interfaces.Talons;         // Don't use what you don't need
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
-import com.fpsrobotics.interfaces.Values;
+import com.fpsrobotics.interfaces.Values;         // Don't use what you don't need
 
 /**
  * Controls the spinny sticks either with an object oriented class or the spinny sticks class.
@@ -32,6 +32,7 @@ public class SpinnySticks extends Thread implements Joysticks, Talons, Values, S
         {
 
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
+                // Switch the order of this -or- Timer.delay(0.20)
             {
 
                 // Check if we need to extend or retract the spinny sticks

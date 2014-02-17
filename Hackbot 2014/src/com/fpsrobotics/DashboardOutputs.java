@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.DriverStationLCD;
 
 /**
  * Outputs variables and other information to the smart dashboard and printlns.
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DashboardOutputs
 {
     int compressorCutoff;
+//    DriverStationLCD userMessages = DriverStationLCD.getInstance();
 
     /**
      * Outputs values to SmartDashboard.
@@ -65,4 +67,8 @@ public class DashboardOutputs
             System.out.println("Come on, don't steal our code!");
         }
     }
+    
+//    public void driverComments() {
+//        userMessages.println(DriverStationLCD.Line.kUser1, 1, "Hackbots Aerial Assist Code");
+//    }
 }
