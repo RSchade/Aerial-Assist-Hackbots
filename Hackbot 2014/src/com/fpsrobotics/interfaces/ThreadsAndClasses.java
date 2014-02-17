@@ -9,7 +9,7 @@ import com.fpsrobotics.*;
  *
  * @author ray
  */
-public interface ThreadsAndClasses extends DIOs, Joysticks, Analog, Solenoids, Values
+public interface ThreadsAndClasses extends DIOs, Joysticks, Values
 {
 
     Constrain constrain = new Constrain();

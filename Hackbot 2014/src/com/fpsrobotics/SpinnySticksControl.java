@@ -1,9 +1,9 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.IsAThread; 
 import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 
 /**
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author ray
  */
-public class SpinnySticksControl extends Thread implements Joysticks, ControlMap, ThreadsAndClasses, IsAThread
+public class SpinnySticksControl extends Thread implements Joysticks, ControlMap, ThreadsAndClasses
 {
 
     boolean isInterrupted = false;
@@ -22,6 +22,7 @@ public class SpinnySticksControl extends Thread implements Joysticks, ControlMap
     public void run()
     {
 
+        DoubleSolenoid spinnySolenoid = HardwareFactory.createDoubleSolenoid(SPINNY_SOLENOID_MAP_ONE, SPINNY_SOLENOID_MAP_TWO);
         SpeedController spinnyMotor = HardwareFactory.createTalon(SPIN_MAP);
         
         long previousTime = System.currentTimeMillis();

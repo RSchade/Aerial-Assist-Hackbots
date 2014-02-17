@@ -1,12 +1,11 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.IsAThread;
-import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.ControlMap;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.PID;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.SpeedController;
 
 /**
@@ -15,7 +14,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author ray
  */
-public class Shooter implements Runnable, Joysticks, Analog, DIOs, ControlMap, PID, ThreadsAndClasses, IsAThread
+public class Shooter implements Runnable, Joysticks, DIOs, ControlMap, PID, ThreadsAndClasses
 {
 
     double dynamicPresetDistance = 0;
@@ -33,6 +32,7 @@ public class Shooter implements Runnable, Joysticks, Analog, DIOs, ControlMap, P
     {
         SpeedController shooterTalonOne = HardwareFactory.createTalon(SHOOTER_TALON_MAP_ONE);
         SpeedController shooterTalonTwo = HardwareFactory.createTalon(SHOOTER_TALON_MAP_TWO);
+        AnalogChannel shooterPot = HardwareFactory.createAnalog(SHOOTER_POT_MAP);
         
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;

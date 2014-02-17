@@ -1,16 +1,15 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.IsAThread;
-import com.fpsrobotics.interfaces.Analog;
 import com.fpsrobotics.interfaces.DIOs;
 import com.fpsrobotics.interfaces.Joysticks;
 import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import edu.wpi.first.wpilibj.AnalogChannel;
 
 /**
  * Uses methods from dashboard outputs to control what gets outputted to the smart dashboard.
  * @author ray
  */
-public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, ThreadsAndClasses, IsAThread
+public class HackbotStation implements Runnable, Joysticks, DIOs, ThreadsAndClasses
 {
 
     boolean isInterrupted = false;
@@ -23,6 +22,9 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Thread
      */
     public void run()
     {
+        AnalogChannel shooterPot = HardwareFactory.createAnalog(SHOOTER_POT_MAP);
+        AnalogChannel distanceSensor = HardwareFactory.createAnalog(DISTANCE_ANALOG_CHANNEL_MAP);
+        
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
 

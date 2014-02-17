@@ -1,7 +1,8 @@
 package com.fpsrobotics;
 
 import edu.wpi.first.wpilibj.Timer;
-import com.fpsrobotics.interfaces.Analog;
+import com.fpsrobotics.interfaces.DeviceMap;
+import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.SpeedController;
 
 /**
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author Josh
  */
-public class CatapultSuggestedB implements Runnable, Analog
+public class CatapultSuggestedB implements Runnable, DeviceMap
 {
     // Variables
 
@@ -28,6 +29,7 @@ public class CatapultSuggestedB implements Runnable, Analog
     private boolean isDone;
     private SpeedController shooterTalonOne;
     private SpeedController shooterTalonTwo;
+    AnalogChannel shooterPot;
 
     /**
      * ACCELERATION LAUNCH CONSTRUCTOR
@@ -57,6 +59,7 @@ public class CatapultSuggestedB implements Runnable, Analog
         isDone = false;
         shooterTalonOne = HardwareFactory.createTalon(SHOOTER_TALON_MAP_ONE);
         shooterTalonTwo = HardwareFactory.createTalon(SHOOTER_TALON_MAP_TWO);
+        shooterPot = HardwareFactory.createAnalog(SHOOTER_POT_MAP);
     }
 
     /**

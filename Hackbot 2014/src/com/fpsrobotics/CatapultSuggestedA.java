@@ -1,13 +1,12 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.IsAThread;
 import com.fpsrobotics.interfaces.Joysticks;
 
 /**
  *
  * @author Josh
  */
-public class CatapultSuggestedA implements Runnable, Joysticks, IsAThread
+public class CatapultSuggestedA implements Runnable, Joysticks
 {
 
     private boolean isInterrupted = false;
