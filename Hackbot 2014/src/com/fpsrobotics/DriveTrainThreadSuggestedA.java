@@ -1,7 +1,7 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.ControlMap;
-import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import com.fpsrobotics.constants.ControlMap;
+import com.fpsrobotics.constants.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.Timer;
 
 /**

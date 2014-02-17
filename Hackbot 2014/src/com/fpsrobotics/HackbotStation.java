@@ -1,10 +1,10 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.IsAThread;
-import com.fpsrobotics.interfaces.Analog;
-import com.fpsrobotics.interfaces.DIOs;
-import com.fpsrobotics.interfaces.Joysticks;
-import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import com.fpsrobotics.constants.IsAThread;
+import com.fpsrobotics.constants.Analog;
+import com.fpsrobotics.constants.DIOs;
+import com.fpsrobotics.constants.Joysticks;
+import com.fpsrobotics.constants.ThreadsAndClasses;
 
 /**
  * Uses methods from dashboard outputs to control what gets outputted to the smart dashboard.
@@ -32,7 +32,6 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Thread
             if (System.currentTimeMillis() - previousTime >= THREAD_REFRESH_RATE)
             {
                 // Output variables to dashboard
-                dashboardOutputs.batteryOutput();
                 dashboardOutputs.teamOutput();
                 dashboardOutputs.outputToDashboard(leftJoystick, rightJoystick, leftDriveEncoder, shooter, spinnySticks, distanceSensor, shooterPot);
 

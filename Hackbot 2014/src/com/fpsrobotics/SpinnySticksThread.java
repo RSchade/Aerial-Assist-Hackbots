@@ -1,16 +1,16 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.IsAThread; 
-import com.fpsrobotics.interfaces.ControlMap;
-import com.fpsrobotics.interfaces.Joysticks;
-import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import com.fpsrobotics.constants.IsAThread; 
+import com.fpsrobotics.constants.ControlMap;
+import com.fpsrobotics.constants.Joysticks;
+import com.fpsrobotics.constants.ThreadsAndClasses;
 
 /**
  * Controls the spinny sticks either with an object oriented class or the spinny sticks class.
  *
  * @author ray
  */
-public class SpinnySticksControl extends Thread implements Joysticks, ControlMap, ThreadsAndClasses, IsAThread
+public class SpinnySticksThread extends Thread implements Joysticks, ControlMap, ThreadsAndClasses, IsAThread
 {
 
     boolean isInterrupted = false;
@@ -24,7 +24,7 @@ public class SpinnySticksControl extends Thread implements Joysticks, ControlMap
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
 //        SimpleMotor spinnySimpleMotor = new SimpleMotor(spinnyMotor, false);
-        SpinnySticks spinnyStick = new SpinnySticks(spinnyMotor, new TwoSolenoids(spinnySolenoid));
+        SpinnySticksObject spinnyStick = new SpinnySticksObject(spinnyMotor, new TwoSolenoids(spinnySolenoid));
 
         while (!isInterrupted)
         {

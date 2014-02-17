@@ -1,4 +1,4 @@
-package com.fpsrobotics.interfaces;
+package com.fpsrobotics.constants;
 
 import edu.wpi.first.wpilibj.Accelerometer;
 import edu.wpi.first.wpilibj.AnalogChannel;

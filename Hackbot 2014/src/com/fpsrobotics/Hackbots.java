@@ -6,8 +6,8 @@
 /*----------------------------------------------------------------------------*/
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.PID;
-import com.fpsrobotics.interfaces.ThreadsAndClasses;
+import com.fpsrobotics.constants.PID;
+import com.fpsrobotics.constants.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
@@ -89,8 +89,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 
             System.out.println("Shooting");
 
-            // Shoot if three in a row
-            shooterControl.shootAuto(shooterTalonOne, shooterTalonTwo, shooterPot);
+            // shoot if three in a row
+            // (shooter code here)
 
             hackbotWatch.feed(dog);
 
@@ -130,8 +130,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
             //Threads here
             Thread driveThread = new Thread(driveTrain);
             Thread hackbotStationThread = new Thread(hackbotStation);
-            Thread shooterThread = new Thread(shooter);
-            Thread spinnySticksThread = new SpinnySticksControl();
+            Thread shooterThread = new CatapultThread();
+            Thread spinnySticksThread = new SpinnySticksThread();
 
             driveThread.start();
             hackbotStationThread.start();

@@ -26,7 +26,7 @@ public class DashboardOutputs
      * @param spinnySticks
      * @param distanceSensor
      */
-    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, Shooter shooter, SpinnySticksControl spinnySticks, AnalogChannel distanceSensor, AnalogChannel shooterPot)
+    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, CatapultThread shooter, SpinnySticksThread spinnySticks, AnalogChannel distanceSensor, AnalogChannel shooterPot)
     {
         // Variable outputs to dashboard
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
@@ -40,24 +40,6 @@ public class DashboardOutputs
         SmartDashboard.putBoolean("Is Shooting", shooter.getAreWeShooting());
         SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getVoltage()/.1176);
         SmartDashboard.putNumber("Shooter Pot", shooterPot.getValue());
-    }
-    
-    public void batteryOutput()
-    {
-        // Battery warnings to the console
-        if (DriverStation.getInstance().getBatteryVoltage() <= 10.5)
-        {
-            System.out.println("Warning! Battery voltage low, replace soon!");
-        } else if (DriverStation.getInstance().getBatteryVoltage() <= 10)
-        {
-            System.out.println("Danger! Battery voltage very low, replace immediately!");
-        } else if (DriverStation.getInstance().getBatteryVoltage() <= 9)
-        {
-            System.out.println("Battery voltage extremely low! Replace immediately, robot may malfunction");
-        } else if (DriverStation.getInstance().getBatteryVoltage() <= 8)
-        {
-            System.out.println("Battery dead, replace now");
-        }
     }
 
     public void teamOutput()

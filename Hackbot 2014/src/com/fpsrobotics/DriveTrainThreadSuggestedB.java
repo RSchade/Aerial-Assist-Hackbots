@@ -1,7 +1,7 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.Solenoids;
-import com.fpsrobotics.interfaces.Talons;
+import com.fpsrobotics.constants.Solenoids;
+import com.fpsrobotics.constants.Talons;
 
 /**
  *

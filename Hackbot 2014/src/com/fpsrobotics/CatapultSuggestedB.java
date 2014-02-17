@@ -1,8 +1,8 @@
 package com.fpsrobotics;
 
 import edu.wpi.first.wpilibj.Timer;
-import com.fpsrobotics.interfaces.Talons;
-import com.fpsrobotics.interfaces.Analog;
+import com.fpsrobotics.constants.Talons;
+import com.fpsrobotics.constants.Analog;
 
 /**
  * Launches the Catapult 3 Functions: 1) Acceleration Launch 2) Regular Launch

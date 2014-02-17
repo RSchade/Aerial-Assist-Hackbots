@@ -1,5 +1,7 @@
-package com.fpsrobotics.interfaces;
+package com.fpsrobotics.constants;
 
+import com.fpsrobotics.deprecated.Presets;
+import com.fpsrobotics.deprecated.DriveControl;
 import com.fpsrobotics.*;
 
 /**
@@ -14,16 +16,14 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Talons, Analog, Sole
 
     Constrain constrain = new Constrain();
     DashboardOutputs dashboardOutputs = new DashboardOutputs();
-    DriveTrain driveTrain = new DriveTrain();
+    DriveThread driveTrain = new DriveThread();
     HackbotStation hackbotStation = new HackbotStation();
     HackbotWatchdog hackbotWatch = new HackbotWatchdog();
     Pneumatics pneumatics = new Pneumatics();
     Presets presets = new Presets();
     RobotCamera robotCamera = new RobotCamera();
     VisionProcessingSample visionSample = new VisionProcessingSample();
-    Shooter shooter = new Shooter();
-    SpinnySticksControl spinnySticks = new SpinnySticksControl();
+    CatapultThread shooter = new CatapultThread();
+    SpinnySticksThread spinnySticks = new SpinnySticksThread();
     DriveControl driveControl = new DriveControl();
-    ShooterControl shooterControl = new ShooterControl();
-
 }

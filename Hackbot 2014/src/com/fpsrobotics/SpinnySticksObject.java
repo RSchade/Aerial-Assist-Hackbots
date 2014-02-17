@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author Hackbots
  */
-public class SpinnySticks extends SimpleMotor implements AirSolenoid
+public class SpinnySticksObject extends SimpleMotor implements AirSolenoid
 {
 
     private final TwoSolenoids spinnySolenoid;
 
-    public SpinnySticks(SpeedController spinnyMotor, TwoSolenoids spinnySolenoid)
+    public SpinnySticksObject(SpeedController spinnyMotor, TwoSolenoids spinnySolenoid)
     {
         super(spinnyMotor, false);
         this.spinnySolenoid = spinnySolenoid;
