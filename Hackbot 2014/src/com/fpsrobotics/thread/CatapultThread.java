@@ -26,6 +26,7 @@ public class CatapultThread extends Thread implements IsAThread
     Preset highGoal;
     Preset pass;
     Preset truss;
+    Preset dynamic;
     CatapultObject shoot;
     double dynamicPresetDistance = 0;
     double dynamicPresetSpeed = 0;
@@ -78,6 +79,7 @@ public class CatapultThread extends Thread implements IsAThread
                     {
                         if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Values.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Values.SHOOTER_MIN_SPEED)
                         {
+                            shoot.presetShoot(Analog.shooterPot, dynamic, shooterTwinMotor);
                         }
                     }
 

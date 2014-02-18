@@ -6,6 +6,7 @@ package com.fpsrobotics.Preset;
 
 import com.fpsrobotics.preset.Preset;
 import com.fpsrobotics.preset.PresetValue;
+import com.fpsrobotics.thread.CatapultThread;
 
 /**
  *
@@ -13,8 +14,11 @@ import com.fpsrobotics.preset.PresetValue;
  */
 public class PresetDynamic extends Preset
 {
+    CatapultThread catapultThread;
     public PresetDynamic()
     {
-        addValue(new PresetValue(_20_PERCENT_THRUST, ));    
+        addValue(new PresetValue(catapultThread.getDynamicPresetSpeed(),catapultThread.getDynamicPresetDistance() ));   
+        addValue(new PresetValue(GO_HOME,60));
+        addValue(new PresetValue(STOP_SHOOTER, 152));
     }
 }
