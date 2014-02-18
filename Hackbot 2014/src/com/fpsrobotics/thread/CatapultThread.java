@@ -9,15 +9,18 @@ import com.fpsrobotics.Preset.*;
 
 /**
  *
- * Controls the shooter, probably will be changed as it becomes more object oriented.
+ * Controls the shooter, probably will be changed as it becomes more object
+ * oriented.
  *
  * @author ray
  */
-public class CatapultThread extends Thread 
+public class CatapultThread extends Thread
 {
+
     Preset highGoal;
     Preset pass;
     Preset truss;
+    Preset dynamic;
     CatapultObject shoot;
     double dynamicPresetDistance = 0;
     double dynamicPresetSpeed = 0;
@@ -25,7 +28,8 @@ public class CatapultThread extends Thread
     boolean areWeShooting;
 
     /**
-     * presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne, shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 0.2);
+     * presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne,
+     * shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 0.2);
      *
      * prese Thread to control the shooter.
      */
@@ -66,10 +70,12 @@ public class CatapultThread extends Thread
 
                     }
 
+
                     if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
                     {
                         if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Constants.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
                         {
+                            shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, dynamic, shooterTwinMotor);
                         }
                     }
 
