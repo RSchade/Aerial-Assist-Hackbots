@@ -5,7 +5,7 @@ import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.SingleSolenoid;
 import com.fpsrobotics.constants.ControlMap;
 import com.fpsrobotics.constants.IsAThread;
-import com.fpsrobotics.constants.Joysticks;
+import com.fpsrobotics.constants.Controls;
 import com.fpsrobotics.constants.Talons;
 import com.fpsrobotics.constants.Solenoids;
 import com.fpsrobotics.constants.ThreadsAndClasses;
@@ -37,11 +37,11 @@ public class DriveThread extends Thread implements IsAThread
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= Values.THREAD_REFRESH_RATE)
             {
-                driveMotor.set(ThreadsAndClasses.constrain.deadzoneConstrain(Joysticks.leftJoystick), ThreadsAndClasses.constrain.deadzoneConstrain(Joysticks.rightJoystick));
+                driveMotor.set(ThreadsAndClasses.constrain.deadzoneConstrain(Controls.leftJoystick), ThreadsAndClasses.constrain.deadzoneConstrain(Controls.rightJoystick));
 //                driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
 
                 // Switch if we hold the button
-                if (Joysticks.leftJoystick.getRawButton(ControlMap.GEAR_SWITCH_ONE) || Joysticks.rightJoystick.getRawButton(ControlMap.GEAR_SWITCH_TWO))
+                if (Controls.leftJoystick.getRawButton(ControlMap.GEAR_SWITCH_ONE) || Controls.rightJoystick.getRawButton(ControlMap.GEAR_SWITCH_TWO))
                 {
                     driveMotor.shift(true);
                 } else

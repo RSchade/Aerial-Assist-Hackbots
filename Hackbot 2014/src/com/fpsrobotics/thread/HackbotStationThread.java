@@ -3,7 +3,7 @@ package com.fpsrobotics.thread;
 import com.fpsrobotics.constants.Analog;
 import com.fpsrobotics.constants.IsAThread;
 import com.fpsrobotics.constants.DIOs;
-import com.fpsrobotics.constants.Joysticks;
+import com.fpsrobotics.constants.Controls;
 import com.fpsrobotics.constants.ThreadsAndClasses;
 import com.fpsrobotics.constants.Values;
 
@@ -34,7 +34,7 @@ public class HackbotStationThread extends Thread implements IsAThread
             {
                 // Output variables to dashboard
                 ThreadsAndClasses.dashboardOutputs.teamOutput();
-                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Joysticks.leftJoystick, Joysticks.rightJoystick, DIOs.leftDriveEncoder, ThreadsAndClasses.catapult, ThreadsAndClasses.spinnySticks, DIOs.distanceSensor, Analog.shooterPot);
+                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Controls.leftJoystick, Controls.rightJoystick, DIOs.leftDriveEncoder, ThreadsAndClasses.catapult, ThreadsAndClasses.spinnySticks, DIOs.distanceSensor, Analog.shooterPot);
 
                 // Reset timer to current time
                 previousTime = System.currentTimeMillis();

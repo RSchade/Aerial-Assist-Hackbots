@@ -6,9 +6,7 @@ import com.fpsrobotics.TwinMotor;
 import com.fpsrobotics.constants.IsAThread;
 import com.fpsrobotics.constants.Analog;
 import com.fpsrobotics.constants.ControlMap;
-import com.fpsrobotics.constants.DIOs;
-import com.fpsrobotics.constants.Joysticks;
-import com.fpsrobotics.constants.PID;
+import com.fpsrobotics.constants.Controls;
 import com.fpsrobotics.constants.Talons;
 import com.fpsrobotics.constants.ThreadsAndClasses;
 import com.fpsrobotics.constants.Values;
@@ -47,27 +45,27 @@ public class CatapultThread extends Thread implements IsAThread
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= Values.THREAD_REFRESH_RATE)
             {
-                dynamicPresetDistance += -Joysticks.gamepadJoystick.getRawAxis(2);
-                dynamicPresetSpeed += Joysticks.gamepadJoystick.getRawAxis(1);
+                dynamicPresetDistance += -Controls.gamepadJoystick.getRawAxis(2);
+                dynamicPresetSpeed += Controls.gamepadJoystick.getRawAxis(1);
 
                 if (ThreadsAndClasses.spinnySticks.getSpinnySticks())
                 {
-                    if (Joysticks.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_ONE))
+                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_ONE))
                     {
                         shooterCatapult.regularLaunch(250, 1.0);
                     }
 
-                    if (Joysticks.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_TWO))
+                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_TWO))
                     {
                         shooterCatapult.regularLaunch(350, 1.0);
                     }
 
-                    if (Joysticks.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_THREE))
+                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_THREE))
                     {
                         shooterCatapult.regularLaunch(600, 1.0);
                     }
 
-                    if (Joysticks.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_FOUR))
+                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_FOUR))
                     {
                         if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Values.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Values.SHOOTER_MIN_SPEED)
                         {
