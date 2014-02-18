@@ -1,4 +1,4 @@
-package com.fpsrobotics;
+package com.fpsrobotics.changes;
 
 public class IntegerPair
 {

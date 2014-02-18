@@ -6,11 +6,9 @@
 /*----------------------------------------------------------------------------*/
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.PID;
-import com.fpsrobotics.interfaces.ThreadsAndClasses;
-import edu.wpi.first.wpilibj.AnalogChannel;
+import com.fpsrobotics.thread.SpinnySticksThread;
+import com.fpsrobotics.constants.ThreadsAndClasses;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
@@ -28,7 +26,7 @@ import edu.wpi.first.wpilibj.camera.AxisCameraException;
  *
  *
  */
-public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
+public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 {
 
     // Local variables
@@ -53,7 +51,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
         hackbotWatch.watchdogInit(dog, 2);
 
         // Init pneumatics
-        pneumatics.init(compressor);
+//        pneumatics.init(compressor);
+        compressor.start();
 
         // Camera settings init
         visionSample.imageFindInit();
@@ -70,14 +69,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
      * goes here. Something about shooting in the hot goal and then going back.
      */
     public void autonomousPeriodic()
-    {
-
-        SpeedController shooterTalonOne = HardwareFactory.createTalon(SHOOTER_TALON_MAP_ONE);
-        SpeedController shooterTalonTwo = HardwareFactory.createTalon(SHOOTER_TALON_MAP_TWO);
-        SpeedController leftDrive = HardwareFactory.createTalon(LEFT_DRIVE_MAP);
-        SpeedController rightDrive = HardwareFactory.createTalon(RIGHT_DRIVE_MAP);
-        AnalogChannel shooterPot = HardwareFactory.createAnalog(SHOOTER_POT_MAP);
-        
+    {  
         try
         {
 
@@ -98,14 +90,14 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 
             System.out.println("Shooting");
 
-            // Shoot if three in a row
-            shooterControl.shootAuto(shooterTalonOne, shooterTalonTwo, shooterPot);
+            // shoot if three in a row
+            // (shooter code here)
 
             hackbotWatch.feed(dog);
 
             // Drive
-            driveControl.driveToPID(driveControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
-            driveControl.driveToPID(driveControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
+//            driveControl.driveToPID(driveControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
+//            driveControl.driveToPID(driveControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
 
             // Feed watchdog during auton
             hackbotWatch.feed(dog);
@@ -139,8 +131,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
             //Threads here
             Thread driveThread = new Thread(driveTrain);
             Thread hackbotStationThread = new Thread(hackbotStation);
-            Thread shooterThread = new Thread(shooter);
-            Thread spinnySticksThread = new SpinnySticksControl();
+            Thread shooterThread = new Thread(catapult);
+            Thread spinnySticksThread = new SpinnySticksThread();
 
             driveThread.start();
             hackbotStationThread.start();
@@ -173,7 +165,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
     {
         driveTrain.interrupt();
         hackbotStation.interrupt();
-        shooter.interrupt();
+        catapult.interrupt();
         spinnySticks.interrupt();
 
         doneAlready = false;

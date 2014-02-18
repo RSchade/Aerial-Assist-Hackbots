@@ -1,4 +1,4 @@
-package com.fpsrobotics.interfaces;
+package com.fpsrobotics.constants;
 
 /**
  * Where the robot's device port mappings can be easily changed.
@@ -35,9 +35,9 @@ public interface DeviceMap
     // Potentiometers
     int SHOOTER_POT_MAP = 1;
     // Accelerometer
-    int ACCEL_MAP = 2;
+    int ACCEL_MAP = 4;
     // Gyroscope
-    int GYRO_MAP = 3;
+    int GYRO_MAP = 5;
     // Ultrasonic Sensor
     int DISTANCE_ANALOG_CHANNEL_MAP = 2;
 

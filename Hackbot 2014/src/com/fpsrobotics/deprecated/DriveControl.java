@@ -1,11 +1,8 @@
-package com.fpsrobotics;
+package com.fpsrobotics.deprecated;
 
-import com.fpsrobotics.interfaces.ThreadsAndClasses;
-import com.fpsrobotics.interfaces.Values;
-import edu.wpi.first.wpilibj.Accelerometer;
-import edu.wpi.first.wpilibj.DriverStation;
+import com.fpsrobotics.constants.ThreadsAndClasses;
+import com.fpsrobotics.constants.Values;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -20,32 +17,20 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class DriveControl implements Values, ThreadsAndClasses
 {
 
-    /**
-     * Run drive train as normal, 1:1 input with joysticks.
-     *
-     * @param leftSpeed
-     * @param rightSpeed
-     * @param leftDrive
-     * @param rightDrive
-     * @param batteryComp
-     */
-    public void drive(double leftSpeed, double rightSpeed, SpeedController leftDrive, SpeedController rightDrive, boolean batteryComp)
-    {
-
-        leftDrive.set(constrain.constrainDouble(leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
-        rightDrive.set(constrain.constrainDouble(-rightSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
-
-    }
-
-    public double deadzoneConstrain(Joystick joystick)
-    {
-        if (joystick.getRawAxis(2) < 0.1 && joystick.getRawAxis(2) > -0.1)
-        {
-            return 0.0;
-        }
-
-        return joystick.getRawAxis(2);
-    }
+//    /**
+//     * Run drive train as normal, 1:1 input with joysticks.
+//     *
+//     * @param leftSpeed
+//     * @param rightSpeed
+//     * @param leftDrive
+//     * @param rightDrive
+//     * @param batteryComp
+//     */
+//    public void drive(double leftSpeed, double rightSpeed, SpeedController leftDrive, SpeedController rightDrive, boolean batteryComp)
+//    {
+//        leftDrive.set(constrain.constrainDouble(leftSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
+//        rightDrive.set(constrain.constrainDouble(-rightSpeed, HIGH_DRIVE_SPEED, LOW_DRIVE_SPEED));
+//    }
 
     /**
      * Drive to a specified distance
@@ -95,14 +80,14 @@ public class DriveControl implements Values, ThreadsAndClasses
         return drivePID;
     }
 
-    /**
-     * Switch gears using accelerometer values, so if we are being rammed or are
-     * ramming we automatically switch into low gear.
-     *
-     * @param leftJoystick
-     * @param rightJoystick
-     * @param accel
-     */
+//    /**
+//     * Switch gears using accelerometer values, so if we are being rammed or are
+//     * ramming we automatically switch into low gear.
+//     *
+//     * @param leftJoystick
+//     * @param rightJoystick
+//     * @param accel
+//     */
 //    public void accelSwitchGears(Joystick leftJoystick, Joystick rightJoystick, Accelerometer accel)
 //    {
 //        if ((accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3) && (accel.getAcceleration() <= 0.3 || accel.getAcceleration() >= -0.3))
