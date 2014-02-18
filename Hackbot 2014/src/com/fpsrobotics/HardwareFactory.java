@@ -36,7 +36,7 @@ public class HardwareFactory
 //        }
 //        return (DoubleSolenoid) doubleSolenoids.get(portNumA);
 //    }
-    
+
     private static Hashtable solenoids = new Hashtable();
 
     public static Solenoid createSolenoid(int port)
