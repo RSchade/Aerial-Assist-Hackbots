@@ -130,7 +130,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
             //Threads here
             Thread driveThread = new Thread(driveTrain);
             Thread hackbotStationThread = new Thread(hackbotStation);
-            Thread shooterThread = new CatapultThread();
+            Thread shooterThread = new Thread(catapult);
             Thread spinnySticksThread = new SpinnySticksThread();
 
             driveThread.start();
@@ -164,7 +164,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
     {
         driveTrain.interrupt();
         hackbotStation.interrupt();
-        shooter.interrupt();
+        catapult.interrupt();
         spinnySticks.interrupt();
 
         doneAlready = false;

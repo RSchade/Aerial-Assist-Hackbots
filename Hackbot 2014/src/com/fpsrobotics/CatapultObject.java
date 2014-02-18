@@ -32,11 +32,6 @@ public class CatapultObject implements Values, Joysticks
             catapult.forward(speed);
         }
 
-        while (shooterPot.getValue() > HOME_POT_VALUE)
-        {
-            catapult.backward(speed);
-        }
-
         goHome();
     }
 

@@ -22,11 +22,11 @@ public interface Values
     
     int THREAD_REFRESH_RATE = 50;
     
-    int HOME_POT_VALUE = 178;
+    int HOME_POT_VALUE = 152;
     
     int HIGH_POT_VALUE = 900;
     
-    double SHOOTER_MAX_SPEED = 0.8;
+    double SHOOTER_MAX_SPEED = 1.0;
     double SHOOTER_MIN_SPEED = 0.2;
-    double SHOOTER_RESET_SPEED = 0.3;
+    double SHOOTER_RESET_SPEED = 0.2;
 }

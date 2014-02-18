@@ -32,12 +32,10 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
         SmartDashboard.putNumber("Left Drive Train Speed", leftJoystick.getRawAxis(2));
         SmartDashboard.putNumber("Threads Currently Running", Thread.activeCount());
-        SmartDashboard.putNumber("Battery Voltage", DriverStation.getInstance().getBatteryVoltage());
         SmartDashboard.putNumber("Encoder Rate", encoder.getRate());
         SmartDashboard.putNumber("Encoder Value", encoder.getRaw());
         SmartDashboard.putNumber("Dynamic Preset Distance", shooter.getDynamicPresetDistance());
         SmartDashboard.putNumber("Dynamic Preset Speed", shooter.getDynamicPresetSpeed());
-        SmartDashboard.putBoolean("Is Shooting", shooter.getAreWeShooting());
         SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getVoltage()/.1176);
         SmartDashboard.putNumber("Shooter Pot", shooterPot.getValue());
     }

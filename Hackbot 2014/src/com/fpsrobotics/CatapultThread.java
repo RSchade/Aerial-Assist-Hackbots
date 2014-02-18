@@ -37,7 +37,7 @@ public class CatapultThread extends Thread implements Joysticks, Analog, Talons,
         isInterrupted = false;
         TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(shooterTalonOne, false), new SimpleMotor(shooterTalonTwo, true));
         CatapultObject shooterCatapult = new CatapultObject(shooterTwinMotor, shooterPot);
-        
+
         shooterCatapult.goHome();
 
         while (!isInterrupted)
@@ -48,26 +48,29 @@ public class CatapultThread extends Thread implements Joysticks, Analog, Talons,
                 dynamicPresetDistance += -gamepadJoystick.getRawAxis(2);
                 dynamicPresetSpeed += gamepadJoystick.getRawAxis(1);
 
-                if (gamepadJoystick.getRawButton(SHOOTER_PRESET_ONE))
+                if (spinnySticks.getSpinnySticks())
                 {
-                    shooterCatapult.regularLaunch(550, 0.5);
-                }
-
-                if (gamepadJoystick.getRawButton(SHOOTER_PRESET_TWO))
-                {
-                    shooterCatapult.regularLaunch(460, 0.5);
-                }
-
-                if (gamepadJoystick.getRawButton(SHOOTER_PRESET_THREE))
-                {
-                    shooterCatapult.regularLaunch(750, 0.5);
-                }
-
-                if (gamepadJoystick.getRawButton(SHOOTER_PRESET_FOUR))
-                {
-                    if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed /100) <= SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= SHOOTER_MIN_SPEED)
+                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_ONE))
                     {
-                        shooterCatapult.regularLaunch((int)dynamicPresetDistance, (dynamicPresetSpeed / 100));
+                        shooterCatapult.regularLaunch(250, 1.0);
+                    }
+
+                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_TWO))
+                    {
+                        shooterCatapult.regularLaunch(350, 1.0);
+                    }
+
+                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_THREE))
+                    {
+                        shooterCatapult.regularLaunch(600, 1.0);
+                    }
+
+                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_FOUR))
+                    {
+                        if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= SHOOTER_MIN_SPEED)
+                        {
+                            shooterCatapult.regularLaunch((int) dynamicPresetDistance, (dynamicPresetSpeed / 100));
+                        }
                     }
                 }
 
@@ -84,11 +87,6 @@ public class CatapultThread extends Thread implements Joysticks, Analog, Talons,
     public double getDynamicPresetSpeed()
     {
         return dynamicPresetSpeed;
-    }
-
-    public boolean getAreWeShooting()
-    {
-        return presets.getAreWeShooting();
     }
 
     public void interrupt()

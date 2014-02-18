@@ -23,7 +23,7 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Talons, Analog, Sole
     Presets presets = new Presets();
     RobotCamera robotCamera = new RobotCamera();
     VisionProcessingSample visionSample = new VisionProcessingSample();
-    CatapultThread shooter = new CatapultThread();
+    CatapultThread catapult = new CatapultThread();
     SpinnySticksThread spinnySticks = new SpinnySticksThread();
     DriveControl driveControl = new DriveControl();
 }

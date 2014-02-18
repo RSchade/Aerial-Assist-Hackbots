@@ -33,7 +33,7 @@ public class HackbotStation implements Runnable, Joysticks, Analog, DIOs, Thread
             {
                 // Output variables to dashboard
                 dashboardOutputs.teamOutput();
-                dashboardOutputs.outputToDashboard(leftJoystick, rightJoystick, leftDriveEncoder, shooter, spinnySticks, distanceSensor, shooterPot);
+                dashboardOutputs.outputToDashboard(leftJoystick, rightJoystick, leftDriveEncoder, catapult, spinnySticks, distanceSensor, shooterPot);
 
                 // Reset timer to current time
                 previousTime = System.currentTimeMillis();
