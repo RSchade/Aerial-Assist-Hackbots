@@ -3,13 +3,8 @@ package com.fpsrobotics.thread;
 import com.fpsrobotics.CatapultObject;
 import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.TwinMotor;
-import com.fpsrobotics.constants.ControlMap;
-import com.fpsrobotics.constants.PID;
-import com.fpsrobotics.constants.ThreadsAndClasses;
-import com.fpsrobotics.hardware.Analogs;
-import com.fpsrobotics.hardware.Joysticks;
-import com.fpsrobotics.hardware.Motors;
-import edu.wpi.first.wpilibj.Joystick;
+import com.fpsrobotics.constants.*;
+import com.fpsrobotics.hardware.*;
 
 /**
  *
@@ -18,13 +13,12 @@ import edu.wpi.first.wpilibj.Joystick;
  *
  * @author ray
  */
-public class CatapultThread extends Thread implements ControlMap, PID, ThreadsAndClasses 
+public class CatapultThread extends Thread implements PID 
 {
 
     double dynamicPresetDistance = 0;
     double dynamicPresetSpeed = 0;
     boolean isInterrupted = false;
-    Joystick gamepadJoystick = Joysticks.gamepadJoystick;
     boolean areWeShooting;
 
     /**
@@ -45,31 +39,31 @@ public class CatapultThread extends Thread implements ControlMap, PID, ThreadsAn
         while (!isInterrupted)
 
         {
-            if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
+            if (Math.abs(previousTime - System.currentTimeMillis()) >= Constants.THREAD_REFRESH_RATE)
             {
-                dynamicPresetDistance += -gamepadJoystick.getRawAxis(2);
-                dynamicPresetSpeed += gamepadJoystick.getRawAxis(1);
+                dynamicPresetDistance += -Joysticks.GAMEPAD.getRawAxis(2);
+                dynamicPresetSpeed += Joysticks.GAMEPAD.getRawAxis(1);
 
-                if (spinnySticks.getSpinnySticks())
+                if (ThreadsAndClasses.spinnySticks.getSpinnySticks())
                 {
-                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_ONE))
+                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_ONE))
                     {
                         shooterCatapult.regularLaunch(250, 1.0);
                     }
 
-                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_TWO))
+                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_TWO))
                     {
                         shooterCatapult.regularLaunch(350, 1.0);
                     }
 
-                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_THREE))
+                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
                     {
                         shooterCatapult.regularLaunch(600, 1.0);
                     }
 
-                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_FOUR))
+                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
                     {
-                        if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= SHOOTER_MIN_SPEED)
+                        if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Constants.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
                         {
                             shooterCatapult.regularLaunch((int) dynamicPresetDistance, (dynamicPresetSpeed / 100));
                         }

@@ -1,13 +1,13 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.constants.Values;
+import com.fpsrobotics.constants.Constants;
 import edu.wpi.first.wpilibj.AnalogChannel;
 
 /**
  *
  * @author Hackbots
  */
-public class CatapultObject implements Values
+public class CatapultObject
 {
 
     private final AnalogChannel shooterPot;
@@ -46,14 +46,14 @@ public class CatapultObject implements Values
 
     public void goHome()
     {
-        while (shooterPot.getValue() > HOME_POT_VALUE)
+        while (shooterPot.getValue() > Constants.HOME_POT_VALUE)
         {
-            catapult.backward(SHOOTER_RESET_SPEED);
+            catapult.backward(Constants.SHOOTER_RESET_SPEED);
         }
 
-        while (shooterPot.getValue() < HOME_POT_VALUE)
+        while (shooterPot.getValue() < Constants.HOME_POT_VALUE)
         {
-            catapult.forward(SHOOTER_RESET_SPEED);
+            catapult.forward(Constants.SHOOTER_RESET_SPEED);
         }
 
         catapult.stop();

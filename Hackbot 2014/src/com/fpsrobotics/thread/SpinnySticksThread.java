@@ -2,11 +2,8 @@ package com.fpsrobotics.thread;
 
 import com.fpsrobotics.SpinnySticksObject;
 import com.fpsrobotics.TwoSolenoids;
-import com.fpsrobotics.constants.ControlMap;
-import com.fpsrobotics.constants.ThreadsAndClasses;
-import com.fpsrobotics.hardware.Joysticks;
-import com.fpsrobotics.hardware.Motors;
-import com.fpsrobotics.hardware.Solenoids;
+import com.fpsrobotics.constants.*;
+import com.fpsrobotics.hardware.*;
 
 /**
  * Controls the spinny sticks either with an object oriented class or the spinny
@@ -14,7 +11,7 @@ import com.fpsrobotics.hardware.Solenoids;
  *
  * @author ray
  */
-public class SpinnySticksThread extends Thread implements ControlMap, ThreadsAndClasses
+public class SpinnySticksThread extends Thread
 {
 
     SpinnySticksObject spinnyStick = new SpinnySticksObject(Motors.SPINNY_MOTOR, new TwoSolenoids(Solenoids.SPINNY_SHIFTER));
@@ -34,38 +31,38 @@ public class SpinnySticksThread extends Thread implements ControlMap, ThreadsAnd
         while (!isInterrupted)
         {
 
-            if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
+            if (Math.abs(previousTime - System.currentTimeMillis()) >= Constants.THREAD_REFRESH_RATE)
             // Switch the order of this -or- Timer.delay(0.20)
             {
 
                 // Check if we need to extend or retract the spinny sticks
-                if (Joysticks.gamepadJoystick.getRawButton(SPINNY_EXTEND))
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_EXTEND))
                 {
 //                    pneumatics.spinnySticksMovement(spinnySolenoid, true);
                     spinnyStick.solenoidOn();
                 }
 
-                if (Joysticks.gamepadJoystick.getRawButton(SPINNY_RETRACT))
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_RETRACT))
                 {
 //                    pneumatics.spinnySticksMovement(spinnySolenoid, false);
                     spinnyStick.solenoidOff();
                 }
 
-                if (Joysticks.gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE))
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_BACKWARD_TOGGLE))
                 {
 //                    controlSpinSticks.spinSticks(spinnyMotor, -0.25);
 //                    spinnySimpleMotor.backward(0.25);
                     spinnyStick.forward(-0.35);
                 }
 
-                if (Joysticks.gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE))
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_FORWARD_TOGGLE))
                 {
 //                    controlSpinSticks.spinSticks(spinnyMotor, 0.25);
 //                    spinnySimpleMotor.forward(0.25);
                     spinnyStick.backward(0.35);
                 }
 
-                if (!Joysticks.gamepadJoystick.getRawButton(SPINNY_FORWARD_TOGGLE) && !Joysticks.gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE))
+                if (!Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_FORWARD_TOGGLE) && !Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_BACKWARD_TOGGLE))
                 {
 //                    controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
 //                    spinnySimpleMotor.stop();

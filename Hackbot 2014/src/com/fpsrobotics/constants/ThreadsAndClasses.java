@@ -4,9 +4,6 @@ import com.fpsrobotics.thread.HackbotStationThread;
 import com.fpsrobotics.thread.DriveThread;
 import com.fpsrobotics.thread.CatapultThread;
 import com.fpsrobotics.thread.SpinnySticksThread;
-import com.fpsrobotics.deprecated.Pneumatics;
-import com.fpsrobotics.deprecated.Presets;
-import com.fpsrobotics.deprecated.DriveControl;
 import com.fpsrobotics.*;
 
 /**
@@ -16,19 +13,15 @@ import com.fpsrobotics.*;
  *
  * @author ray
  */
-public interface ThreadsAndClasses
+public class ThreadsAndClasses
 {
 
-    Constrain constrain = new Constrain();
-    DashboardOutputs dashboardOutputs = new DashboardOutputs();
-    DriveThread driveTrain = new DriveThread();
-    HackbotStationThread hackbotStation = new HackbotStationThread();
-    HackbotWatchdog hackbotWatch = new HackbotWatchdog();
-    Pneumatics pneumatics = new Pneumatics();
-    Presets presets = new Presets();
-    RobotCamera robotCamera = new RobotCamera();
-    VisionProcessingSample visionSample = new VisionProcessingSample();
-    CatapultThread catapult = new CatapultThread();
-    SpinnySticksThread spinnySticks = new SpinnySticksThread();
-    DriveControl driveControl = new DriveControl();
+    public static final Constrain constrain = new Constrain();
+    public static final DashboardOutputs dashboardOutputs = new DashboardOutputs();
+    public static final DriveThread driveTrain = new DriveThread();
+    public static final HackbotStationThread hackbotStation = new HackbotStationThread();
+    public static final RobotCamera robotCamera = new RobotCamera();
+    public static final VisionProcessingSample visionSample = new VisionProcessingSample();
+    public static final CatapultThread catapult = new CatapultThread();
+    public static final SpinnySticksThread spinnySticks = new SpinnySticksThread();
 }

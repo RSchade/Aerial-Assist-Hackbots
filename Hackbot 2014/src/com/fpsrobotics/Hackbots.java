@@ -7,9 +7,9 @@
 package com.fpsrobotics;
 
 import com.fpsrobotics.thread.SpinnySticksThread;
-import com.fpsrobotics.constants.ThreadsAndClasses;
+import com.fpsrobotics.constants.*;
+import com.fpsrobotics.hardware.*;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
 /**
@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.camera.AxisCameraException;
  *
  *
  */
-public class Hackbots extends IterativeRobot implements ThreadsAndClasses
+public class Hackbots extends IterativeRobot
 {
 
     // Local variables
@@ -36,7 +36,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 
     
     // Watchdog
-    Watchdog dog = Watchdog.getInstance();
+    HackbotWatchdog hackbotWatch = new HackbotWatchdog();
 
     /**
      * This function is run when the robot is first started up and should be
@@ -48,15 +48,15 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         System.out.println("Hackbots Aerial Assist Code");
 
         // Init watchdog with 2 second timeout
-        hackbotWatch.watchdogInit(dog, 2);
+        hackbotWatch.watchdogInit(2);
 
         // Init pneumatics
 //        pneumatics.init(compressor);
-        compressor.start();
+        DigitalIOs.COMPRESSOR.start();
 
         // Camera settings init
-        visionSample.imageFindInit();
-        robotCamera.init();
+        ThreadsAndClasses.visionSample.imageFindInit();
+        ThreadsAndClasses.robotCamera.init();
     }
 
     public void autonomousInit()
@@ -75,7 +75,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 
             while (goodImageCounter <= 2)
             {
-                if (visionSample.autoImageFind())
+                if (ThreadsAndClasses.visionSample.autoImageFind())
                 {
                     goodImageCounter++;
 
@@ -83,7 +83,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 
                 }
 
-                hackbotWatch.feed(dog);
+                hackbotWatch.feed();
             }
 
             goodImageCounter = 0;
@@ -93,18 +93,18 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             // shoot if three in a row
             // (shooter code here)
 
-            hackbotWatch.feed(dog);
+            hackbotWatch.feed();
 
             // Drive
 //            driveControl.driveToPID(driveControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
 //            driveControl.driveToPID(driveControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
 
             // Feed watchdog during auton
-            hackbotWatch.feed(dog);
+            hackbotWatch.feed();
 
             while (super.isAutonomous())
             {
-                hackbotWatch.feed(dog);
+                hackbotWatch.feed();
             }
 
         } catch (AxisCameraException ex)
@@ -129,9 +129,9 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
         if (!doneAlready)
         {
             //Threads here
-            Thread driveThread = new Thread(driveTrain);
-            Thread hackbotStationThread = new Thread(hackbotStation);
-            Thread shooterThread = new Thread(catapult);
+            Thread driveThread = new Thread(ThreadsAndClasses.driveTrain);
+            Thread hackbotStationThread = new Thread(ThreadsAndClasses.hackbotStation);
+            Thread shooterThread = new Thread(ThreadsAndClasses.catapult);
             Thread spinnySticksThread = new SpinnySticksThread();
 
             driveThread.start();
@@ -142,7 +142,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
             doneAlready = true;
         }
         // Feed the watchdog
-        hackbotWatch.feed(dog);
+        hackbotWatch.feed();
     }
 
     public void testInit()
@@ -153,7 +153,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
     public void testPeriodic()
     {
         // Feed watchdog during test
-        hackbotWatch.feed(dog);
+        hackbotWatch.feed();
     }
 
     public void disabledInit()
@@ -163,10 +163,10 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses
 
     public void disabledPeriodic()
     {
-        driveTrain.interrupt();
-        hackbotStation.interrupt();
-        catapult.interrupt();
-        spinnySticks.interrupt();
+        ThreadsAndClasses.driveTrain.interrupt();
+        ThreadsAndClasses.hackbotStation.interrupt();
+        ThreadsAndClasses.catapult.interrupt();
+        ThreadsAndClasses.spinnySticks.interrupt();
 
         doneAlready = false;
     }
