@@ -7,7 +7,7 @@ import com.fpsrobotics.constants.Joysticks;
  *
  * @author Josh
  */
-public class CatapultSuggestedA implements Runnable, Joysticks, IsAThread
+public class CatapultSuggestedA implements Runnable, Joysticks
 {
 
     private boolean isInterrupted = false;
