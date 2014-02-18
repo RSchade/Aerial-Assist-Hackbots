@@ -1,7 +1,8 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.Preset.*;
+import com.fpsrobotics.preset.*;
 import edu.wpi.first.wpilibj.AnalogChannel;
+
 
 /**
  *

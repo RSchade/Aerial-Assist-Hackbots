@@ -5,7 +5,7 @@ import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.TwinMotor;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
-import com.fpsrobotics.Preset.*;
+import com.fpsrobotics.preset.*;
 
 /**
  *
