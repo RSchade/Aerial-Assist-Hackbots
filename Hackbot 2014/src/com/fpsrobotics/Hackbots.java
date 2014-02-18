@@ -8,12 +8,9 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.constants.DIOs;
 import com.fpsrobotics.thread.SpinnySticksThread;
-import com.fpsrobotics.constants.StaticClasses;
-import com.fpsrobotics.thread.CatapultThread;
-import com.fpsrobotics.thread.DriveThread;
-import com.fpsrobotics.thread.HackbotStationThread;
+import com.fpsrobotics.constants.*;
+import com.fpsrobotics.hardware.*;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
 /**
@@ -40,7 +37,7 @@ public class Hackbots extends IterativeRobot
 
     
     // Watchdog
-    Watchdog dog = Watchdog.getInstance();
+    HackbotWatchdog hackbotWatch = new HackbotWatchdog();
 
     /**
      * This function is run when the robot is first started up and should be
@@ -52,15 +49,15 @@ public class Hackbots extends IterativeRobot
         System.out.println("Hackbots Aerial Assist Code");
 
         // Init watchdog with 2 second timeout
-        StaticClasses.hackbotWatch.watchdogInit(dog, 2);
+        hackbotWatch.watchdogInit(2);
 
         // Init pneumatics
 //        pneumatics.init(compressor);
-        DIOs.compressor.start();
+        DigitalIOs.COMPRESSOR.start();
 
         // Camera settings init
-        StaticClasses.visionSample.imageFindInit();
-        StaticClasses.robotCamera.init();
+        ThreadsAndClasses.visionSample.imageFindInit();
+        ThreadsAndClasses.robotCamera.init();
     }
 
     public void autonomousInit()
@@ -79,7 +76,7 @@ public class Hackbots extends IterativeRobot
 
             while (goodImageCounter <= 2)
             {
-                if (StaticClasses.visionSample.autoImageFind())
+                if (ThreadsAndClasses.visionSample.autoImageFind())
                 {
                     goodImageCounter++;
 
@@ -87,7 +84,7 @@ public class Hackbots extends IterativeRobot
 
                 }
 
-                StaticClasses.hackbotWatch.feed(dog);
+                hackbotWatch.feed();
             }
 
             goodImageCounter = 0;
@@ -97,18 +94,18 @@ public class Hackbots extends IterativeRobot
             // shoot if three in a row
             // (shooter code here)
 
-            StaticClasses.hackbotWatch.feed(dog);
+            hackbotWatch.feed();
 
             // Drive
 //            driveControl.driveToPID(driveControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
 //            driveControl.driveToPID(driveControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
 
             // Feed watchdog during auton
-            StaticClasses.hackbotWatch.feed(dog);
+            hackbotWatch.feed();
 
             while (super.isAutonomous())
             {
-                StaticClasses.hackbotWatch.feed(dog);
+                hackbotWatch.feed();
             }
 
         } catch (AxisCameraException ex)
@@ -150,7 +147,7 @@ public class Hackbots extends IterativeRobot
             doneAlready = true;
         }
         // Feed the watchdog
-        StaticClasses.hackbotWatch.feed(dog);
+        hackbotWatch.feed();
     }
 
     public void testInit()
@@ -161,7 +158,7 @@ public class Hackbots extends IterativeRobot
     public void testPeriodic()
     {
         // Feed watchdog during test
-        StaticClasses.hackbotWatch.feed(dog);
+        hackbotWatch.feed();
     }
 
     public void disabledInit()
@@ -171,10 +168,10 @@ public class Hackbots extends IterativeRobot
 
     public void disabledPeriodic()
     {
-        StaticClasses.driveTrain.interrupt();
-        StaticClasses.hackbotStation.interrupt();
-        StaticClasses.catapult.interrupt();
-        StaticClasses.spinnySticks.interrupt();
+        ThreadsAndClasses.driveTrain.interrupt();
+        ThreadsAndClasses.hackbotStation.interrupt();
+        ThreadsAndClasses.catapult.interrupt();
+        ThreadsAndClasses.spinnySticks.interrupt();
 
         doneAlready = false;
     }

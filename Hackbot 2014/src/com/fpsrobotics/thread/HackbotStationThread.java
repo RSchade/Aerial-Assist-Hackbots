@@ -1,11 +1,8 @@
 package com.fpsrobotics.thread;
 
-import com.fpsrobotics.constants.Analog;
-import com.fpsrobotics.constants.IsAThread;
-import com.fpsrobotics.constants.DIOs;
-import com.fpsrobotics.constants.Controls;
-import com.fpsrobotics.constants.StaticClasses;
-import com.fpsrobotics.constants.Values;
+
+import com.fpsrobotics.constants.*;
+import com.fpsrobotics.hardware.*;
 
 /**
  * Uses methods from dashboard outputs to control what gets outputted to the smart dashboard.
@@ -30,11 +27,11 @@ public class HackbotStationThread extends Thread implements IsAThread
         while (!isInterrupted)
         {
             //Everything outputs every second, to reduce lag and heat
-            if (System.currentTimeMillis() - previousTime >= Values.THREAD_REFRESH_RATE)
+            if (System.currentTimeMillis() - previousTime >= Constants.THREAD_REFRESH_RATE)
             {
                 // Output variables to dashboard
-                StaticClasses.dashboardOutputs.teamOutput();
-                StaticClasses.dashboardOutputs.outputToDashboard(Controls.leftJoystick, Controls.rightJoystick, DIOs.leftDriveEncoder, StaticClasses.catapult, StaticClasses.spinnySticks, DIOs.distanceSensor, Analog.shooterPot);
+                ThreadsAndClasses.dashboardOutputs.teamOutput();
+                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Joysticks.LEFT, Joysticks.RIGHT, DigitalIOs.LEFT_DRIVE_ENCODER, ThreadsAndClasses.catapult, ThreadsAndClasses.spinnySticks, Analogs.DISTANCE_SENSOR, Analogs.SHOOTER_POTENTIOMETER);
 
                 // Reset timer to current time
                 previousTime = System.currentTimeMillis();
