@@ -1,6 +1,5 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.constants.Joysticks;
 import com.fpsrobotics.constants.Values;
 import edu.wpi.first.wpilibj.AnalogChannel;
 
@@ -8,7 +7,7 @@ import edu.wpi.first.wpilibj.AnalogChannel;
  *
  * @author Hackbots
  */
-public class CatapultObject implements Values, Joysticks
+public class CatapultObject implements Values
 {
 
     private final AnalogChannel shooterPot;

@@ -8,15 +8,7 @@ package com.fpsrobotics.constants;
 public interface DeviceMap
 {
 
-    // Talons
-    // Drive Thread
-    int LEFT_DRIVE_MAP = 2;
-    int RIGHT_DRIVE_MAP = 1;
-    // Shooter
-    int SHOOTER_TALON_MAP_ONE = 4;
-    int SHOOTER_TALON_MAP_TWO = 5;
-    // Spinny Sticks
-    int SPIN_MAP = 3;
+    
 
     // Relays
     // Spike

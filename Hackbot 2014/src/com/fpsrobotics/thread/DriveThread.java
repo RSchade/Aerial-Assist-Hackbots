@@ -4,19 +4,16 @@ import com.fpsrobotics.DriveObject;
 import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.SingleSolenoid;
 import com.fpsrobotics.constants.ControlMap;
-import com.fpsrobotics.constants.IsAThread;
-import com.fpsrobotics.constants.Joysticks;
-import com.fpsrobotics.constants.Talons;
-import com.fpsrobotics.constants.Solenoids;
 import com.fpsrobotics.constants.ThreadsAndClasses;
-import com.fpsrobotics.constants.Values;
+import com.fpsrobotics.hardware.Joysticks;
+import com.fpsrobotics.hardware.Motors;
 
 /**
  * Uses methods from other classes to control the drive train.
  *
  * @author ray
  */
-public class DriveThread implements Runnable, Joysticks, Talons, ControlMap, Solenoids, Values, ThreadsAndClasses, IsAThread
+public class DriveThread implements Runnable, ControlMap, ThreadsAndClasses
 {
 
     boolean isInterrupted = false;
@@ -32,17 +29,17 @@ public class DriveThread implements Runnable, Joysticks, Talons, ControlMap, Sol
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
 
-        DriveObject driveMotor = new DriveObject(new SimpleMotor(leftDrive, true), new SimpleMotor(rightDrive, false), new SingleSolenoid(gearSolenoid));
+        DriveObject driveMotor = new DriveObject(new SimpleMotor(Motors.LEFT_DRIVE, true), new SimpleMotor(Motors.RIGHT_DRIVE, false), new SingleSolenoid(gearSolenoid));
 
         while (!isInterrupted)
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
             {
-                driveMotor.set(constrain.deadzoneConstrain(leftJoystick), constrain.deadzoneConstrain(rightJoystick));
+                driveMotor.set(constrain.deadzoneConstrain(Joysticks.leftJoystick), constrain.deadzoneConstrain(Joysticks.rightJoystick));
 //                driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
 
                 // Switch if we hold the button
-                if (leftJoystick.getRawButton(GEAR_SWITCH_ONE) || rightJoystick.getRawButton(GEAR_SWITCH_TWO))
+                if (Joysticks.leftJoystick.getRawButton(GEAR_SWITCH_ONE) || Joysticks.rightJoystick.getRawButton(GEAR_SWITCH_TWO))
                 {
                     driveMotor.shift(true);
                 } else

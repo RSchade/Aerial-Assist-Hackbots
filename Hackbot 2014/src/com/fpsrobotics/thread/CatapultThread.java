@@ -3,14 +3,13 @@ package com.fpsrobotics.thread;
 import com.fpsrobotics.CatapultObject;
 import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.TwinMotor;
-import com.fpsrobotics.constants.IsAThread;
-import com.fpsrobotics.constants.Analog;
 import com.fpsrobotics.constants.ControlMap;
-import com.fpsrobotics.constants.DIOs;
-import com.fpsrobotics.constants.Joysticks;
 import com.fpsrobotics.constants.PID;
-import com.fpsrobotics.constants.Talons;
 import com.fpsrobotics.constants.ThreadsAndClasses;
+import com.fpsrobotics.hardware.Analogs;
+import com.fpsrobotics.hardware.Joysticks;
+import com.fpsrobotics.hardware.Motors;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  *
@@ -19,13 +18,13 @@ import com.fpsrobotics.constants.ThreadsAndClasses;
  *
  * @author ray
  */
-public class CatapultThread extends Thread implements Joysticks, Analog, Talons, DIOs, ControlMap, PID, ThreadsAndClasses, IsAThread
+public class CatapultThread extends Thread implements ControlMap, PID, ThreadsAndClasses 
 {
 
     double dynamicPresetDistance = 0;
     double dynamicPresetSpeed = 0;
     boolean isInterrupted = false;
-
+    Joystick gamepadJoystick = Joysticks.gamepadJoystick;
     boolean areWeShooting;
 
     /**
@@ -38,8 +37,8 @@ public class CatapultThread extends Thread implements Joysticks, Analog, Talons,
     {
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
-        TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(shooterTalonOne, false), new SimpleMotor(shooterTalonTwo, true));
-        CatapultObject shooterCatapult = new CatapultObject(shooterTwinMotor, shooterPot);
+        TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Motors.SHOOTER_ONE, false), new SimpleMotor(Motors.SHOOTER_TWO, true));
+        CatapultObject shooterCatapult = new CatapultObject(shooterTwinMotor, Analogs.SHOOTER_POTENTIOMETER);
 
         shooterCatapult.goHome();
 
