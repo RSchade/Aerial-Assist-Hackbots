@@ -10,6 +10,7 @@ import com.fpsrobotics.constants.Controls;
 import com.fpsrobotics.constants.Talons;
 import com.fpsrobotics.constants.StaticClasses;
 import com.fpsrobotics.constants.Values;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  *
@@ -26,7 +27,7 @@ public class CatapultThread extends Thread implements IsAThread
     boolean isInterrupted = false;
 
     boolean areWeShooting;
-    
+
     /**
      * presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne,
      * shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 0.2);
@@ -50,27 +51,36 @@ public class CatapultThread extends Thread implements IsAThread
 
                 if (StaticClasses.spinnySticks.getSpinnySticks())
                 {
-                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_ONE))
-                    {
-                        shooterCatapult.regularLaunch(250, 1.0);
-                    }
+//                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_ONE))
+//                    {
+//                        shooterCatapult.regularLaunch(250, 1.0);
+//                    }
+//
+//                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_TWO))
+//                    {
+//                        shooterCatapult.regularLaunch(350, 1.0);
+//                    }
+//
+//                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_THREE))
+//                    {
+//                        shooterCatapult.regularLaunch(600, 1.0);
+//                    }
+//
+//                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_FOUR))
+//                    {
+//                        if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Values.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Values.SHOOTER_MIN_SPEED)
+//                        {
+//                            shooterCatapult.regularLaunch((int) dynamicPresetDistance, (dynamicPresetSpeed / 100));
+//                        }
+//                    }
 
-                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_TWO))
-                    {
-                        shooterCatapult.regularLaunch(350, 1.0);
-                    }
+                    shooterPreset(Controls.gamepadJoystick, ControlMap.SHOOTER_PRESET_ONE, shooterCatapult, 250, 1.0);
+                    shooterPreset(Controls.gamepadJoystick, ControlMap.SHOOTER_PRESET_TWO, shooterCatapult, 350, 1.0);
+                    shooterPreset(Controls.gamepadJoystick, ControlMap.SHOOTER_PRESET_THREE, shooterCatapult, 600, 1.0);
 
-                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_THREE))
+                    if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Values.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Values.SHOOTER_MIN_SPEED)
                     {
-                        shooterCatapult.regularLaunch(600, 1.0);
-                    }
-
-                    if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_FOUR))
-                    {
-                        if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Values.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Values.SHOOTER_MIN_SPEED)
-                        {
-                            shooterCatapult.regularLaunch((int) dynamicPresetDistance, (dynamicPresetSpeed / 100));
-                        }
+                        shooterPreset(Controls.gamepadJoystick, ControlMap.SHOOTER_PRESET_FOUR, shooterCatapult, (int) dynamicPresetDistance, (dynamicPresetSpeed / 100));
                     }
                 }
 
@@ -92,6 +102,14 @@ public class CatapultThread extends Thread implements IsAThread
     public void interrupt()
     {
         isInterrupted = true;
+    }
+
+    public void shooterPreset(Joystick gamepadJoystick, int presetButton, CatapultObject catapultObject, int preset, double speed)
+    {
+        if (gamepadJoystick.getRawButton(presetButton))
+        {
+            catapultObject.regularLaunch(preset, speed);
+        }
     }
 
 }

@@ -1,7 +1,10 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.constants.ControlMap;
+import com.fpsrobotics.constants.Controls;
 import com.fpsrobotics.constants.Values;
 import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  *

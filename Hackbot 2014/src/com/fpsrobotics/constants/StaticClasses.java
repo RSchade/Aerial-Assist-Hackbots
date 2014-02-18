@@ -4,7 +4,6 @@ import com.fpsrobotics.thread.HackbotStationThread;
 import com.fpsrobotics.thread.DriveThread;
 import com.fpsrobotics.thread.CatapultThread;
 import com.fpsrobotics.thread.SpinnySticksThread;
-import com.fpsrobotics.deprecated.Presets;
 import com.fpsrobotics.*;
 
 /**
@@ -22,7 +21,6 @@ public class StaticClasses
     public final static DriveThread driveTrain = new DriveThread();
     public final static HackbotStationThread hackbotStation = new HackbotStationThread();
     public final static HackbotWatchdog hackbotWatch = new HackbotWatchdog();
-    public final static Presets presets = new Presets();
     public final static RobotCamera robotCamera = new RobotCamera();
     public final static VisionProcessingSample visionSample = new VisionProcessingSample();
     public final static CatapultThread catapult = new CatapultThread();
