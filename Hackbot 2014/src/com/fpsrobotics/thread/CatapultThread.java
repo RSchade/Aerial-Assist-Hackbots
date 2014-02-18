@@ -11,6 +11,7 @@ import com.fpsrobotics.constants.Joysticks;
 import com.fpsrobotics.constants.PID;
 import com.fpsrobotics.constants.Talons;
 import com.fpsrobotics.constants.ThreadsAndClasses;
+import com.fpsrobotics.constants.Values;
 
 /**
  *
@@ -19,7 +20,7 @@ import com.fpsrobotics.constants.ThreadsAndClasses;
  *
  * @author ray
  */
-public class CatapultThread extends Thread implements Joysticks, Analog, Talons, DIOs, ControlMap, PID, ThreadsAndClasses, IsAThread
+public class CatapultThread extends Thread implements IsAThread
 {
 
     double dynamicPresetDistance = 0;
@@ -27,7 +28,7 @@ public class CatapultThread extends Thread implements Joysticks, Analog, Talons,
     boolean isInterrupted = false;
 
     boolean areWeShooting;
-
+    
     /**
      * presets.shooterPresetPot(gamepadJoystick, shooterPot, shooterTalonOne,
      * shooterTalonTwo, 300, SHOOTER_PRESET_ONE, 0.2);
@@ -38,39 +39,37 @@ public class CatapultThread extends Thread implements Joysticks, Analog, Talons,
     {
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
-        TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(shooterTalonOne, false), new SimpleMotor(shooterTalonTwo, true));
-        CatapultObject shooterCatapult = new CatapultObject(shooterTwinMotor, shooterPot);
+        TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Talons.shooterTalonOne, false), new SimpleMotor(Talons.shooterTalonTwo, true));
+        CatapultObject shooterCatapult = new CatapultObject(shooterTwinMotor, Analog.shooterPot);
 
         shooterCatapult.goHome();
-
         while (!isInterrupted)
-
         {
-            if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
+            if (Math.abs(previousTime - System.currentTimeMillis()) >= Values.THREAD_REFRESH_RATE)
             {
-                dynamicPresetDistance += -gamepadJoystick.getRawAxis(2);
-                dynamicPresetSpeed += gamepadJoystick.getRawAxis(1);
+                dynamicPresetDistance += -Joysticks.gamepadJoystick.getRawAxis(2);
+                dynamicPresetSpeed += Joysticks.gamepadJoystick.getRawAxis(1);
 
-                if (spinnySticks.getSpinnySticks())
+                if (ThreadsAndClasses.spinnySticks.getSpinnySticks())
                 {
-                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_ONE))
+                    if (Joysticks.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_ONE))
                     {
                         shooterCatapult.regularLaunch(250, 1.0);
                     }
 
-                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_TWO))
+                    if (Joysticks.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_TWO))
                     {
                         shooterCatapult.regularLaunch(350, 1.0);
                     }
 
-                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_THREE))
+                    if (Joysticks.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_THREE))
                     {
                         shooterCatapult.regularLaunch(600, 1.0);
                     }
 
-                    if (gamepadJoystick.getRawButton(SHOOTER_PRESET_FOUR))
+                    if (Joysticks.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_FOUR))
                     {
-                        if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= SHOOTER_MIN_SPEED)
+                        if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Values.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Values.SHOOTER_MIN_SPEED)
                         {
                             shooterCatapult.regularLaunch((int) dynamicPresetDistance, (dynamicPresetSpeed / 100));
                         }

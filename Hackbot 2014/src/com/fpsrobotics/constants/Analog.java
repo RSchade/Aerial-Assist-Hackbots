@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.AnalogChannel;
  *
  * @author ray
  */
-public interface Analog extends DeviceMap
+public class Analog
 {
 
-    AnalogChannel shooterPot = new AnalogChannel(SHOOTER_POT_MAP);
-    Accelerometer accel = new Accelerometer(ACCEL_MAP);
+    public final static AnalogChannel shooterPot = new AnalogChannel(DeviceMap.SHOOTER_POT_MAP);
+    public final static Accelerometer accel = new Accelerometer(DeviceMap.ACCEL_MAP);
 //    Gyro gyro = new Gyro(GYRO_MAP);
 }

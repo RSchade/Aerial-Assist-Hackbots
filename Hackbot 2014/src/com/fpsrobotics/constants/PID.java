@@ -9,7 +9,7 @@ package com.fpsrobotics.constants;
  *
  * @author ray
  */
-public interface PID
+public class PID
 {
 
     // PID for shooter

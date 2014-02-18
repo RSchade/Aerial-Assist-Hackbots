@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.Solenoid;
  *
  * @author ray
  */
-public interface Solenoids extends DeviceMap
+public class Solenoids
 {
     //Create solenoids here
 
-    DoubleSolenoid spinnySolenoid = new DoubleSolenoid(SPINNY_SOLENOID_MAP_ONE, SPINNY_SOLENOID_MAP_TWO);
+    public final static DoubleSolenoid spinnySolenoid = new DoubleSolenoid(DeviceMap.SPINNY_SOLENOID_MAP_ONE, DeviceMap.SPINNY_SOLENOID_MAP_TWO);
 
-    Solenoid gearSolenoid = new Solenoid(GEAR_SOLENOID_MAP);
+    public final static Solenoid gearSolenoid = new Solenoid(DeviceMap.GEAR_SOLENOID_MAP);
 }

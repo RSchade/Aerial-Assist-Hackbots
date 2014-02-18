@@ -4,9 +4,7 @@ import com.fpsrobotics.thread.HackbotStationThread;
 import com.fpsrobotics.thread.DriveThread;
 import com.fpsrobotics.thread.CatapultThread;
 import com.fpsrobotics.thread.SpinnySticksThread;
-import com.fpsrobotics.deprecated.Pneumatics;
 import com.fpsrobotics.deprecated.Presets;
-import com.fpsrobotics.deprecated.DriveControl;
 import com.fpsrobotics.*;
 
 /**
@@ -16,19 +14,17 @@ import com.fpsrobotics.*;
  *
  * @author ray
  */
-public interface ThreadsAndClasses extends DIOs, Joysticks, Talons, Analog, Solenoids, Values
+public class ThreadsAndClasses
 {
 
-    Constrain constrain = new Constrain();
-    DashboardOutputs dashboardOutputs = new DashboardOutputs();
-    DriveThread driveTrain = new DriveThread();
-    HackbotStationThread hackbotStation = new HackbotStationThread();
-    HackbotWatchdog hackbotWatch = new HackbotWatchdog();
-    Pneumatics pneumatics = new Pneumatics();
-    Presets presets = new Presets();
-    RobotCamera robotCamera = new RobotCamera();
-    VisionProcessingSample visionSample = new VisionProcessingSample();
-    CatapultThread catapult = new CatapultThread();
-    SpinnySticksThread spinnySticks = new SpinnySticksThread();
-    DriveControl driveControl = new DriveControl();
+    public final static Constrain constrain = new Constrain();
+    public final static DashboardOutputs dashboardOutputs = new DashboardOutputs();
+    public final static DriveThread driveTrain = new DriveThread();
+    public final static HackbotStationThread hackbotStation = new HackbotStationThread();
+    public final static HackbotWatchdog hackbotWatch = new HackbotWatchdog();
+    public final static Presets presets = new Presets();
+    public final static RobotCamera robotCamera = new RobotCamera();
+    public final static VisionProcessingSample visionSample = new VisionProcessingSample();
+    public final static CatapultThread catapult = new CatapultThread();
+    public final static SpinnySticksThread spinnySticks = new SpinnySticksThread();
 }

@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.Encoder;
  *
  * @author ray
  */
-public interface DIOs extends DeviceMap
+public class DIOs
 {
 
     // DIOs here
-    Encoder leftDriveEncoder = new Encoder(LEFT_DRIVE_ENCODER_MAP_ONE, LEFT_DRIVE_ENCODER_MAP_TWO);
-    Encoder rightDriveEncoder = new Encoder(RIGHT_DRIVE_ENCODER_MAP_ONE, RIGHT_DRIVE_ENCODER_MAP_TWO);
-    Compressor compressor = new Compressor(COMPRESSOR_DIO_MAP, COMPRESSOR_RELAY_SPIKE_MAP);
-    AnalogChannel distanceSensor = new AnalogChannel(DISTANCE_ANALOG_CHANNEL_MAP);
+    public final static Encoder leftDriveEncoder = new Encoder(DeviceMap.LEFT_DRIVE_ENCODER_MAP_ONE, DeviceMap.LEFT_DRIVE_ENCODER_MAP_TWO);
+    public final static Encoder rightDriveEncoder = new Encoder(DeviceMap.RIGHT_DRIVE_ENCODER_MAP_ONE, DeviceMap.RIGHT_DRIVE_ENCODER_MAP_TWO);
+    public final static Compressor compressor = new Compressor(DeviceMap.COMPRESSOR_DIO_MAP, DeviceMap.COMPRESSOR_RELAY_SPIKE_MAP);
+    public final static AnalogChannel distanceSensor = new AnalogChannel(DeviceMap.DISTANCE_ANALOG_CHANNEL_MAP);
 
 }

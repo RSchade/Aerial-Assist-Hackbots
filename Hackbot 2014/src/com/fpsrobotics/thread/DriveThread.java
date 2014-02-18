@@ -16,9 +16,8 @@ import com.fpsrobotics.constants.Values;
  *
  * @author ray
  */
-public class DriveThread implements Runnable, Joysticks, Talons, ControlMap, Solenoids, Values, ThreadsAndClasses, IsAThread
+public class DriveThread extends Thread implements IsAThread
 {
-
     boolean isInterrupted = false;
 
     /**
@@ -32,17 +31,17 @@ public class DriveThread implements Runnable, Joysticks, Talons, ControlMap, Sol
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
 
-        DriveObject driveMotor = new DriveObject(new SimpleMotor(leftDrive, true), new SimpleMotor(rightDrive, false), new SingleSolenoid(gearSolenoid));
+        DriveObject driveMotor = new DriveObject(new SimpleMotor(Talons.leftDrive, true), new SimpleMotor(Talons.rightDrive, false), new SingleSolenoid(Solenoids.gearSolenoid));
 
         while (!isInterrupted)
         {
-            if (Math.abs(previousTime - System.currentTimeMillis()) >= THREAD_REFRESH_RATE)
+            if (Math.abs(previousTime - System.currentTimeMillis()) >= Values.THREAD_REFRESH_RATE)
             {
-                driveMotor.set(constrain.deadzoneConstrain(leftJoystick), constrain.deadzoneConstrain(rightJoystick));
+                driveMotor.set(ThreadsAndClasses.constrain.deadzoneConstrain(Joysticks.leftJoystick), ThreadsAndClasses.constrain.deadzoneConstrain(Joysticks.rightJoystick));
 //                driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
 
                 // Switch if we hold the button
-                if (leftJoystick.getRawButton(GEAR_SWITCH_ONE) || rightJoystick.getRawButton(GEAR_SWITCH_TWO))
+                if (Joysticks.leftJoystick.getRawButton(ControlMap.GEAR_SWITCH_ONE) || Joysticks.rightJoystick.getRawButton(ControlMap.GEAR_SWITCH_TWO))
                 {
                     driveMotor.shift(true);
                 } else

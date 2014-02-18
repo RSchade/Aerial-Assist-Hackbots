@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj.Talon;
  *
  * @author ray
  */
-public interface Talons extends DeviceMap
+public class Talons
 {
     // Create drivetrain here
 
-    SpeedController leftDrive = new Talon(LEFT_DRIVE_MAP);
-    SpeedController rightDrive = new Talon(RIGHT_DRIVE_MAP);
+   public final static  SpeedController leftDrive = new Talon(DeviceMap.LEFT_DRIVE_MAP);
+   public final static  SpeedController rightDrive = new Talon(DeviceMap.RIGHT_DRIVE_MAP);
     
-    SpeedController spinnyMotor = new Talon(SPIN_MAP);
+  public final static   SpeedController spinnyMotor = new Talon(DeviceMap.SPIN_MAP);
 //    SpeedController spinnyRightMotor = new Talon(RIGHT_SPIN_MAP);
     
-    SpeedController shooterTalonOne = new Talon(SHOOTER_TALON_MAP_ONE);
-    SpeedController shooterTalonTwo = new Talon(SHOOTER_TALON_MAP_TWO);
+   public final static  SpeedController shooterTalonOne = new Talon(DeviceMap.SHOOTER_TALON_MAP_ONE);
+   public final static  SpeedController shooterTalonTwo = new Talon(DeviceMap.SHOOTER_TALON_MAP_TWO);
     // Create other Talons here
 }

@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.Joystick;
  *
  * @author ray
  */
-public interface Joysticks extends DeviceMap
+public class Joysticks
 {
     // Create all joysticks here
 
-    Joystick leftJoystick = new Joystick(LEFT_JOYSTICK_MAP);
-    Joystick rightJoystick = new Joystick(RIGHT_JOYSTICK_MAP);
-    Joystick gamepadJoystick = new Joystick(GAMEPAD_JOYSTICK_MAP);
+  public final static   Joystick leftJoystick = new Joystick(DeviceMap.LEFT_JOYSTICK_MAP);
+   public final static  Joystick rightJoystick = new Joystick(DeviceMap.RIGHT_JOYSTICK_MAP);
+   public final static  Joystick gamepadJoystick = new Joystick(DeviceMap.GAMEPAD_JOYSTICK_MAP);
 }

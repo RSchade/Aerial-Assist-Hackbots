@@ -1,13 +1,13 @@
-package com.fpsrobotics.deprecated;
-
-/**
- * Class which contains the methods to control the pneumatics.
- * 
- * @author ray
- */
-public class Pneumatics
-{
-
+//package com.fpsrobotics.deprecated;
+//
+///**
+// * Class which contains the methods to control the pneumatics.
+// * 
+// * @author ray
+// */
+//public class Pneumatics
+//{
+//
 //    /**
 //     * Initialize the compressor.
 //     *
@@ -72,4 +72,4 @@ public class Pneumatics
 //    {
 //        driveMotor.shift(switchState);
 //    }
-}
+//}
