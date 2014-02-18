@@ -1,5 +1,8 @@
-package com.fpsrobotics;
+package com.fpsrobotics.thread;
 
+import com.fpsrobotics.CatapultObject;
+import com.fpsrobotics.SimpleMotor;
+import com.fpsrobotics.TwinMotor;
 import com.fpsrobotics.constants.IsAThread;
 import com.fpsrobotics.constants.Analog;
 import com.fpsrobotics.constants.ControlMap;

@@ -1,4 +1,4 @@
-package com.fpsrobotics;
+package com.fpsrobotics.changes;
 
 import com.fpsrobotics.constants.Solenoids;
 import com.fpsrobotics.constants.Talons;

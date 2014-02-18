@@ -1,5 +1,10 @@
 package com.fpsrobotics.constants;
 
+import com.fpsrobotics.thread.HackbotStationThread;
+import com.fpsrobotics.thread.DriveThread;
+import com.fpsrobotics.thread.CatapultThread;
+import com.fpsrobotics.thread.SpinnySticksThread;
+import com.fpsrobotics.deprecated.Pneumatics;
 import com.fpsrobotics.deprecated.Presets;
 import com.fpsrobotics.deprecated.DriveControl;
 import com.fpsrobotics.*;
@@ -17,7 +22,7 @@ public interface ThreadsAndClasses extends DIOs, Joysticks, Talons, Analog, Sole
     Constrain constrain = new Constrain();
     DashboardOutputs dashboardOutputs = new DashboardOutputs();
     DriveThread driveTrain = new DriveThread();
-    HackbotStation hackbotStation = new HackbotStation();
+    HackbotStationThread hackbotStation = new HackbotStationThread();
     HackbotWatchdog hackbotWatch = new HackbotWatchdog();
     Pneumatics pneumatics = new Pneumatics();
     Presets presets = new Presets();

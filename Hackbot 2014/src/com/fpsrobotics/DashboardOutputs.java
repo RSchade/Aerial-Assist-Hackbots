@@ -1,5 +1,7 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.thread.CatapultThread;
+import com.fpsrobotics.thread.SpinnySticksThread;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
