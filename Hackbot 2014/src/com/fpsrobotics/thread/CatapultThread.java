@@ -5,6 +5,7 @@ import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.TwinMotor;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
+import com.fpsrobotics.Preset.*;
 
 /**
  *
@@ -12,7 +13,7 @@ import com.fpsrobotics.hardware.*;
  *
  * @author ray
  */
-public class CatapultThread extends Thread implements PID 
+public class CatapultThread extends Thread 
 {
     Preset highGoal;
     Preset pass;
@@ -36,7 +37,6 @@ public class CatapultThread extends Thread implements PID
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
         TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Motors.SHOOTER_ONE, false), new SimpleMotor(Motors.SHOOTER_TWO, true));
-        CatapultObject shooterCatapult = new CatapultObject(shooterTwinMotor, Analogs.SHOOTER_POTENTIOMETER);
 
 
         while (!isInterrupted)
@@ -50,19 +50,19 @@ public class CatapultThread extends Thread implements PID
                 {
                     if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_ONE))
                     {
-                        shoot.presetShoot(Analog.shooterPot, highGoal, shooterTwinMotor);
+                        shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, highGoal, shooterTwinMotor);
 
                     }
 
                     if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_TWO))
                     {
-                        shoot.presetShoot(Analog.shooterPot, pass, shooterTwinMotor);
+                        shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, pass, shooterTwinMotor);
 
                     }
 
                     if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
                     {
-                        shoot.presetShoot(Analog.shooterPot, pass, shooterTwinMotor);
+                        shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, pass, shooterTwinMotor);
 
                     }
 

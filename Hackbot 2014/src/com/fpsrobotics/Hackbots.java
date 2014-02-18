@@ -6,10 +6,10 @@
 /*----------------------------------------------------------------------------*/
 package com.fpsrobotics;
 
-import com.fpsrobotics.constants.DIOs;
 import com.fpsrobotics.thread.SpinnySticksThread;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
+import com.fpsrobotics.thread.*;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 
@@ -130,10 +130,6 @@ public class Hackbots extends IterativeRobot
         if (!doneAlready)
         {
             //Threads here
-//            Thread driveThread = new Thread(StaticClasses.driveTrain);
-//            Thread hackbotStationThread = new Thread(StaticClasses.hackbotStation);
-//            Thread shooterThread = new Thread(StaticClasses.catapult);
-//            Thread spinnySticksThread = new SpinnySticksThread();
             Thread spinnySticksThread = new SpinnySticksThread();
             Thread shooterThread = new CatapultThread();
             Thread driveThread = new DriveThread();

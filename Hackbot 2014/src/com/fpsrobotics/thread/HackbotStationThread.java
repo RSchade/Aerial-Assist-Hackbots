@@ -8,7 +8,7 @@ import com.fpsrobotics.hardware.*;
  * Uses methods from dashboard outputs to control what gets outputted to the smart dashboard.
  * @author ray
  */
-public class HackbotStationThread extends Thread implements IsAThread
+public class HackbotStationThread extends Thread
 {
 
     boolean isInterrupted = false;

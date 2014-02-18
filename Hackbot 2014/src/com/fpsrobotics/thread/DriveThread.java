@@ -11,7 +11,7 @@ import com.fpsrobotics.hardware.*;
  *
  * @author ray
  */
-public class DriveThread extends Thread implements IsAThread
+public class DriveThread extends Thread
 {
     boolean isInterrupted = false;
 
