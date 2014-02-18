@@ -98,8 +98,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
 
             System.out.println("Shooting");
 
-            // Shoot if three in a row
-            shooterControl.shootAuto(shooterTalonOne, shooterTalonTwo, shooterPot);
+            // shoot if three in a row
+            // (shooter code here)
 
             hackbotWatch.feed(dog);
 
@@ -139,8 +139,8 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
             //Threads here
             Thread driveThread = new Thread(driveTrain);
             Thread hackbotStationThread = new Thread(hackbotStation);
-            Thread shooterThread = new Thread(shooter);
-            Thread spinnySticksThread = new SpinnySticksControl();
+            Thread shooterThread = new Thread(catapult);
+            Thread spinnySticksThread = new SpinnySticksThread();
 
             driveThread.start();
             hackbotStationThread.start();
@@ -173,7 +173,7 @@ public class Hackbots extends IterativeRobot implements ThreadsAndClasses, PID
     {
         driveTrain.interrupt();
         hackbotStation.interrupt();
-        shooter.interrupt();
+        catapult.interrupt();
         spinnySticks.interrupt();
 
         doneAlready = false;

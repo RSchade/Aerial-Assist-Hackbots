@@ -1,21 +1,19 @@
 package com.fpsrobotics;
 
-import edu.wpi.first.wpilibj.Solenoid;
-
 /**
  *
  * Controls the drive train in a object oriented manner.
  *
  * @author ray
  */
-public class DriveMotor implements Motor
+public class DriveObject implements Motor
 {
 
     private final SimpleMotor leftDrive;
     private final SimpleMotor rightDrive;
     private final SingleSolenoid gearSolenoid;
 
-    public DriveMotor(SimpleMotor leftDrive, SimpleMotor rightDrive, SingleSolenoid gearSolenoid)
+    public DriveObject(SimpleMotor leftDrive, SimpleMotor rightDrive, SingleSolenoid gearSolenoid)
     {
         this.leftDrive = leftDrive;
         this.rightDrive = rightDrive;

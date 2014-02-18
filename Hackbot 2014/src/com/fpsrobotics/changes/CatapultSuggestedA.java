@@ -1,6 +1,7 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.Joysticks;
+import com.fpsrobotics.constants.IsAThread;
+import com.fpsrobotics.constants.Joysticks;
 
 /**
  *

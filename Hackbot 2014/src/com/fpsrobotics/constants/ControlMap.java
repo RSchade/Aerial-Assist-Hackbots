@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.fpsrobotics.interfaces;
+package com.fpsrobotics.constants;
 
 /**
  *
@@ -19,6 +19,8 @@ public interface ControlMap
     int SHOOTER_MANUAL = 8;
     int SHOOTER_PRESET_ONE = 1;
     int SHOOTER_PRESET_TWO = 2;
+    int SHOOTER_PRESET_THREE = 3;
+    int SHOOTER_PRESET_FOUR = 4;
     // Spinny Sticks
     int SPINNY_EXTEND = 9;
     int SPINNY_RETRACT = 10;

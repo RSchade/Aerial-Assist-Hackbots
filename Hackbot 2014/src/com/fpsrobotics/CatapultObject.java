@@ -1,19 +1,20 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.interfaces.Values;
+import com.fpsrobotics.constants.Joysticks;
+import com.fpsrobotics.constants.Values;
 import edu.wpi.first.wpilibj.AnalogChannel;
 
 /**
  *
  * @author Hackbots
  */
-public class RobotShooter implements Values
+public class CatapultObject implements Values, Joysticks
 {
 
     private final AnalogChannel shooterPot;
     private final TwinMotor catapult;
 
-    public RobotShooter(TwinMotor catapult, AnalogChannel shooterPot)
+    public CatapultObject(TwinMotor catapult, AnalogChannel shooterPot)
     {
         this.shooterPot = shooterPot;
         this.catapult = catapult;
@@ -24,28 +25,14 @@ public class RobotShooter implements Values
         return shooterPot.getValue();
     }
 
-    public void reset()
-    {
-        while (shooterPot.getValue() >= HOME_POT_VALUE)
-        {
-            catapult.backward(0.40);
-        }
-    }
-
-    public void regularLaunch(double speed)
-    {
-        while (shooterPot.getValue() <= HIGH_POT_VALUE)
-        {
-            catapult.forward(speed);
-        }
-    }
-
     public void regularLaunch(int presetValue, double speed)
     {
         while (shooterPot.getValue() <= presetValue)
         {
             catapult.forward(speed);
         }
+
+        goHome();
     }
 
     public void acceleratedLaunch(int presetValue, double speed, int stepValue)
@@ -54,13 +41,22 @@ public class RobotShooter implements Values
         {
             catapult.forward(speed, stepValue);
         }
+
+        goHome();
     }
 
-    public void acceleratedLaunch(double speed, int stepValue)
+    public void goHome()
     {
-        while (shooterPot.getValue() <= HIGH_POT_VALUE)
+        while (shooterPot.getValue() > HOME_POT_VALUE)
         {
-            catapult.forward(speed, stepValue);
+            catapult.backward(SHOOTER_RESET_SPEED);
         }
+
+        while (shooterPot.getValue() < HOME_POT_VALUE)
+        {
+            catapult.forward(SHOOTER_RESET_SPEED);
+        }
+
+        catapult.stop();
     }
 }
