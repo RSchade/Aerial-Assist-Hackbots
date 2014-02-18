@@ -8,7 +8,7 @@ import com.fpsrobotics.constants.Analog;
 import com.fpsrobotics.constants.ControlMap;
 import com.fpsrobotics.constants.Controls;
 import com.fpsrobotics.constants.Talons;
-import com.fpsrobotics.constants.ThreadsAndClasses;
+import com.fpsrobotics.constants.StaticClasses;
 import com.fpsrobotics.constants.Values;
 
 /**
@@ -48,7 +48,7 @@ public class CatapultThread extends Thread implements IsAThread
                 dynamicPresetDistance += -Controls.gamepadJoystick.getRawAxis(2);
                 dynamicPresetSpeed += Controls.gamepadJoystick.getRawAxis(1);
 
-                if (ThreadsAndClasses.spinnySticks.getSpinnySticks())
+                if (StaticClasses.spinnySticks.getSpinnySticks())
                 {
                     if (Controls.gamepadJoystick.getRawButton(ControlMap.SHOOTER_PRESET_ONE))
                     {

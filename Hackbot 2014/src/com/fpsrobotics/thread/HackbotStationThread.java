@@ -4,7 +4,7 @@ import com.fpsrobotics.constants.Analog;
 import com.fpsrobotics.constants.IsAThread;
 import com.fpsrobotics.constants.DIOs;
 import com.fpsrobotics.constants.Controls;
-import com.fpsrobotics.constants.ThreadsAndClasses;
+import com.fpsrobotics.constants.StaticClasses;
 import com.fpsrobotics.constants.Values;
 
 /**
@@ -33,8 +33,8 @@ public class HackbotStationThread extends Thread implements IsAThread
             if (System.currentTimeMillis() - previousTime >= Values.THREAD_REFRESH_RATE)
             {
                 // Output variables to dashboard
-                ThreadsAndClasses.dashboardOutputs.teamOutput();
-                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Controls.leftJoystick, Controls.rightJoystick, DIOs.leftDriveEncoder, ThreadsAndClasses.catapult, ThreadsAndClasses.spinnySticks, DIOs.distanceSensor, Analog.shooterPot);
+                StaticClasses.dashboardOutputs.teamOutput();
+                StaticClasses.dashboardOutputs.outputToDashboard(Controls.leftJoystick, Controls.rightJoystick, DIOs.leftDriveEncoder, StaticClasses.catapult, StaticClasses.spinnySticks, DIOs.distanceSensor, Analog.shooterPot);
 
                 // Reset timer to current time
                 previousTime = System.currentTimeMillis();

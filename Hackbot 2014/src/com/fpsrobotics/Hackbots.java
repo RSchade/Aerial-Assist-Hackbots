@@ -8,7 +8,7 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.constants.DIOs;
 import com.fpsrobotics.thread.SpinnySticksThread;
-import com.fpsrobotics.constants.ThreadsAndClasses;
+import com.fpsrobotics.constants.StaticClasses;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
@@ -49,15 +49,15 @@ public class Hackbots extends IterativeRobot
         System.out.println("Hackbots Aerial Assist Code");
 
         // Init watchdog with 2 second timeout
-        ThreadsAndClasses.hackbotWatch.watchdogInit(dog, 2);
+        StaticClasses.hackbotWatch.watchdogInit(dog, 2);
 
         // Init pneumatics
 //        pneumatics.init(compressor);
         DIOs.compressor.start();
 
         // Camera settings init
-        ThreadsAndClasses.visionSample.imageFindInit();
-        ThreadsAndClasses.robotCamera.init();
+        StaticClasses.visionSample.imageFindInit();
+        StaticClasses.robotCamera.init();
     }
 
     public void autonomousInit()
@@ -76,7 +76,7 @@ public class Hackbots extends IterativeRobot
 
             while (goodImageCounter <= 2)
             {
-                if (ThreadsAndClasses.visionSample.autoImageFind())
+                if (StaticClasses.visionSample.autoImageFind())
                 {
                     goodImageCounter++;
 
@@ -84,7 +84,7 @@ public class Hackbots extends IterativeRobot
 
                 }
 
-                ThreadsAndClasses.hackbotWatch.feed(dog);
+                StaticClasses.hackbotWatch.feed(dog);
             }
 
             goodImageCounter = 0;
@@ -94,18 +94,18 @@ public class Hackbots extends IterativeRobot
             // shoot if three in a row
             // (shooter code here)
 
-            ThreadsAndClasses.hackbotWatch.feed(dog);
+            StaticClasses.hackbotWatch.feed(dog);
 
             // Drive
 //            driveControl.driveToPID(driveControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
 //            driveControl.driveToPID(driveControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
 
             // Feed watchdog during auton
-            ThreadsAndClasses.hackbotWatch.feed(dog);
+            StaticClasses.hackbotWatch.feed(dog);
 
             while (super.isAutonomous())
             {
-                ThreadsAndClasses.hackbotWatch.feed(dog);
+                StaticClasses.hackbotWatch.feed(dog);
             }
 
         } catch (AxisCameraException ex)
@@ -130,9 +130,9 @@ public class Hackbots extends IterativeRobot
         if (!doneAlready)
         {
             //Threads here
-            Thread driveThread = new Thread(ThreadsAndClasses.driveTrain);
-            Thread hackbotStationThread = new Thread(ThreadsAndClasses.hackbotStation);
-            Thread shooterThread = new Thread(ThreadsAndClasses.catapult);
+            Thread driveThread = new Thread(StaticClasses.driveTrain);
+            Thread hackbotStationThread = new Thread(StaticClasses.hackbotStation);
+            Thread shooterThread = new Thread(StaticClasses.catapult);
             Thread spinnySticksThread = new SpinnySticksThread();
 
             driveThread.start();
@@ -143,7 +143,7 @@ public class Hackbots extends IterativeRobot
             doneAlready = true;
         }
         // Feed the watchdog
-        ThreadsAndClasses.hackbotWatch.feed(dog);
+        StaticClasses.hackbotWatch.feed(dog);
     }
 
     public void testInit()
@@ -154,7 +154,7 @@ public class Hackbots extends IterativeRobot
     public void testPeriodic()
     {
         // Feed watchdog during test
-        ThreadsAndClasses.hackbotWatch.feed(dog);
+        StaticClasses.hackbotWatch.feed(dog);
     }
 
     public void disabledInit()
@@ -164,10 +164,10 @@ public class Hackbots extends IterativeRobot
 
     public void disabledPeriodic()
     {
-        ThreadsAndClasses.driveTrain.interrupt();
-        ThreadsAndClasses.hackbotStation.interrupt();
-        ThreadsAndClasses.catapult.interrupt();
-        ThreadsAndClasses.spinnySticks.interrupt();
+        StaticClasses.driveTrain.interrupt();
+        StaticClasses.hackbotStation.interrupt();
+        StaticClasses.catapult.interrupt();
+        StaticClasses.spinnySticks.interrupt();
 
         doneAlready = false;
     }

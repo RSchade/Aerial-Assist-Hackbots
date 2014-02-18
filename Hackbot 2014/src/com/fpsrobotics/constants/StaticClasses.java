@@ -14,7 +14,7 @@ import com.fpsrobotics.*;
  *
  * @author ray
  */
-public class ThreadsAndClasses
+public class StaticClasses
 {
 
     public final static Constrain constrain = new Constrain();
