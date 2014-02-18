@@ -1,10 +1,7 @@
 package com.fpsrobotics;
 
-import com.fpsrobotics.constants.ControlMap;
-import com.fpsrobotics.constants.Controls;
-import com.fpsrobotics.constants.Values;
+import com.fpsrobotics.preset.Preset;
 import edu.wpi.first.wpilibj.AnalogChannel;
-import edu.wpi.first.wpilibj.Joystick;
 
 /**
  *
@@ -12,53 +9,21 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class CatapultObject
 {
+    private AnalogChannel shooterPot;
+    private TwinMotor shooterMotor;
+    private Preset preset;
 
-    private final AnalogChannel shooterPot;
-    private final TwinMotor catapult;
-
-    public CatapultObject(TwinMotor catapult, AnalogChannel shooterPot)
+    public void presetShoot(AnalogChannel pot, Preset preset, TwinMotor shooterMotor)
     {
-        this.shooterPot = shooterPot;
-        this.catapult = catapult;
+        this.shooterPot = pot;
+        this.preset = preset;
+        this.shooterMotor = shooterMotor;
+        shoot();
     }
 
-    public int potGetValue()
+    public void shoot()
     {
-        return shooterPot.getValue();
-    }
-
-    public void regularLaunch(int presetValue, double speed)
-    {
-        while (shooterPot.getValue() <= presetValue)
-        {
-            catapult.forward(speed);
-        }
-
-        goHome();
-    }
-
-    public void acceleratedLaunch(int presetValue, double speed, int stepValue)
-    {
-        while (shooterPot.getValue() <= presetValue)
-        {
-            catapult.forward(speed, stepValue);
-        }
-
-        goHome();
-    }
-
-    public void goHome()
-    {
-        while (shooterPot.getValue() > Values.HOME_POT_VALUE)
-        {
-            catapult.backward(Values.SHOOTER_RESET_SPEED);
-        }
-
-        while (shooterPot.getValue() < Values.HOME_POT_VALUE)
-        {
-            catapult.forward(Values.SHOOTER_RESET_SPEED);
-        }
-
-        catapult.stop();
+        double speed = this.preset.presetSpeed(this.shooterPot.getValue());
+        this.shooterMotor.forward(speed);
     }
 }

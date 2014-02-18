@@ -7,7 +7,7 @@ package com.fpsrobotics;
  */
 public interface Motor
 {
-
+    
     public abstract void stop();
 
     public abstract void forward(double speed);
