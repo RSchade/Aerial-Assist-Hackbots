@@ -1,4 +1,4 @@
-package com.fpsrobotics;
+package com.fpsrobotics.changes;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Compressor;

@@ -1,5 +1,7 @@
-package com.fpsrobotics;
+package com.fpsrobotics.thread;
 
+import com.fpsrobotics.SpinnySticksObject;
+import com.fpsrobotics.TwoSolenoids;
 import com.fpsrobotics.constants.IsAThread;
 import com.fpsrobotics.constants.ControlMap;
 import com.fpsrobotics.constants.Joysticks;

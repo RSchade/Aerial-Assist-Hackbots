@@ -1,5 +1,8 @@
-package com.fpsrobotics;
+package com.fpsrobotics.thread;
 
+import com.fpsrobotics.DriveObject;
+import com.fpsrobotics.SimpleMotor;
+import com.fpsrobotics.SingleSolenoid;
 import com.fpsrobotics.constants.ControlMap;
 import com.fpsrobotics.constants.IsAThread;
 import com.fpsrobotics.constants.Joysticks;
