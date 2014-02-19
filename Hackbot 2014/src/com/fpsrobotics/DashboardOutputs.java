@@ -28,7 +28,7 @@ public class DashboardOutputs
      * @param spinnySticks
      * @param distanceSensor
      */
-    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, CatapultThread shooter, SpinnySticksThread spinnySticks, AnalogChannel distanceSensor, AnalogChannel shooterPot)
+    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, double dynamicDistance, double dynamicSpeed, AnalogChannel distanceSensor, AnalogChannel shooterPot)
     {
         // Variable outputs to dashboard
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
@@ -36,8 +36,8 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Threads Currently Running", Thread.activeCount());
         SmartDashboard.putNumber("Encoder Rate", encoder.getRate());
         SmartDashboard.putNumber("Encoder Value", encoder.getRaw());
-        SmartDashboard.putNumber("Dynamic Preset Distance", shooter.getDynamicPresetDistance());
-        SmartDashboard.putNumber("Dynamic Preset Speed", shooter.getDynamicPresetSpeed());
+        SmartDashboard.putNumber("Dynamic Preset Distance", dynamicDistance);
+        SmartDashboard.putNumber("Dynamic Preset Speed", dynamicSpeed);
         SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getVoltage()/.1176);
         SmartDashboard.putNumber("Shooter Pot", shooterPot.getValue());
     }

@@ -1,6 +1,7 @@
 package com.fpsrobotics.thread;
 
 
+import com.fpsrobotics.Dashboard;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
 
@@ -31,7 +32,7 @@ public class HackbotStationThread extends Thread
             {
                 // Output variables to dashboard
                 ThreadsAndClasses.dashboardOutputs.teamOutput();
-                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Joysticks.LEFT, Joysticks.RIGHT, DigitalIOs.LEFT_DRIVE_ENCODER, ThreadsAndClasses.catapult, ThreadsAndClasses.spinnySticks, Analogs.DISTANCE_SENSOR, Analogs.SHOOTER_POTENTIOMETER);
+                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Joysticks.LEFT, Joysticks.RIGHT, DigitalIOs.LEFT_DRIVE_ENCODER, Dashboard.getDistance(), Dashboard.getSpeed(), Analogs.DISTANCE_SENSOR, Analogs.SHOOTER_POTENTIOMETER);
 
                 // Reset timer to current time
                 previousTime = System.currentTimeMillis();

@@ -1,5 +1,9 @@
 package com.fpsrobotics;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.SpeedController;
+
 /**
  *
  * Controls the drive train in a object oriented manner.

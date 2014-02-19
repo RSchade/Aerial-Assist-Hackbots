@@ -34,8 +34,11 @@ public class Hackbots extends IterativeRobot
     boolean doneAlready = false;
     boolean doneEverythingAuto = false;
     int goodImageCounter = 0;
+    SpinnySticksThread spinnySticksThread;
+    CatapultThread shooterThread;
+    DriveThread driveThread;
+    HackbotStationThread hackbotStationThread;
 
-    
     // Watchdog
     HackbotWatchdog hackbotWatch = new HackbotWatchdog();
 
@@ -70,7 +73,7 @@ public class Hackbots extends IterativeRobot
      * goes here. Something about shooting in the hot goal and then going back.
      */
     public void autonomousPeriodic()
-    {  
+    {
         try
         {
 
@@ -93,13 +96,11 @@ public class Hackbots extends IterativeRobot
 
             // shoot if three in a row
             // (shooter code here)
-
             hackbotWatch.feed();
 
             // Drive
 //            driveControl.driveToPID(driveControl.initDrivePID(leftDrive, leftDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
 //            driveControl.driveToPID(driveControl.initDrivePID(rightDrive, rightDriveEncoder, LOW_SETPOINT_PID_AUTO, HIGH_SETPOINT_PID_AUTO, autoP, autoI, autoD), -100);
-
             // Feed watchdog during auton
             hackbotWatch.feed();
 
@@ -116,7 +117,10 @@ public class Hackbots extends IterativeRobot
 
     public void teleopInit()
     {
-
+        spinnySticksThread = new SpinnySticksThread();
+        shooterThread = new CatapultThread();
+        driveThread = new DriveThread();
+        hackbotStationThread = new HackbotStationThread();
     }
 
     /**
@@ -130,10 +134,6 @@ public class Hackbots extends IterativeRobot
         if (!doneAlready)
         {
             //Threads here
-            Thread spinnySticksThread = new SpinnySticksThread();
-            Thread shooterThread = new CatapultThread();
-            Thread driveThread = new DriveThread();
-            Thread hackbotStationThread = new HackbotStationThread();
 
             driveThread.start();
             hackbotStationThread.start();
@@ -164,11 +164,32 @@ public class Hackbots extends IterativeRobot
 
     public void disabledPeriodic()
     {
-        ThreadsAndClasses.driveTrain.interrupt();
-        ThreadsAndClasses.hackbotStation.interrupt();
-        ThreadsAndClasses.catapult.interrupt();
-        ThreadsAndClasses.spinnySticks.interrupt();
+        if (driveThread != null)
+        {
+            driveThread.interrupt();
+        }
+
+        if (hackbotStationThread != null)
+        {
+            hackbotStationThread.interrupt();
+        }
+
+        if (shooterThread != null)
+        {
+            shooterThread.interrupt();
+        }
+
+        if (spinnySticksThread != null)
+        {
+            spinnySticksThread.interrupt();
+        }
+
+        driveThread = null;
+        hackbotStationThread = null;
+        shooterThread = null;
+        spinnySticksThread = null;
 
         doneAlready = false;
+
     }
 }

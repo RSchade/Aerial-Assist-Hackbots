@@ -1,11 +1,12 @@
 package com.fpsrobotics.thread;
 
-import com.fpsrobotics.CatapultObject;
+import com.fpsrobotics.Catapult;
+import com.fpsrobotics.Dashboard;
 import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.TwinMotor;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
-import com.fpsrobotics.Preset.*;
+import com.fpsrobotics.preset.*;
 
 /**
  *
@@ -20,8 +21,7 @@ public class CatapultThread extends Thread
     Preset highGoal;
     Preset pass;
     Preset truss;
-    Preset dynamic;
-    CatapultObject shoot;
+    Catapult shoot;
     double dynamicPresetDistance = 0;
     double dynamicPresetSpeed = 0;
     boolean isInterrupted = false;
@@ -41,61 +41,45 @@ public class CatapultThread extends Thread
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
         TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Motors.SHOOTER_ONE, false), new SimpleMotor(Motors.SHOOTER_TWO, true));
-
+        shoot = Catapult.createInstance(Analogs.SHOOTER_POTENTIOMETER, shooterTwinMotor);
 
         while (!isInterrupted)
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= Constants.THREAD_REFRESH_RATE)
             {
-                dynamicPresetDistance += -Joysticks.GAMEPAD.getRawAxis(2);
-                dynamicPresetSpeed += Joysticks.GAMEPAD.getRawAxis(1);
+                dynamicPresetDistance += -Joysticks.GAMEPAD.getRawAxis(2) * 3;
+                dynamicPresetSpeed += Joysticks.GAMEPAD.getRawAxis(1) * 2;
 
-                if (ThreadsAndClasses.spinnySticks.getSpinnySticks())
+                Dashboard.setDistance(dynamicPresetDistance);
+                Dashboard.setSpeed(dynamicPresetSpeed);
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_ONE))
                 {
-                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_ONE))
+                    shoot.shoot(pass);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_TWO))
+                {
+                    shoot.shoot(truss);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
+                {
+                    shoot.shoot(highGoal);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
+                {
+                    if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Constants.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
                     {
-                        shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, highGoal, shooterTwinMotor);
-
+                        Preset dynamic = new PresetDynamic();
+                        shoot.shoot(dynamic);
                     }
-
-                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_TWO))
-                    {
-                        shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, pass, shooterTwinMotor);
-
-                    }
-
-                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
-                    {
-                        shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, pass, shooterTwinMotor);
-
-                    }
-
-
-                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
-                    {
-                        if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Constants.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
-                        {
-                            shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, dynamic, shooterTwinMotor);
-                        }
-                    }
-
-
-
                 }
 
                 previousTime = System.currentTimeMillis();
             }
         }
-    }
-
-    public double getDynamicPresetDistance()
-    {
-        return dynamicPresetDistance;
-    }
-
-    public double getDynamicPresetSpeed()
-    {
-        return dynamicPresetSpeed;
     }
 
     public void interrupt()

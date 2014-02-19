@@ -9,26 +9,24 @@ import edu.wpi.first.wpilibj.Watchdog;
  */
 public class HackbotWatchdog
 {
-    Watchdog dog = Watchdog.getInstance();
+    Watchdog mrMullen = Watchdog.getInstance();
     /**
      * Feed the watchdog so the robot doesn't die.
-     * 
-     * @param dog 
+     * (Mr. Mullen is our watchdog)
      */
     public void feed()
     {
-        dog.feed();
+        mrMullen.feed();
     }
 
     /**
      * Initialize the robot's watchdog.
      * 
-     * @param dog
      * @param expire 
      */
     public void watchdogInit(int expire)
     {
-        dog.setEnabled(true);
-        dog.setExpiration(expire);
+        mrMullen.setEnabled(true);
+        mrMullen.setExpiration(expire);
     }
 }
