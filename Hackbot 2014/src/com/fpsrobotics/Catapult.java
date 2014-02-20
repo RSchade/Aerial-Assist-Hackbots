@@ -35,7 +35,7 @@ public class Catapult
 
     public void shoot(Preset preset)
     {
-        isFiring = true;
+        isFiring = false;
         
         if (!SpinnySticks.getInstance().areSpinnySticksUp())
         {
@@ -61,11 +61,13 @@ public class Catapult
             }
         }
         
-        isFiring = false;
+        isFiring = true;
     }
 
     public void moveCatapultForward(PresetValue nextElement)
     {
+        System.out.println(Math.abs(nextElement.getSpeed()));
+        
         this.shooterMotor.forward(Math.abs(nextElement.getSpeed()));
 
         while (nextElement.getAngle() > shooterPot.getValue())
@@ -76,7 +78,8 @@ public class Catapult
 
     public void moveCatapultBackward(PresetValue nextElement)
     {
-
+        System.out.println(Math.abs(nextElement.getSpeed()));
+        
         this.shooterMotor.backward(Math.abs(nextElement.getSpeed()));
 
         while (nextElement.getAngle() < shooterPot.getValue())

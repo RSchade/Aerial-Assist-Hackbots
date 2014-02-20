@@ -24,9 +24,10 @@ public class DashboardOutputs
      * @param leftJoystick
      * @param rightJoystick
      * @param encoder
-     * @param shooter
-     * @param spinnySticks
+     * @param dynamicDistance
+     * @param dynamicSpeed
      * @param distanceSensor
+     * @param shooterPot
      */
     public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, double dynamicDistance, double dynamicSpeed, AnalogChannel distanceSensor, AnalogChannel shooterPot)
     {

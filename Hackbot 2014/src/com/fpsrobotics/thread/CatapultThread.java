@@ -21,6 +21,10 @@ public class CatapultThread extends Thread
     Preset highGoal;
     Preset pass;
     Preset truss;
+
+    Preset presetHigh;
+    Preset presetLow;
+
     Catapult shoot;
     double dynamicPresetDistance = 0;
     double dynamicPresetSpeed = 0;
@@ -38,8 +42,13 @@ public class CatapultThread extends Thread
         highGoal = new PresetHighGoal();
         pass = new PresetPass();
         truss = new PresetTruss();
+
+        presetHigh = new PresetHigh();
+        presetLow = new PresetLow();
+
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
+
         TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Motors.SHOOTER_ONE, false), new SimpleMotor(Motors.SHOOTER_TWO, true));
         shoot = Catapult.createInstance(Analogs.SHOOTER_POTENTIOMETER, shooterTwinMotor);
 
@@ -66,6 +75,16 @@ public class CatapultThread extends Thread
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
                 {
                     shoot.shoot(highGoal);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(8))
+                {
+                    shoot.shoot(presetHigh);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(6))
+                {
+                    shoot.shoot(presetLow);
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
