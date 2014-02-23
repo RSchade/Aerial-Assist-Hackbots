@@ -13,7 +13,7 @@ public class Catapult
 
     private final AnalogChannel shooterPot;
     private final Motor shooterMotor;
-    private static Catapult singleton;
+    private static Catapult singleton = null;
     private boolean isFiring;
 
     private Catapult(AnalogChannel pot, Motor shooterMotor)
@@ -21,22 +21,31 @@ public class Catapult
         this.shooterPot = pot;
         this.shooterMotor = shooterMotor;
     }
-    
+
     public static Catapult createInstance(AnalogChannel pot, Motor shooterMotor)
     {
-        singleton = new Catapult(pot, shooterMotor);
+        if (singleton == null)
+        {
+            singleton = new Catapult(pot, shooterMotor);
+        }
+
         return singleton;
     }
-    
+
     public static Catapult getInstance()
     {
+        if (singleton == null)
+        {
+            throw new NullPointerException("Catapult Instance isn't Defined and is null");
+        }
+        
         return singleton;
     }
 
     public void shoot(Preset preset)
     {
-        isFiring = false;
-        
+        isFiring = true;
+
         if (!SpinnySticks.getInstance().areSpinnySticksUp())
         {
             Enumeration presetValues = preset.getElements();
@@ -60,14 +69,14 @@ public class Catapult
 
             }
         }
-        
-        isFiring = true;
+
+        isFiring = false;
     }
 
     public void moveCatapultForward(PresetValue nextElement)
     {
         System.out.println(Math.abs(nextElement.getSpeed()));
-        
+
         this.shooterMotor.forward(Math.abs(nextElement.getSpeed()));
 
         while (nextElement.getAngle() > shooterPot.getValue())
@@ -79,7 +88,7 @@ public class Catapult
     public void moveCatapultBackward(PresetValue nextElement)
     {
         System.out.println(Math.abs(nextElement.getSpeed()));
-        
+
         this.shooterMotor.backward(Math.abs(nextElement.getSpeed()));
 
         while (nextElement.getAngle() < shooterPot.getValue())
@@ -87,7 +96,7 @@ public class Catapult
 
         }
     }
-    
+
     public boolean isFiring()
     {
         return isFiring;

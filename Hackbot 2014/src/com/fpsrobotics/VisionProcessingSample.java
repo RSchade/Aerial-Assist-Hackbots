@@ -91,6 +91,8 @@ public class VisionProcessingSample
         int verticalTargets[] = new int[MAX_PARTICLES];
         int horizontalTargets[] = new int[MAX_PARTICLES];
         int verticalTargetCount, horizontalTargetCount;
+        
+        System.out.println("Image finding on");
 
         try
         {
@@ -148,7 +150,6 @@ public class VisionProcessingSample
                     {
                         System.out.println("particle: " + i + "is a Vertical Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
                         verticalTargets[verticalTargetCount++] = i;  //Add particle to target array and increment count
-                        return true;
                     } else
                     {
                         System.out.println("particle: " + i + "is not a Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
@@ -164,6 +165,9 @@ public class VisionProcessingSample
                 target.verticalIndex = verticalTargets[0];
                 for (int i = 0; i < verticalTargetCount; i++)
                 {
+                    
+                    System.out.println("Image finding Vertical Target");
+                    
                     ParticleAnalysisReport verticalReport = filteredImage.getParticleAnalysisReport(verticalTargets[i]);
                     for (int j = 0; j < horizontalTargetCount; j++)
                     {

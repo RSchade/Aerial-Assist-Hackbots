@@ -7,6 +7,7 @@ import com.fpsrobotics.TwinMotor;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
 import com.fpsrobotics.preset.*;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
@@ -53,21 +54,27 @@ public class CatapultThread extends Thread
                 dynamicPresetDistance += -Joysticks.GAMEPAD.getRawAxis(2) * 3;
                 dynamicPresetSpeed += Joysticks.GAMEPAD.getRawAxis(1) * 2;
 
-                Dashboard.setDistance(dynamicPresetDistance);
-                Dashboard.setSpeed(dynamicPresetSpeed);
+                Dashboard.setDynamicDistance(dynamicPresetDistance);
+                Dashboard.setDynamicSpeed(dynamicPresetSpeed);
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_ONE))
                 {
+//                    double currentTime = Timer.getFPGATimestamp();
+//                    Dashboard.setCurrentLaunchTime(currentTime);
                     shoot.shoot(pass);
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_TWO))
                 {
+//                    double currentTime = Timer.getFPGATimestamp();
+//                    Dashboard.setCurrentLaunchTime(currentTime);
                     shoot.shoot(truss);
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
                 {
+//                    double currentTime = Timer.getFPGATimestamp();
+//                    Dashboard.setCurrentLaunchTime(currentTime);
                     shoot.shoot(highGoal);
                 }
 
@@ -79,6 +86,8 @@ public class CatapultThread extends Thread
                         {
                             dynamicPresetSpeed = 100;
                         }
+//                        double currentTime = Timer.getFPGATimestamp();
+//                        Dashboard.setCurrentLaunchTime(currentTime);
                         Preset dynamic = new PresetDynamic();
                         shoot.shoot(dynamic);
                     }

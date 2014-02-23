@@ -15,9 +15,7 @@ import com.fpsrobotics.thread.*;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,13 +37,11 @@ public class Hackbots extends IterativeRobot
     // Local variables
     boolean doneAlready = false;
     boolean doneEverythingAuto = false;
-    int goodImageCounter = 0;
+
     SpinnySticksThread spinnySticksThread;
     CatapultThread shooterThread;
     DriveThread driveThread;
     HackbotStationThread hackbotStationThread;
-    PIDController leftPID;
-    PIDController rightPID;
 
     // Watchdog
     HackbotWatchdog hackbotWatch = new HackbotWatchdog();
@@ -63,50 +59,175 @@ public class Hackbots extends IterativeRobot
         hackbotWatch.watchdogInit(2);
 
         // Init pneumatics
-//        pneumatics.init(compressor);
         DigitalIOs.COMPRESSOR.start();
 
         // Camera settings init
-        ThreadsAndClasses.visionSample.imageFindInit();
         ThreadsAndClasses.robotCamera.init();
     }
 
+    /**
+     * Used for the autonomous code.
+     */
+    PIDController leftPID;
+    PIDController rightPID;
     PresetAuto presetAuto;
     PresetHighGoal presetHighGoal;
 
+    /**
+     * Called once when autonomous is enabled.
+     */
     public void autonomousInit()
     {
-        presetAuto = new PresetAuto();
-        presetHighGoal = new PresetHighGoal();
-        
-        DigitalIOs.LEFT_DRIVE_ENCODER.setDistancePerPulse(.000623);
-//        DigitalIOs.LEFT_DRIVE_ENCODER.setDistancePerPulse(.000623);
+        System.out.println("autonomousInit");
 
+        DigitalIOs.LEFT_DRIVE_ENCODER.setDistancePerPulse(.000623);
+        DigitalIOs.LEFT_DRIVE_ENCODER.setDistancePerPulse(.000623);
         //Starts the encoders.
         DigitalIOs.LEFT_DRIVE_ENCODER.start();
-//        rightEncoder.start();
-
-        //Sets the encoders to use distance for PID.
-        //If this is not done, the robot may not go anywhere.
-        //It is also possible to use rate, by changing kDistance to kRate.
+        // rightEncoder.start();
+        // Sets the encoders to use distance for PID.
+        // If this is not done, the robot may not go anywhere.
+        // It is also possible to use rate, by changing kDistance to kRate.
         DigitalIOs.LEFT_DRIVE_ENCODER.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-//        DigitalIOs.LEFT_DRIVE_ENCODER.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-
+        DigitalIOs.LEFT_DRIVE_ENCODER.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
         //Initializes the PID Controllers
         leftPID = new PIDController(0.3, 0.0, 0.0, DigitalIOs.LEFT_DRIVE_ENCODER, Motors.LEFT_DRIVE);
         rightPID = new PIDController(0.3, 0.0, 0.0, DigitalIOs.LEFT_DRIVE_ENCODER, Motors.RIGHT_DRIVE);
-
         //Enables the PID Controllers.
         leftPID.enable();
         rightPID.enable();
-
         //Sets the distance per pulse in inches.
         //Sets the input range of the PID Controller.
-        //These will change, and you should change them based on how far
-        //your robot will be driving.
-        //For this example, we set them at 100 inches.
+        // These will change, and you should change them based on how far
+        //  your robot will be driving.
+        // For this example, we set them at 100 inches.
         leftPID.setInputRange(-100, 100);
         rightPID.setInputRange(-100, 100);
+
+        // Creates the presets used for autonomous shooting
+        presetAuto = new PresetAuto();
+        presetHighGoal = new PresetHighGoal();
+
+        VisionProcessingSample visionSample;
+
+        int goodImageCounter = 0;
+
+        hackbotWatch.feed();
+
+        TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Motors.SHOOTER_ONE, false), new SimpleMotor(Motors.SHOOTER_TWO, true));
+        Catapult shoot = Catapult.createInstance(Analogs.SHOOTER_POTENTIOMETER, shooterTwinMotor);
+        SpinnySticks spinnyStick = SpinnySticks.createInstance(Motors.SPINNY_MOTOR, new TwoSolenoids(Solenoids.SPINNY_SHIFTER));
+
+        boolean isImageFinding = true;
+
+        spinnyStick.spinnySticksUp();
+
+        visionSample = new VisionProcessingSample();
+        visionSample.imageFindInit();
+
+        long previousTime = System.currentTimeMillis();
+
+        try
+        {
+
+            while (System.currentTimeMillis() - previousTime < 5000 && isImageFinding)
+            {
+
+                while (goodImageCounter <= 2)
+                {
+                    if (visionSample.autoImageFind())
+                    {
+                        goodImageCounter++;
+
+                        System.out.println("New Image");
+
+                        hackbotWatch.feed();
+
+                    }
+
+                    hackbotWatch.feed();
+                }
+
+                System.out.println("Shooting");
+
+//        spinnyStick.spinnySticksUp();
+//        long previousTime = System.currentTimeMillis();
+//
+//        while (System.currentTimeMillis() - previousTime < 600)
+//        {
+//            hackbotWatch.feed();
+//        }
+                spinnyStick.spinnySticksDown();
+
+//            previousTime = System.currentTimeMillis();
+//            while (System.currentTimeMillis() - previousTime < 200)
+//            {
+//                hackbotWatch.feed();
+//            }
+                shoot.shoot(presetHighGoal);
+
+                leftPID.setSetpoint(-50);
+                rightPID.setSetpoint(50);
+
+                previousTime = System.currentTimeMillis();
+
+                while (System.currentTimeMillis() - previousTime < 2600)
+                {
+                    hackbotWatch.feed();
+                }
+
+                spinnyStick.spinnySticksDown();
+
+                leftPID.setSetpoint(0);
+                rightPID.setSetpoint(0);
+
+                leftPID.disable();
+                rightPID.disable();
+
+                while (super.isAutonomous())
+                {
+                    hackbotWatch.feed();
+                }
+
+            }
+
+            previousTime = System.currentTimeMillis();
+
+            while (System.currentTimeMillis() - previousTime < 2000)
+            {
+                hackbotWatch.feed();
+            }
+
+            leftPID.setSetpoint(-50);
+            rightPID.setSetpoint(50);
+
+            previousTime = System.currentTimeMillis();
+
+            while (System.currentTimeMillis() - previousTime < 2600)
+            {
+                hackbotWatch.feed();
+            }
+
+            spinnyStick.spinnySticksDown();
+
+            leftPID.setSetpoint(0);
+            rightPID.setSetpoint(0);
+
+            leftPID.disable();
+            rightPID.disable();
+
+            shoot.shoot(presetAuto);
+
+            while (super.isAutonomous())
+            {
+                hackbotWatch.feed();
+            }
+
+        } catch (AxisCameraException ex)
+        {
+            ex.printStackTrace();
+        }
+
     }
 
     /**
@@ -115,66 +236,13 @@ public class Hackbots extends IterativeRobot
      */
     public void autonomousPeriodic()
     {
-        TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Motors.SHOOTER_ONE, false), new SimpleMotor(Motors.SHOOTER_TWO, true));
-        Catapult shoot = Catapult.createInstance(Analogs.SHOOTER_POTENTIOMETER, shooterTwinMotor);
-        SpinnySticks spinnyStick = SpinnySticks.createInstance(Motors.SPINNY_MOTOR, new TwoSolenoids(Solenoids.SPINNY_SHIFTER));
-
-//        try
-//        {
-//
-//            while (goodImageCounter <= 2)
-//            {
-//                if (ThreadsAndClasses.visionSample.autoImageFind())
-//                {
-//                    goodImageCounter++;
-//
-//                    System.out.println("New Image");
-//
-//                }
-//
-//                hackbotWatch.feed();
-//            }
-//            goodImageCounter = 0;
-//
-//            System.out.println("Shooting");
-//
-        spinnyStick.spinnySticksUp();
-
-        shoot.shoot(presetHighGoal);
-        
-//        leftPID.setSetpoint(-50);
-//        rightPID.setSetpoint(50);
-//
-//        long previousTime = System.currentTimeMillis();
-//
-//        while (System.currentTimeMillis() - previousTime < 4200)
-//        {
-//            hackbotWatch.feed();
-//        }
-//
-//        spinnyStick.spinnySticksDown();
-//
-//        leftPID.setSetpoint(0);
-//        rightPID.setSetpoint(0);
-//
-//        leftPID.disable();
-//        rightPID.disable();
-//
-//        shoot.shoot(presetAuto);
-
-        while (super.isAutonomous())
-        {
-            hackbotWatch.feed();
-        }
-
-//        } catch (AxisCameraException ex)
-//        {
-//            ex.printStackTrace();
-//        }
+        System.out.println("autonomousPeriodic");
     }
 
     public void teleopInit()
     {
+        System.out.println("teleopInit");
+
         spinnySticksThread = new SpinnySticksThread();
         shooterThread = new CatapultThread();
         driveThread = new DriveThread();
@@ -188,6 +256,8 @@ public class Hackbots extends IterativeRobot
      */
     public void teleopPeriodic()
     {
+        System.out.println("teleopPeriodic");
+
         // Start all threads (only once)
         if (!doneAlready)
         {
@@ -221,6 +291,8 @@ public class Hackbots extends IterativeRobot
 
     public void disabledPeriodic()
     {
+        System.out.println("disabledPeriodic");
+
         if (driveThread != null)
         {
             driveThread.interrupt();
@@ -251,6 +323,10 @@ public class Hackbots extends IterativeRobot
             rightPID = null;
         }
 
+//        if (visionSample != null)
+//        {
+//            visionSample = null;
+//        }
         driveThread = null;
         hackbotStationThread = null;
         shooterThread = null;

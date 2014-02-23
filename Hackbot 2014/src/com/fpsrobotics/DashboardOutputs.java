@@ -35,8 +35,10 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
         SmartDashboard.putNumber("Left Drive Train Speed", leftJoystick.getRawAxis(2));
         SmartDashboard.putNumber("Threads Currently Running", Thread.activeCount());
-        SmartDashboard.putNumber("Encoder Rate", encoder.getRate());
-        SmartDashboard.putNumber("Encoder Value", encoder.getRaw());
+        SmartDashboard.putNumber("Left Encoder Count", encoder.get());
+        SmartDashboard.putNumber("Left Encoder Raw Count", encoder.getRaw());
+        SmartDashboard.putNumber("Left Encoder Distance", encoder.getDistance());
+        SmartDashboard.putNumber("Left Encoder Value", encoder.getRate());
         SmartDashboard.putNumber("Dynamic Preset Distance", dynamicDistance);
         SmartDashboard.putNumber("Dynamic Preset Speed", dynamicSpeed);
         SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getVoltage()/.1176);

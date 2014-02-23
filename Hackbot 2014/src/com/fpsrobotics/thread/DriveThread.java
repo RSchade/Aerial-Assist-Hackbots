@@ -25,6 +25,10 @@ public class DriveThread extends Thread
     {
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
+        //Encoder Values
+        DigitalIOs.LEFT_DRIVE_ENCODER.setDistancePerPulse(.000623);
+        DigitalIOs.LEFT_DRIVE_ENCODER.reset();
+        DigitalIOs.LEFT_DRIVE_ENCODER.start();
 
         DriveObject driveMotor = new DriveObject(new SimpleMotor(Motors.LEFT_DRIVE, true), new SimpleMotor(Motors.RIGHT_DRIVE, false), new SingleSolenoid(Solenoids.GEAR_SHIFTER));
 
@@ -36,7 +40,7 @@ public class DriveThread extends Thread
 //                driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
 
                 // Switch if we hold the button
-                if (Joysticks.LEFT.getRawButton(JoystickButtons.GEAR_SWITCH_ONE) || Joysticks.RIGHT.getRawButton(JoystickButtons.GEAR_SWITCH_TWO))
+                if (Joysticks.LEFT.getRawButton(JoystickButtons.GEAR_SWITCH) || Joysticks.RIGHT.getRawButton(JoystickButtons.GEAR_SWITCH))
                 {
                     driveMotor.shift(true);
                 } else
@@ -47,6 +51,7 @@ public class DriveThread extends Thread
                 previousTime = System.currentTimeMillis();
             }
         }
+        DigitalIOs.LEFT_DRIVE_ENCODER.stop();
     }
 
     public void interrupt()

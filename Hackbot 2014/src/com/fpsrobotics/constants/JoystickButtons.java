@@ -13,8 +13,7 @@ package com.fpsrobotics.constants;
 public class JoystickButtons
 {
     // Gear Switching
-    public static final int GEAR_SWITCH_ONE = 1;
-    public static final int GEAR_SWITCH_TWO = 1;
+    public static final int GEAR_SWITCH = 1;
     // Shooting
     public static final int SHOOTER_MANUAL = 8;
     public static final int SHOOTER_PRESET_ONE = 1;
