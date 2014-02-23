@@ -2,12 +2,12 @@ package com.fpsrobotics.thread;
 
 import com.fpsrobotics.Catapult;
 import com.fpsrobotics.Dashboard;
+import com.fpsrobotics.LEDs;
 import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.TwinMotor;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
 import com.fpsrobotics.preset.*;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
@@ -61,6 +61,7 @@ public class CatapultThread extends Thread
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
+                    LEDs.getInstance().BlueSet(true);
                     shoot.shoot(pass);
                 }
 
@@ -68,6 +69,7 @@ public class CatapultThread extends Thread
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
+                    LEDs.getInstance().BlueSet(true);
                     shoot.shoot(truss);
                 }
 
@@ -75,6 +77,7 @@ public class CatapultThread extends Thread
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
+                    LEDs.getInstance().BlueSet(true);
                     shoot.shoot(highGoal);
                 }
 
@@ -88,12 +91,15 @@ public class CatapultThread extends Thread
                         }
 //                        double currentTime = Timer.getFPGATimestamp();
 //                        Dashboard.setCurrentLaunchTime(currentTime);
+                        LEDs.getInstance().BlueSet(true);
                         Preset dynamic = new PresetDynamic();
                         shoot.shoot(dynamic);
                     }
                 }
 
                 previousTime = System.currentTimeMillis();
+
+                LEDs.getInstance().BlueSet(false);
             }
         }
     }

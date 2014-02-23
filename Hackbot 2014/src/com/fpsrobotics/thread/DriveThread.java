@@ -1,6 +1,7 @@
 package com.fpsrobotics.thread;
 
 import com.fpsrobotics.DriveObject;
+import com.fpsrobotics.LEDs;
 import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.SingleSolenoid;
 import com.fpsrobotics.constants.*;
@@ -13,6 +14,7 @@ import com.fpsrobotics.hardware.*;
  */
 public class DriveThread extends Thread
 {
+
     boolean isInterrupted = false;
 
     /**
@@ -42,16 +44,18 @@ public class DriveThread extends Thread
                 // Switch if we hold the button
                 if (Joysticks.LEFT.getRawButton(JoystickButtons.GEAR_SWITCH) || Joysticks.RIGHT.getRawButton(JoystickButtons.GEAR_SWITCH))
                 {
+                    LEDs.getInstance().GreenSet(true);
                     driveMotor.shift(true);
                 } else
                 {
+                    LEDs.getInstance().GreenSet(false);
                     driveMotor.shift(false);
                 }
 
                 previousTime = System.currentTimeMillis();
             }
+            DigitalIOs.LEFT_DRIVE_ENCODER.stop();
         }
-        DigitalIOs.LEFT_DRIVE_ENCODER.stop();
     }
 
     public void interrupt()

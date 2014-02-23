@@ -18,7 +18,7 @@ public class PresetDynamic extends Preset
 
     public PresetDynamic()
     {
-        addValue(new PresetValue((Dashboard.getSpeed() / 100), Dashboard.getDistance()));
+        addValue(new PresetValue((Dashboard.getDynamicSpeed()/ 100), Dashboard.getDynamicDistance()));
         addValue(new PresetValue(GO_HOME, 160));
         addValue(new PresetValue(STOP_SHOOTER, 160));
     }

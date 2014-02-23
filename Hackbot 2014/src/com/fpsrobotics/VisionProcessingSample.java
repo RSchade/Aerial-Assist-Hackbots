@@ -93,6 +93,8 @@ public class VisionProcessingSample
         int verticalTargetCount, horizontalTargetCount;
         
         System.out.println("Image finding on");
+        
+        LEDs.getInstance().RedSet(true);
 
         try
         {
@@ -145,6 +147,7 @@ public class VisionProcessingSample
 
                         System.out.println("particle: " + i + "is a Horizontal Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
                         horizontalTargets[horizontalTargetCount++] = i; //Add particle to target array and increment count
+                        LEDs.getInstance().BlueFlash();
                         return true;
                     } else if (scoreCompareTarget(scores[i], true))
                     {
@@ -243,6 +246,8 @@ public class VisionProcessingSample
             ex.printStackTrace();
         }
 
+        LEDs.getInstance().RedSet(false);
+        
         return false;
 
     }

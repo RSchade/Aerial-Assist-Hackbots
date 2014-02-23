@@ -33,4 +33,8 @@ public class HardwarePorts
     final static int LEFT_JOYSTICK = 1;
     final static int RIGHT_JOYSTICK = 2;
     final static int GAMEPAD_JOYSTICK = 3;
+    // LEDs
+    final static int LED_ONE = 4;
+    final static int LED_TWO = 5;
+    final static int LED_THREE = 6;
 }
