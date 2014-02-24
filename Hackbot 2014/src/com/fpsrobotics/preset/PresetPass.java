@@ -17,5 +17,6 @@ public class PresetPass extends Preset
         addValue(new PresetValue(_90_PERCENT_THRUST, 400));      // Full thrust
         addValue(new PresetValue(GO_HOME, 160));
         addValue(new PresetValue(STOP_SHOOTER, 160));
+        
     }
 }
