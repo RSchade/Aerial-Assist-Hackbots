@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DashboardOutputs
 {
-    int compressorCutoff;
 //    DriverStationLCD userMessages = DriverStationLCD.getInstance();
 
     /**
@@ -29,7 +28,7 @@ public class DashboardOutputs
      * @param distanceSensor
      * @param shooterPot
      */
-    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, double dynamicDistance, double dynamicSpeed, AnalogChannel distanceSensor, AnalogChannel shooterPot)
+    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, double dynamicDistance, double dynamicSpeed, Ultrasonic ultraDistance, AnalogChannel shooterPot)
     {
         // Variable outputs to dashboard
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
@@ -41,7 +40,8 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Left Encoder Value", encoder.getRate());
         SmartDashboard.putNumber("Dynamic Preset Distance", dynamicDistance);
         SmartDashboard.putNumber("Dynamic Preset Speed", dynamicSpeed);
-        SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getVoltage()/.1176);
+//        SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getVoltage()/.1176);
+        SmartDashboard.putNumber("Ultrasonic Distance (ft)", ultraDistance.getDistanceFt());
         SmartDashboard.putNumber("Shooter Pot", shooterPot.getValue());
     }
 

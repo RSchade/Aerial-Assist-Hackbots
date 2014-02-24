@@ -32,7 +32,7 @@ public class HackbotStationThread extends Thread
             {
                 // Output variables to dashboard
                 ThreadsAndClasses.dashboardOutputs.teamOutput();
-                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Joysticks.LEFT, Joysticks.RIGHT, DigitalIOs.LEFT_DRIVE_ENCODER, Dashboard.getDynamicDistance(), Dashboard.getDynamicSpeed(), Analogs.DISTANCE_SENSOR, Analogs.SHOOTER_POTENTIOMETER);
+                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Joysticks.LEFT, Joysticks.RIGHT, DigitalIOs.LEFT_DRIVE_ENCODER, Dashboard.getDynamicDistance(), Dashboard.getDynamicSpeed(), Analogs.ULTRA_DISTANCE, Analogs.SHOOTER_POTENTIOMETER);
 
                 // Reset timer to current time
                 previousTime = System.currentTimeMillis();
