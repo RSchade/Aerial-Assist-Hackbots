@@ -1,0 +1,45 @@
+int redIn = 1;
+int blueIn = 2;
+int greenIn = 3;
+
+int redOut = 4;
+int blueOut = 5;
+int greenOut = 6;
+
+void setup()
+{
+    pinMode(redIn, INPUT);
+    pinMode(blueIn, INPUT);
+    pinMode(greenIn, INPUT);
+
+    pinMode(redOut, OUTPUT);
+    pinMode(blueOut, OUTPUT);
+    pinMode(greenOut, OUTPUT);
+}
+
+void loop()
+{
+    if(digitalRead(redIn) == HIGH)
+    {
+        digitalWrite(redOut, HIGH);
+    } else
+    {
+        digitalWrite(redOut, LOW);
+    }
+
+    if(digitalRead(blueIn) == HIGH)
+    {
+        digitalWrite(blueOut, HIGH);
+    } else
+    {
+        digitalWrite(blueOut, LOW);
+    }
+
+    if(digitalRead(greenIn) == HIGH)
+    {
+        digitalWrite(greenOut, HIGH);
+    } else
+    {
+        digitalWrite(greenOut, LOW);
+    }
+}
