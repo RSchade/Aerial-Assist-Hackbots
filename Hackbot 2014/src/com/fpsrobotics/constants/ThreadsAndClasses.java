@@ -11,8 +11,6 @@ import com.fpsrobotics.*;
  */
 public class ThreadsAndClasses
 {
-
-    public static final Constrain constrain = new Constrain();
-    public static final DashboardOutputs dashboardOutputs = new DashboardOutputs();
-    public static final RobotCamera robotCamera = new RobotCamera();
+//    public static final Constrain constrain = new Constrain();
+//    public static final DashboardOutputs dashboardOutputs = new DashboardOutputs();
 }

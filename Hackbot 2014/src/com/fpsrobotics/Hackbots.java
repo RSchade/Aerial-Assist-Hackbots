@@ -41,6 +41,7 @@ public class Hackbots extends IterativeRobot
     CatapultThread shooterThread;
     DriveThread driveThread;
     HackbotStationThread hackbotStationThread;
+    RobotCamera robotCamera;
 
     // Watchdog
     HackbotWatchdog hackbotWatch = new HackbotWatchdog();
@@ -60,8 +61,10 @@ public class Hackbots extends IterativeRobot
         // Init pneumatics
         DigitalIOs.COMPRESSOR.start();
 
+        robotCamera = new RobotCamera();
+
         // Camera settings init
-        ThreadsAndClasses.robotCamera.init();
+        robotCamera.init();
     }
 
     /**

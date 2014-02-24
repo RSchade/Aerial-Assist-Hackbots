@@ -5,6 +5,7 @@
 package com.fpsrobotics.preset;
 
 import com.fpsrobotics.Dashboard;
+import com.fpsrobotics.constants.Constants;
 import com.fpsrobotics.thread.CatapultThread;
 
 /**
@@ -19,7 +20,7 @@ public class PresetDynamic extends Preset
     public PresetDynamic()
     {
         addValue(new PresetValue((Dashboard.getDynamicSpeed()/ 100), Dashboard.getDynamicDistance()));
-        addValue(new PresetValue(GO_HOME, 160));
-        addValue(new PresetValue(STOP_SHOOTER, 160));
+        addValue(new PresetValue(GO_HOME, Constants.HOME_POT_VALUE));
+        addValue(new PresetValue(STOP_SHOOTER, Constants.HOME_POT_VALUE));
     }
 }

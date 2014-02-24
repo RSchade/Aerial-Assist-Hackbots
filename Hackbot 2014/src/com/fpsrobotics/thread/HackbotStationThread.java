@@ -1,7 +1,7 @@
 package com.fpsrobotics.thread;
 
-
 import com.fpsrobotics.Dashboard;
+import com.fpsrobotics.DashboardOutputs;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
 
@@ -24,6 +24,8 @@ public class HackbotStationThread extends Thread
     {   
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
+        
+        DashboardOutputs dashboardOutputs = new DashboardOutputs();
 
         while (!isInterrupted)
         {
@@ -31,8 +33,11 @@ public class HackbotStationThread extends Thread
             if (System.currentTimeMillis() - previousTime >= Constants.THREAD_REFRESH_RATE)
             {
                 // Output variables to dashboard
-                ThreadsAndClasses.dashboardOutputs.teamOutput();
-                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Joysticks.LEFT, Joysticks.RIGHT, DigitalIOs.LEFT_DRIVE_ENCODER, Dashboard.getDynamicDistance(), Dashboard.getDynamicSpeed(), Analogs.ULTRA_DISTANCE, Analogs.SHOOTER_POTENTIOMETER);
+//                ThreadsAndClasses.dashboardOutputs.teamOutput();
+//                ThreadsAndClasses.dashboardOutputs.outputToDashboard(Joysticks.LEFT, Joysticks.RIGHT, DigitalIOs.LEFT_DRIVE_ENCODER, Dashboard.getDynamicDistance(), Dashboard.getDynamicSpeed(), Analogs.ULTRA_DISTANCE, Analogs.SHOOTER_POTENTIOMETER);
+
+                dashboardOutputs.teamOutput();
+                dashboardOutputs.outputToDashboard(Joysticks.LEFT, Joysticks.RIGHT, DigitalIOs.LEFT_DRIVE_ENCODER, Dashboard.getDynamicDistance(), Dashboard.getDynamicSpeed(), Analogs.ULTRA_DISTANCE, Analogs.SHOOTER_POTENTIOMETER);
 
                 // Reset timer to current time
                 previousTime = System.currentTimeMillis();

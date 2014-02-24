@@ -83,7 +83,7 @@ public class CatapultThread extends Thread
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
                 {
-                    if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
+                    if (dynamicPresetDistance <= Constants.HIGH_POT_VALUE && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
                     {
                         if ((dynamicPresetSpeed / 100) <= Constants.SHOOTER_MAX_SPEED)
                         {

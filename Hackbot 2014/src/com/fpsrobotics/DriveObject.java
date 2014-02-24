@@ -55,7 +55,7 @@ public class DriveObject implements Motor
         return (leftDrive.getSpeed() + rightDrive.getSpeed()) / 2;
     }
 
-    public void set(double speedLeft, double speedRight)
+    public void setWithDeadzones(double speedLeft, double speedRight)
     {
         if (speedLeft > 0.1)
         {
@@ -66,6 +66,25 @@ public class DriveObject implements Motor
         }
 
         if (speedRight > 0.1)
+        {
+            rightDrive.forward(speedRight);
+        } else if (speedRight < 0.1)
+        {
+            rightDrive.backward(Math.abs(speedRight));
+        }
+    }
+
+    public void set(double speedLeft, double speedRight)
+    {
+        if (speedLeft > 0.0)
+        {
+            leftDrive.forward(speedLeft);
+        } else if (speedLeft < 0.1)
+        {
+            leftDrive.backward(Math.abs(speedLeft));
+        }
+
+        if (speedRight > 0.0)
         {
             rightDrive.forward(speedRight);
         } else if (speedRight < 0.1)
