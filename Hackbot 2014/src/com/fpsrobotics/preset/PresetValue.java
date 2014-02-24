@@ -11,22 +11,22 @@ package com.fpsrobotics.preset;
 public class PresetValue
 {
 
-    private final double _speed;
-    private final double _angle;
+    private final double speed;
+    private final double angle;
 
     public PresetValue(double speed, double angle)
     {
-        this._speed = speed;
-        this._angle = angle;
+        this.speed = speed;
+        this.angle = angle;
     }
 
     public double getSpeed()
     {
-        return this._speed;
+        return this.speed;
     }
 
     public double getAngle()
     {
-        return this._angle;
+        return this.angle;
     }
 }
