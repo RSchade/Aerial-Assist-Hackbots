@@ -1,0 +1,61 @@
+Suggestions for Code
+Hackbots:
+	3) Autonomous:
+		a) Look at "AutonomousSuggested"
+
+Drive Train:
+	1) Look at comments
+	2) WAY TO COMPLICATED THAN WHAT WE NEED:
+		You say in SEVEN classes what can be said in TWO
+		I spent 45 MINUTES trying to read the drive train files
+		Goal of Programming: Do as much as possible with the least lines of code
+		Look at "DriveTrainThreadSuggestedA" and "DriveTrainThreadSuggestedB"
+	3) Functions of Drive Train as seen by me:
+		a) Set Speed
+		b) Get Speed
+		c) Stop
+		d) Gear Shifter (manual/ auto)
+Hackbot Station:
+	1) Figure out which values you would want to output to Dashboard
+	2) See Added Comment Sections
+Catapult:
+	1) Look at "CatapultSuggestedA" and "CatapultSuggestedB"
+
+
+ 
+
+Classes:	Main		Dashboard		Drive Train		Shooter		Spinny Sticks		Unused
+•	Constrain
+•	ControlSpinSticks (UNUSED)
+•	DashboardOutput
+•	DriveControl
+•	DriveMotor
+•	DriveTrain
+•	FakePIDLoop (UNUSED)
+•	HackbotStation
+•	HackbotWatchdog
+•	Hackbots
+•	Motor
+•	OffloadProcesses  (UNUSED)
+•	Pneumatics
+•	Presets
+•	RobotCamera
+•	Shooter
+•	ShooterControl
+•	SimpleMotor
+•	SpinnySticks
+•	TwinMotor
+•	VisionProcessingSample
+Interfaces
+•	Analog
+•	ControlMap
+•	DIOs
+•	DeviceMap
+•	IsAThread
+•	Joysticks
+•	PID
+•	Relays		(UNUSED)
+•	Solenoids
+•	Talons
+•	ThreadsAndClasses
+•	Values

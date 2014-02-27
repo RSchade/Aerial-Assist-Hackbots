@@ -1,0 +1,542 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package com.fpsrobotics;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import edu.wpi.first.wpilibj.camera.AxisCamera;<a name="line.3"></a>
+<span class="sourceLineNo">004</span>import edu.wpi.first.wpilibj.camera.AxisCameraException;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import edu.wpi.first.wpilibj.image.*;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;<a name="line.6"></a>
+<span class="sourceLineNo">007</span><a name="line.7"></a>
+<span class="sourceLineNo">008</span>/**<a name="line.8"></a>
+<span class="sourceLineNo">009</span> * Sample program to use NIVision to find rectangles in the scene that are<a name="line.9"></a>
+<span class="sourceLineNo">010</span> * illuminated by a LED ring light (similar to the model from FIRSTChoice). The<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * camera sensitivity is set very low so as to only show light sources and<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * remove any distracting parts of the image.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * The CriteriaCollection is the set of criteria that is used to filter the set<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * of rectangles that are detected. In this example we're looking for rectangles<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * with a minimum width of 30 pixels and maximum of 400 pixels.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * The algorithm first does a color threshold operation that only takes objects<a name="line.18"></a>
+<span class="sourceLineNo">019</span> * in the scene that have a bright green color component. Then a small object<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * filter removes small particles that might be caused by green reflection<a name="line.20"></a>
+<span class="sourceLineNo">021</span> * scattered from other parts of the scene. Finally all particles are scored on<a name="line.21"></a>
+<span class="sourceLineNo">022</span> * rectangularity, and aspect ratio, to determine if they are a target.<a name="line.22"></a>
+<span class="sourceLineNo">023</span> *<a name="line.23"></a>
+<span class="sourceLineNo">024</span> * Look in the VisionImages directory inside the project that is created for the<a name="line.24"></a>
+<span class="sourceLineNo">025</span> * sample images.<a name="line.25"></a>
+<span class="sourceLineNo">026</span> */<a name="line.26"></a>
+<span class="sourceLineNo">027</span>public class VisionProcessingSample<a name="line.27"></a>
+<span class="sourceLineNo">028</span>{<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>    //Camera constants used for distance calculation<a name="line.30"></a>
+<span class="sourceLineNo">031</span>    final int Y_IMAGE_RES = 240;                //X Image resolution in pixels, should be 120, 240 or 480<a name="line.31"></a>
+<span class="sourceLineNo">032</span>    final double VIEW_ANGLE = 49;               //Axis M1013<a name="line.32"></a>
+<span class="sourceLineNo">033</span>    //final double VIEW_ANGLE = 41.7;           //Axis 206 camera<a name="line.33"></a>
+<span class="sourceLineNo">034</span>    //final double VIEW_ANGLE = 37.4;  //Axis M1011 camera<a name="line.34"></a>
+<span class="sourceLineNo">035</span>    final double PI = 3.141592653;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>    //Score limits used for target identification<a name="line.36"></a>
+<span class="sourceLineNo">037</span>    final int RECTANGULARITY_LIMIT = 40;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>    final int ASPECT_RATIO_LIMIT_TARGET = 55;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>    final int ASPECT_RATIO_LIMIT_BUMPER = 40;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>    //Score limits used for hot target determination<a name="line.40"></a>
+<span class="sourceLineNo">041</span>    final int TAPE_WIDTH_LIMIT = 50;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>    final int VERTICAL_SCORE_LIMIT = 50;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>    final int LR_SCORE_LIMIT = 50;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>    //Minimum area of particles to be considered<a name="line.44"></a>
+<span class="sourceLineNo">045</span>    final int AREA_MINIMUM = 150;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>    //Maximum number of particles to process<a name="line.46"></a>
+<span class="sourceLineNo">047</span>    final int MAX_PARTICLES = 8;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    AxisCamera camera = AxisCamera.getInstance();          // the axis camera object (connected to the switch)<a name="line.48"></a>
+<span class="sourceLineNo">049</span>    CriteriaCollection cc;      // the criteria for doing the particle filter operation<a name="line.49"></a>
+<span class="sourceLineNo">050</span><a name="line.50"></a>
+<span class="sourceLineNo">051</span>    boolean shootNow;<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span>    public class Scores<a name="line.53"></a>
+<span class="sourceLineNo">054</span>    {<a name="line.54"></a>
+<span class="sourceLineNo">055</span><a name="line.55"></a>
+<span class="sourceLineNo">056</span>        double rectangularity;<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        double aspectRatioVertical;<a name="line.57"></a>
+<span class="sourceLineNo">058</span>        double aspectRatioHorizontal;<a name="line.58"></a>
+<span class="sourceLineNo">059</span>    }<a name="line.59"></a>
+<span class="sourceLineNo">060</span><a name="line.60"></a>
+<span class="sourceLineNo">061</span>    public class ScoresBumper<a name="line.61"></a>
+<span class="sourceLineNo">062</span>    {<a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span>        double rectangularity;<a name="line.64"></a>
+<span class="sourceLineNo">065</span>        double aspectRatioHorizontal;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    }<a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67"></a>
+<span class="sourceLineNo">068</span>    public class TargetReport<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    {<a name="line.69"></a>
+<span class="sourceLineNo">070</span><a name="line.70"></a>
+<span class="sourceLineNo">071</span>        int verticalIndex;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        int horizontalIndex;<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        boolean Hot;<a name="line.73"></a>
+<span class="sourceLineNo">074</span>        double totalScore;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>        double leftScore;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>        double rightScore;<a name="line.76"></a>
+<span class="sourceLineNo">077</span>        double tapeWidthScore;<a name="line.77"></a>
+<span class="sourceLineNo">078</span>        double verticalScore;<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    };<a name="line.79"></a>
+<span class="sourceLineNo">080</span><a name="line.80"></a>
+<span class="sourceLineNo">081</span>    public void imageFindInit()<a name="line.81"></a>
+<span class="sourceLineNo">082</span>    {<a name="line.82"></a>
+<span class="sourceLineNo">083</span>        //camera = AxisCamera.getInstance();  // get an instance of the camera<a name="line.83"></a>
+<span class="sourceLineNo">084</span>        cc = new CriteriaCollection();      // create the criteria for the particle filter<a name="line.84"></a>
+<span class="sourceLineNo">085</span>        cc.addCriteria(MeasurementType.IMAQ_MT_AREA, AREA_MINIMUM, 65535, false);<a name="line.85"></a>
+<span class="sourceLineNo">086</span>    }<a name="line.86"></a>
+<span class="sourceLineNo">087</span><a name="line.87"></a>
+<span class="sourceLineNo">088</span>    public boolean autoImageFind() throws AxisCameraException<a name="line.88"></a>
+<span class="sourceLineNo">089</span>    {<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        TargetReport target = new TargetReport();<a name="line.90"></a>
+<span class="sourceLineNo">091</span>        int verticalTargets[] = new int[MAX_PARTICLES];<a name="line.91"></a>
+<span class="sourceLineNo">092</span>        int horizontalTargets[] = new int[MAX_PARTICLES];<a name="line.92"></a>
+<span class="sourceLineNo">093</span>        int verticalTargetCount, horizontalTargetCount;<a name="line.93"></a>
+<span class="sourceLineNo">094</span><a name="line.94"></a>
+<span class="sourceLineNo">095</span>        try<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        {<a name="line.96"></a>
+<span class="sourceLineNo">097</span>            /**<a name="line.97"></a>
+<span class="sourceLineNo">098</span>             * Do the image capture with the camera and apply the algorithm<a name="line.98"></a>
+<span class="sourceLineNo">099</span>             * described above. This sample will either get images from the<a name="line.99"></a>
+<span class="sourceLineNo">100</span>             * camera or from an image file stored in the top level directory in<a name="line.100"></a>
+<span class="sourceLineNo">101</span>             * the flash memory on the cRIO. The file name in this case is<a name="line.101"></a>
+<span class="sourceLineNo">102</span>             * "testImage.jpg"<a name="line.102"></a>
+<span class="sourceLineNo">103</span>             *<a name="line.103"></a>
+<span class="sourceLineNo">104</span>             */<a name="line.104"></a>
+<span class="sourceLineNo">105</span><a name="line.105"></a>
+<span class="sourceLineNo">106</span>            ColorImage image = camera.getImage();     // comment if using stored images<a name="line.106"></a>
+<span class="sourceLineNo">107</span>            //ColorImage image;                           // next 2 lines read image from flash on cRIO<a name="line.107"></a>
+<span class="sourceLineNo">108</span>            //image = new RGBImage("/testImage.jpg");           // get the sample image from the cRIO flash<a name="line.108"></a>
+<span class="sourceLineNo">109</span>            // BinaryImage thresholdImage = image.thresholdRGB(0, 255, 200, 255, 0, 255);   // keep only green objects<a name="line.109"></a>
+<span class="sourceLineNo">110</span>            BinaryImage thresholdImage = image.thresholdHSL(0, 255, 0, 255, 245, 255); // HSV values need to be tuned<a name="line.110"></a>
+<span class="sourceLineNo">111</span>//            thresholdImage.write("/threshold.bmp");<a name="line.111"></a>
+<span class="sourceLineNo">112</span>            BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles<a name="line.112"></a>
+<span class="sourceLineNo">113</span>            filteredImage.write("/filteredImageHotGoal.bmp");<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>            //iterate through each particle and score to see if it is a target<a name="line.115"></a>
+<span class="sourceLineNo">116</span>            Scores scores[] = new Scores[filteredImage.getNumberParticles()];<a name="line.116"></a>
+<span class="sourceLineNo">117</span>            horizontalTargetCount = verticalTargetCount = 0;<a name="line.117"></a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span>            if (filteredImage.getNumberParticles() &gt; 0)<a name="line.119"></a>
+<span class="sourceLineNo">120</span>            {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>                for (int i = 0; i &lt; MAX_PARTICLES &amp;&amp; i &lt; filteredImage.getNumberParticles(); i++)<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                {<a name="line.122"></a>
+<span class="sourceLineNo">123</span>                    System.out.println(i);<a name="line.123"></a>
+<span class="sourceLineNo">124</span><a name="line.124"></a>
+<span class="sourceLineNo">125</span>                    ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);<a name="line.125"></a>
+<span class="sourceLineNo">126</span><a name="line.126"></a>
+<span class="sourceLineNo">127</span>                    System.out.println("Height " + report.boundingRectHeight);<a name="line.127"></a>
+<span class="sourceLineNo">128</span>                    System.out.println("Width " + report.boundingRectWidth);<a name="line.128"></a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span>                    scores[i] = new Scores();<a name="line.130"></a>
+<span class="sourceLineNo">131</span><a name="line.131"></a>
+<span class="sourceLineNo">132</span>                    //Score each particle on rectangularity and aspect ratio<a name="line.132"></a>
+<span class="sourceLineNo">133</span>                    scores[i].rectangularity = scoreRectangularity(report);<a name="line.133"></a>
+<span class="sourceLineNo">134</span>                    scores[i].aspectRatioVertical = scoreAspectRatio(filteredImage, report, i, true);<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                    scores[i].aspectRatioHorizontal = scoreAspectRatio(filteredImage, report, i, false);<a name="line.135"></a>
+<span class="sourceLineNo">136</span><a name="line.136"></a>
+<span class="sourceLineNo">137</span>                    //Check if the particle is a horizontal target, if not, check if it's a vertical target<a name="line.137"></a>
+<span class="sourceLineNo">138</span>                    if (scoreCompareTarget(scores[i], false))<a name="line.138"></a>
+<span class="sourceLineNo">139</span>                    {<a name="line.139"></a>
+<span class="sourceLineNo">140</span>                        filteredImage.free();<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                        thresholdImage.free();<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                        image.free();<a name="line.142"></a>
+<span class="sourceLineNo">143</span><a name="line.143"></a>
+<span class="sourceLineNo">144</span>                        System.out.println("particle: " + i + "is a Horizontal Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);<a name="line.144"></a>
+<span class="sourceLineNo">145</span>                        horizontalTargets[horizontalTargetCount++] = i; //Add particle to target array and increment count<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                        return true;<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                    } else if (scoreCompareTarget(scores[i], true))<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                    {<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                        System.out.println("particle: " + i + "is a Vertical Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                        verticalTargets[verticalTargetCount++] = i;  //Add particle to target array and increment count<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                        return true;<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                    } else<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                    {<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                        System.out.println("particle: " + i + "is not a Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);<a name="line.154"></a>
+<span class="sourceLineNo">155</span><a name="line.155"></a>
+<span class="sourceLineNo">156</span>                    }<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                    System.out.println("rect: " + scores[i].rectangularity + "ARHoriz: " + scores[i].aspectRatioHorizontal);<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                    System.out.println("ARVert: " + scores[i].aspectRatioVertical);<a name="line.158"></a>
+<span class="sourceLineNo">159</span><a name="line.159"></a>
+<span class="sourceLineNo">160</span>                }<a name="line.160"></a>
+<span class="sourceLineNo">161</span><a name="line.161"></a>
+<span class="sourceLineNo">162</span>                //Zero out scores and set verticalIndex to first target in case there are no horizontal targets<a name="line.162"></a>
+<span class="sourceLineNo">163</span>                target.totalScore = target.leftScore = target.rightScore = target.tapeWidthScore = target.verticalScore = 0;<a name="line.163"></a>
+<span class="sourceLineNo">164</span>                target.verticalIndex = verticalTargets[0];<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                for (int i = 0; i &lt; verticalTargetCount; i++)<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                {<a name="line.166"></a>
+<span class="sourceLineNo">167</span>                    ParticleAnalysisReport verticalReport = filteredImage.getParticleAnalysisReport(verticalTargets[i]);<a name="line.167"></a>
+<span class="sourceLineNo">168</span>                    for (int j = 0; j &lt; horizontalTargetCount; j++)<a name="line.168"></a>
+<span class="sourceLineNo">169</span>                    {<a name="line.169"></a>
+<span class="sourceLineNo">170</span>                        ParticleAnalysisReport horizontalReport = filteredImage.getParticleAnalysisReport(horizontalTargets[j]);<a name="line.170"></a>
+<span class="sourceLineNo">171</span>                        double horizWidth, horizHeight, vertWidth, leftScore, rightScore, tapeWidthScore, verticalScore, total;<a name="line.171"></a>
+<span class="sourceLineNo">172</span><a name="line.172"></a>
+<span class="sourceLineNo">173</span>                        //Measure equivalent rectangle sides for use in score calculation<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                        horizWidth = NIVision.MeasureParticle(filteredImage.image, horizontalTargets[j], false, MeasurementType.IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE);<a name="line.174"></a>
+<span class="sourceLineNo">175</span>                        vertWidth = NIVision.MeasureParticle(filteredImage.image, verticalTargets[i], false, MeasurementType.IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE);<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                        horizHeight = NIVision.MeasureParticle(filteredImage.image, horizontalTargets[j], false, MeasurementType.IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE);<a name="line.176"></a>
+<span class="sourceLineNo">177</span><a name="line.177"></a>
+<span class="sourceLineNo">178</span>                        //Determine if the horizontal target is in the expected location to the left of the vertical target<a name="line.178"></a>
+<span class="sourceLineNo">179</span>                        leftScore = ratioToScore(1.2 * (verticalReport.boundingRectLeft - horizontalReport.center_mass_x) / horizWidth);<a name="line.179"></a>
+<span class="sourceLineNo">180</span>                        //Determine if the horizontal target is in the expected location to the right of the  vertical target<a name="line.180"></a>
+<span class="sourceLineNo">181</span>                        rightScore = ratioToScore(1.2 * (horizontalReport.center_mass_x - verticalReport.boundingRectLeft - verticalReport.boundingRectWidth) / horizWidth);<a name="line.181"></a>
+<span class="sourceLineNo">182</span>                        //Determine if the width of the tape on the two targets appears to be the same<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                        tapeWidthScore = ratioToScore(vertWidth / horizHeight);<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                        //Determine if the vertical location of the horizontal target appears to be correct<a name="line.184"></a>
+<span class="sourceLineNo">185</span>                        verticalScore = ratioToScore(1 - (verticalReport.boundingRectTop - horizontalReport.center_mass_y) / (4 * horizHeight));<a name="line.185"></a>
+<span class="sourceLineNo">186</span>                        total = leftScore &gt; rightScore ? leftScore : rightScore;<a name="line.186"></a>
+<span class="sourceLineNo">187</span>                        total += tapeWidthScore + verticalScore;<a name="line.187"></a>
+<span class="sourceLineNo">188</span><a name="line.188"></a>
+<span class="sourceLineNo">189</span>                        //If the target is the best detected so far store the information about it<a name="line.189"></a>
+<span class="sourceLineNo">190</span>                        if (total &gt; target.totalScore)<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                        {<a name="line.191"></a>
+<span class="sourceLineNo">192</span>                            target.horizontalIndex = horizontalTargets[j];<a name="line.192"></a>
+<span class="sourceLineNo">193</span>                            target.verticalIndex = verticalTargets[i];<a name="line.193"></a>
+<span class="sourceLineNo">194</span>                            target.totalScore = total;<a name="line.194"></a>
+<span class="sourceLineNo">195</span>                            target.leftScore = leftScore;<a name="line.195"></a>
+<span class="sourceLineNo">196</span>                            target.rightScore = rightScore;<a name="line.196"></a>
+<span class="sourceLineNo">197</span>                            target.tapeWidthScore = tapeWidthScore;<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                            target.verticalScore = verticalScore;<a name="line.198"></a>
+<span class="sourceLineNo">199</span>                        }<a name="line.199"></a>
+<span class="sourceLineNo">200</span>                    }<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                    //Determine if the best target is a Hot target<a name="line.201"></a>
+<span class="sourceLineNo">202</span>                    target.Hot = hotOrNot(target);<a name="line.202"></a>
+<span class="sourceLineNo">203</span>                }<a name="line.203"></a>
+<span class="sourceLineNo">204</span><a name="line.204"></a>
+<span class="sourceLineNo">205</span>                if (verticalTargetCount &gt; 0)<a name="line.205"></a>
+<span class="sourceLineNo">206</span>                {<a name="line.206"></a>
+<span class="sourceLineNo">207</span>                    //Information about the target is contained in the "target" structure<a name="line.207"></a>
+<span class="sourceLineNo">208</span>                    //To get measurement information such as sizes or locations use the<a name="line.208"></a>
+<span class="sourceLineNo">209</span>                    //horizontal or vertical index to get the particle report as shown below<a name="line.209"></a>
+<span class="sourceLineNo">210</span>                    ParticleAnalysisReport distanceReport = filteredImage.getParticleAnalysisReport(target.verticalIndex);<a name="line.210"></a>
+<span class="sourceLineNo">211</span>                    double distance = computeDistance(filteredImage, distanceReport, target.verticalIndex);<a name="line.211"></a>
+<span class="sourceLineNo">212</span>                    if (target.Hot)<a name="line.212"></a>
+<span class="sourceLineNo">213</span>                    {<a name="line.213"></a>
+<span class="sourceLineNo">214</span>                        System.out.println("Hot target located");<a name="line.214"></a>
+<span class="sourceLineNo">215</span>                        System.out.println("Distance: " + distance);<a name="line.215"></a>
+<span class="sourceLineNo">216</span>                    } else<a name="line.216"></a>
+<span class="sourceLineNo">217</span>                    {<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                        System.out.println("No hot target present");<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                        System.out.println("Distance: " + distance);<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                    }<a name="line.220"></a>
+<span class="sourceLineNo">221</span>                }<a name="line.221"></a>
+<span class="sourceLineNo">222</span><a name="line.222"></a>
+<span class="sourceLineNo">223</span>            }<a name="line.223"></a>
+<span class="sourceLineNo">224</span><a name="line.224"></a>
+<span class="sourceLineNo">225</span>            /**<a name="line.225"></a>
+<span class="sourceLineNo">226</span>             * all images in Java must be freed after they are used since they<a name="line.226"></a>
+<span class="sourceLineNo">227</span>             * are allocated out of C data structures. Not calling free() will<a name="line.227"></a>
+<span class="sourceLineNo">228</span>             * cause the memory to accumulate over each pass of this loop.<a name="line.228"></a>
+<span class="sourceLineNo">229</span>             */<a name="line.229"></a>
+<span class="sourceLineNo">230</span>            filteredImage.free();<a name="line.230"></a>
+<span class="sourceLineNo">231</span>            thresholdImage.free();<a name="line.231"></a>
+<span class="sourceLineNo">232</span>            image.free();<a name="line.232"></a>
+<span class="sourceLineNo">233</span><a name="line.233"></a>
+<span class="sourceLineNo">234</span>        } catch (AxisCameraException ex)<a name="line.234"></a>
+<span class="sourceLineNo">235</span>        {        // this is needed if the camera.getImage() is called<a name="line.235"></a>
+<span class="sourceLineNo">236</span>            ex.printStackTrace();<a name="line.236"></a>
+<span class="sourceLineNo">237</span>        } catch (NIVisionException ex)<a name="line.237"></a>
+<span class="sourceLineNo">238</span>        {<a name="line.238"></a>
+<span class="sourceLineNo">239</span>            ex.printStackTrace();<a name="line.239"></a>
+<span class="sourceLineNo">240</span>        }<a name="line.240"></a>
+<span class="sourceLineNo">241</span><a name="line.241"></a>
+<span class="sourceLineNo">242</span>        return false;<a name="line.242"></a>
+<span class="sourceLineNo">243</span><a name="line.243"></a>
+<span class="sourceLineNo">244</span>    }<a name="line.244"></a>
+<span class="sourceLineNo">245</span><a name="line.245"></a>
+<span class="sourceLineNo">246</span>    public void bumperImageFind() throws AxisCameraException<a name="line.246"></a>
+<span class="sourceLineNo">247</span>    {<a name="line.247"></a>
+<span class="sourceLineNo">248</span>        TargetReport target = new TargetReport();<a name="line.248"></a>
+<span class="sourceLineNo">249</span>//        int horizontalTargets[] = new int[MAX_PARTICLES];<a name="line.249"></a>
+<span class="sourceLineNo">250</span>//        int horizontalTargetCount;<a name="line.250"></a>
+<span class="sourceLineNo">251</span><a name="line.251"></a>
+<span class="sourceLineNo">252</span>        try<a name="line.252"></a>
+<span class="sourceLineNo">253</span>        {<a name="line.253"></a>
+<span class="sourceLineNo">254</span>            /**<a name="line.254"></a>
+<span class="sourceLineNo">255</span>             * Do the image capture with the camera and apply the algorithm<a name="line.255"></a>
+<span class="sourceLineNo">256</span>             * described above. This sample will either get images from the<a name="line.256"></a>
+<span class="sourceLineNo">257</span>             * camera or from an image file stored in the top level directory in<a name="line.257"></a>
+<span class="sourceLineNo">258</span>             * the flash memory on the cRIO. The file name in this case is<a name="line.258"></a>
+<span class="sourceLineNo">259</span>             * "testImage.jpg"<a name="line.259"></a>
+<span class="sourceLineNo">260</span>             *<a name="line.260"></a>
+<span class="sourceLineNo">261</span>             */<a name="line.261"></a>
+<span class="sourceLineNo">262</span><a name="line.262"></a>
+<span class="sourceLineNo">263</span>            ColorImage image = camera.getImage();     // comment if using stored images<a name="line.263"></a>
+<span class="sourceLineNo">264</span>            BinaryImage thresholdImage = image.thresholdRGB(230, 255, 0, 255, 0, 255);<a name="line.264"></a>
+<span class="sourceLineNo">265</span>            BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles<a name="line.265"></a>
+<span class="sourceLineNo">266</span>            filteredImage.write("/filteredImageBumper.bmp");<a name="line.266"></a>
+<span class="sourceLineNo">267</span><a name="line.267"></a>
+<span class="sourceLineNo">268</span>            //iterate through each particle and score to see if it is a target<a name="line.268"></a>
+<span class="sourceLineNo">269</span>            ScoresBumper scores[] = new ScoresBumper[filteredImage.getNumberParticles()];<a name="line.269"></a>
+<span class="sourceLineNo">270</span><a name="line.270"></a>
+<span class="sourceLineNo">271</span>            if (filteredImage.getNumberParticles() &gt; 0)<a name="line.271"></a>
+<span class="sourceLineNo">272</span>            {<a name="line.272"></a>
+<span class="sourceLineNo">273</span>                for (int i = 0; i &lt; MAX_PARTICLES &amp;&amp; i &lt; filteredImage.getNumberParticles(); i++)<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                {<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                    System.out.println(i);<a name="line.275"></a>
+<span class="sourceLineNo">276</span><a name="line.276"></a>
+<span class="sourceLineNo">277</span>                    ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);<a name="line.277"></a>
+<span class="sourceLineNo">278</span><a name="line.278"></a>
+<span class="sourceLineNo">279</span>                    System.out.println("Height " + report.boundingRectHeight);<a name="line.279"></a>
+<span class="sourceLineNo">280</span>                    System.out.println("Width " + report.boundingRectWidth);<a name="line.280"></a>
+<span class="sourceLineNo">281</span><a name="line.281"></a>
+<span class="sourceLineNo">282</span>                    scores[i] = new ScoresBumper();<a name="line.282"></a>
+<span class="sourceLineNo">283</span><a name="line.283"></a>
+<span class="sourceLineNo">284</span>                    //Score each particle on rectangularity and aspect ratio<a name="line.284"></a>
+<span class="sourceLineNo">285</span>                    scores[i].rectangularity = scoreRectangularity(report);<a name="line.285"></a>
+<span class="sourceLineNo">286</span>                    scores[i].aspectRatioHorizontal = scoreAspectRatio(filteredImage, report, i, false);<a name="line.286"></a>
+<span class="sourceLineNo">287</span><a name="line.287"></a>
+<span class="sourceLineNo">288</span>                    //Check if the particle is a horizontal bumper<a name="line.288"></a>
+<span class="sourceLineNo">289</span>                    if (scoreCompareBumper(scores[i]))<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                    {<a name="line.290"></a>
+<span class="sourceLineNo">291</span>                        System.out.println("particle: " + i + "is a Horizontal Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);<a name="line.291"></a>
+<span class="sourceLineNo">292</span><a name="line.292"></a>
+<span class="sourceLineNo">293</span>                    } else<a name="line.293"></a>
+<span class="sourceLineNo">294</span>                    {<a name="line.294"></a>
+<span class="sourceLineNo">295</span>                        System.out.println("particle: " + i + "is not a Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);<a name="line.295"></a>
+<span class="sourceLineNo">296</span><a name="line.296"></a>
+<span class="sourceLineNo">297</span>                    }<a name="line.297"></a>
+<span class="sourceLineNo">298</span><a name="line.298"></a>
+<span class="sourceLineNo">299</span>                    System.out.println("rect: " + scores[i].rectangularity + " ARHoriz: " + scores[i].aspectRatioHorizontal);<a name="line.299"></a>
+<span class="sourceLineNo">300</span><a name="line.300"></a>
+<span class="sourceLineNo">301</span>                }<a name="line.301"></a>
+<span class="sourceLineNo">302</span><a name="line.302"></a>
+<span class="sourceLineNo">303</span>                //Zero out scores and set verticalIndex to first target in case there are no horizontal targets<a name="line.303"></a>
+<span class="sourceLineNo">304</span>                target.totalScore = target.leftScore = target.rightScore = target.tapeWidthScore = target.verticalScore = 0;<a name="line.304"></a>
+<span class="sourceLineNo">305</span>            }<a name="line.305"></a>
+<span class="sourceLineNo">306</span><a name="line.306"></a>
+<span class="sourceLineNo">307</span>            /**<a name="line.307"></a>
+<span class="sourceLineNo">308</span>             * all images in Java must be freed after they are used since they<a name="line.308"></a>
+<span class="sourceLineNo">309</span>             * are allocated out of C data structures. Not calling free() will<a name="line.309"></a>
+<span class="sourceLineNo">310</span>             * cause the memory to accumulate over each pass of this loop.<a name="line.310"></a>
+<span class="sourceLineNo">311</span>             */<a name="line.311"></a>
+<span class="sourceLineNo">312</span>            filteredImage.free();<a name="line.312"></a>
+<span class="sourceLineNo">313</span>            thresholdImage.free();<a name="line.313"></a>
+<span class="sourceLineNo">314</span>            image.free();<a name="line.314"></a>
+<span class="sourceLineNo">315</span><a name="line.315"></a>
+<span class="sourceLineNo">316</span>        } catch (AxisCameraException ex)<a name="line.316"></a>
+<span class="sourceLineNo">317</span>        {        // this is needed if the camera.getImage() is called<a name="line.317"></a>
+<span class="sourceLineNo">318</span>            ex.printStackTrace();<a name="line.318"></a>
+<span class="sourceLineNo">319</span>        } catch (NIVisionException ex)<a name="line.319"></a>
+<span class="sourceLineNo">320</span>        {<a name="line.320"></a>
+<span class="sourceLineNo">321</span>            ex.printStackTrace();<a name="line.321"></a>
+<span class="sourceLineNo">322</span>        }<a name="line.322"></a>
+<span class="sourceLineNo">323</span><a name="line.323"></a>
+<span class="sourceLineNo">324</span>    }<a name="line.324"></a>
+<span class="sourceLineNo">325</span><a name="line.325"></a>
+<span class="sourceLineNo">326</span>    /**<a name="line.326"></a>
+<span class="sourceLineNo">327</span>     * Computes the estimated distance to a target using the height of the<a name="line.327"></a>
+<span class="sourceLineNo">328</span>     * particle in the image. For more information and graphics showing the math<a name="line.328"></a>
+<span class="sourceLineNo">329</span>     * behind this approach see the Vision Processing section of the<a name="line.329"></a>
+<span class="sourceLineNo">330</span>     * ScreenStepsLive documentation.<a name="line.330"></a>
+<span class="sourceLineNo">331</span>     *<a name="line.331"></a>
+<span class="sourceLineNo">332</span>     * @param image The image to use for measuring the particle estimated<a name="line.332"></a>
+<span class="sourceLineNo">333</span>     * rectangle<a name="line.333"></a>
+<span class="sourceLineNo">334</span>     * @param report The Particle Analysis Report for the particle<a name="line.334"></a>
+<span class="sourceLineNo">335</span>     * @param outer True if the particle should be treated as an outer target,<a name="line.335"></a>
+<span class="sourceLineNo">336</span>     * false to treat it as a center target<a name="line.336"></a>
+<span class="sourceLineNo">337</span>     * @return The estimated distance to the target in Inches.<a name="line.337"></a>
+<span class="sourceLineNo">338</span>     */<a name="line.338"></a>
+<span class="sourceLineNo">339</span>    double computeDistance(BinaryImage image, ParticleAnalysisReport report, int particleNumber) throws NIVisionException<a name="line.339"></a>
+<span class="sourceLineNo">340</span>    {<a name="line.340"></a>
+<span class="sourceLineNo">341</span>        double rectLong, height;<a name="line.341"></a>
+<span class="sourceLineNo">342</span>        int targetHeight;<a name="line.342"></a>
+<span class="sourceLineNo">343</span><a name="line.343"></a>
+<span class="sourceLineNo">344</span>        rectLong = NIVision.MeasureParticle(image.image, particleNumber, false, MeasurementType.IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE);<a name="line.344"></a>
+<span class="sourceLineNo">345</span>        //using the smaller of the estimated rectangle long side and the bounding rectangle height results in better performance<a name="line.345"></a>
+<span class="sourceLineNo">346</span>        //on skewed rectangles<a name="line.346"></a>
+<span class="sourceLineNo">347</span>        height = Math.min(report.boundingRectHeight, rectLong);<a name="line.347"></a>
+<span class="sourceLineNo">348</span>        targetHeight = 32;<a name="line.348"></a>
+<span class="sourceLineNo">349</span><a name="line.349"></a>
+<span class="sourceLineNo">350</span>        return Y_IMAGE_RES * targetHeight / (height * 12 * 2 * Math.tan(VIEW_ANGLE * Math.PI / (180 * 2)));<a name="line.350"></a>
+<span class="sourceLineNo">351</span>    }<a name="line.351"></a>
+<span class="sourceLineNo">352</span><a name="line.352"></a>
+<span class="sourceLineNo">353</span>    /**<a name="line.353"></a>
+<span class="sourceLineNo">354</span>     * Computes a score (0-100) comparing the aspect ratio to the ideal aspect<a name="line.354"></a>
+<span class="sourceLineNo">355</span>     * ratio for the target. This method uses the equivalent rectangle sides to<a name="line.355"></a>
+<span class="sourceLineNo">356</span>     * determine aspect ratio as it performs better as the target gets skewed by<a name="line.356"></a>
+<span class="sourceLineNo">357</span>     * moving to the left or right. The equivalent rectangle is the rectangle<a name="line.357"></a>
+<span class="sourceLineNo">358</span>     * with sides x and y where particle area= x*y and particle perimeter= 2x+2y<a name="line.358"></a>
+<span class="sourceLineNo">359</span>     *<a name="line.359"></a>
+<span class="sourceLineNo">360</span>     * @param image The image containing the particle to score, needed to<a name="line.360"></a>
+<span class="sourceLineNo">361</span>     * perform additional measurements<a name="line.361"></a>
+<span class="sourceLineNo">362</span>     * @param report The Particle Analysis Report for the particle, used for the<a name="line.362"></a>
+<span class="sourceLineNo">363</span>     * width, height, and particle number<a name="line.363"></a>
+<span class="sourceLineNo">364</span>     * @param outer     Indicates whether the particle aspect ratio should be<a name="line.364"></a>
+<span class="sourceLineNo">365</span>     * compared to the ratio for the inner target or the outer<a name="line.365"></a>
+<span class="sourceLineNo">366</span>     * @return The aspect ratio score (0-100)<a name="line.366"></a>
+<span class="sourceLineNo">367</span>     */<a name="line.367"></a>
+<span class="sourceLineNo">368</span>    public double scoreAspectRatio(BinaryImage image, ParticleAnalysisReport report, int particleNumber, boolean vertical) throws NIVisionException<a name="line.368"></a>
+<span class="sourceLineNo">369</span>    {<a name="line.369"></a>
+<span class="sourceLineNo">370</span>        double rectLong, rectShort, aspectRatio, idealAspectRatio;<a name="line.370"></a>
+<span class="sourceLineNo">371</span><a name="line.371"></a>
+<span class="sourceLineNo">372</span>        rectLong = NIVision.MeasureParticle(image.image, particleNumber, false, MeasurementType.IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE);<a name="line.372"></a>
+<span class="sourceLineNo">373</span>        rectShort = NIVision.MeasureParticle(image.image, particleNumber, false, MeasurementType.IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE);<a name="line.373"></a>
+<span class="sourceLineNo">374</span>        idealAspectRatio = vertical ? (4.0 / 32) : (23.5 / 4);  //Vertical reflector 4" wide x 32" tall, horizontal 23.5" wide x 4" tall<a name="line.374"></a>
+<span class="sourceLineNo">375</span><a name="line.375"></a>
+<span class="sourceLineNo">376</span>        //Divide width by height to measure aspect ratio<a name="line.376"></a>
+<span class="sourceLineNo">377</span>        if (report.boundingRectWidth &gt; report.boundingRectHeight)<a name="line.377"></a>
+<span class="sourceLineNo">378</span>        {<a name="line.378"></a>
+<span class="sourceLineNo">379</span>            //particle is wider than it is tall, divide long by short<a name="line.379"></a>
+<span class="sourceLineNo">380</span>            aspectRatio = ratioToScore((rectLong / rectShort) / idealAspectRatio);<a name="line.380"></a>
+<span class="sourceLineNo">381</span>        } else<a name="line.381"></a>
+<span class="sourceLineNo">382</span>        {<a name="line.382"></a>
+<span class="sourceLineNo">383</span>            //particle is taller than it is wide, divide short by long<a name="line.383"></a>
+<span class="sourceLineNo">384</span>            aspectRatio = ratioToScore((rectShort / rectLong) / idealAspectRatio);<a name="line.384"></a>
+<span class="sourceLineNo">385</span>        }<a name="line.385"></a>
+<span class="sourceLineNo">386</span>        return aspectRatio;<a name="line.386"></a>
+<span class="sourceLineNo">387</span>    }<a name="line.387"></a>
+<span class="sourceLineNo">388</span><a name="line.388"></a>
+<span class="sourceLineNo">389</span>    /**<a name="line.389"></a>
+<span class="sourceLineNo">390</span>     * Compares scores to defined limits and returns true if the particle<a name="line.390"></a>
+<span class="sourceLineNo">391</span>     * appears to be a target<a name="line.391"></a>
+<span class="sourceLineNo">392</span>     *<a name="line.392"></a>
+<span class="sourceLineNo">393</span>     * @param scores The structure containing the scores to compare<a name="line.393"></a>
+<span class="sourceLineNo">394</span>     * @param outer True if the particle should be treated as an outer target,<a name="line.394"></a>
+<span class="sourceLineNo">395</span>     * false to treat it as a center target<a name="line.395"></a>
+<span class="sourceLineNo">396</span>     *<a name="line.396"></a>
+<span class="sourceLineNo">397</span>     * @return True if the particle meets all limits, false otherwise<a name="line.397"></a>
+<span class="sourceLineNo">398</span>     */<a name="line.398"></a>
+<span class="sourceLineNo">399</span>    boolean scoreCompareTarget(Scores scores, boolean vertical)<a name="line.399"></a>
+<span class="sourceLineNo">400</span>    {<a name="line.400"></a>
+<span class="sourceLineNo">401</span>        boolean isTarget = true;<a name="line.401"></a>
+<span class="sourceLineNo">402</span><a name="line.402"></a>
+<span class="sourceLineNo">403</span>        isTarget &amp;= scores.rectangularity &gt; RECTANGULARITY_LIMIT;<a name="line.403"></a>
+<span class="sourceLineNo">404</span>        if (vertical)<a name="line.404"></a>
+<span class="sourceLineNo">405</span>        {<a name="line.405"></a>
+<span class="sourceLineNo">406</span>            isTarget &amp;= scores.aspectRatioVertical &gt; ASPECT_RATIO_LIMIT_TARGET;<a name="line.406"></a>
+<span class="sourceLineNo">407</span>        } else<a name="line.407"></a>
+<span class="sourceLineNo">408</span>        {<a name="line.408"></a>
+<span class="sourceLineNo">409</span>            isTarget &amp;= scores.aspectRatioHorizontal &gt; ASPECT_RATIO_LIMIT_TARGET;<a name="line.409"></a>
+<span class="sourceLineNo">410</span>        }<a name="line.410"></a>
+<span class="sourceLineNo">411</span><a name="line.411"></a>
+<span class="sourceLineNo">412</span>        return isTarget;<a name="line.412"></a>
+<span class="sourceLineNo">413</span>    }<a name="line.413"></a>
+<span class="sourceLineNo">414</span><a name="line.414"></a>
+<span class="sourceLineNo">415</span>    boolean scoreCompareBumper(ScoresBumper scores)<a name="line.415"></a>
+<span class="sourceLineNo">416</span>    {<a name="line.416"></a>
+<span class="sourceLineNo">417</span>        boolean isTarget = true;<a name="line.417"></a>
+<span class="sourceLineNo">418</span><a name="line.418"></a>
+<span class="sourceLineNo">419</span>        isTarget &amp;= scores.rectangularity &gt; RECTANGULARITY_LIMIT;<a name="line.419"></a>
+<span class="sourceLineNo">420</span>        isTarget &amp;= scores.aspectRatioHorizontal &gt; ASPECT_RATIO_LIMIT_BUMPER;<a name="line.420"></a>
+<span class="sourceLineNo">421</span><a name="line.421"></a>
+<span class="sourceLineNo">422</span>        return isTarget;<a name="line.422"></a>
+<span class="sourceLineNo">423</span>    }<a name="line.423"></a>
+<span class="sourceLineNo">424</span><a name="line.424"></a>
+<span class="sourceLineNo">425</span>    /**<a name="line.425"></a>
+<span class="sourceLineNo">426</span>     * Computes a score (0-100) estimating how rectangular the particle is by<a name="line.426"></a>
+<span class="sourceLineNo">427</span>     * comparing the area of the particle to the area of the bounding box<a name="line.427"></a>
+<span class="sourceLineNo">428</span>     * surrounding it. A perfect rectangle would cover the entire bounding box.<a name="line.428"></a>
+<span class="sourceLineNo">429</span>     *<a name="line.429"></a>
+<span class="sourceLineNo">430</span>     * @param report The Particle Analysis Report for the particle to score<a name="line.430"></a>
+<span class="sourceLineNo">431</span>     * @return The rectangularity score (0-100)<a name="line.431"></a>
+<span class="sourceLineNo">432</span>     */<a name="line.432"></a>
+<span class="sourceLineNo">433</span>    double scoreRectangularity(ParticleAnalysisReport report)<a name="line.433"></a>
+<span class="sourceLineNo">434</span>    {<a name="line.434"></a>
+<span class="sourceLineNo">435</span>        if (report.boundingRectWidth * report.boundingRectHeight != 0)<a name="line.435"></a>
+<span class="sourceLineNo">436</span>        {<a name="line.436"></a>
+<span class="sourceLineNo">437</span>            return 100 * report.particleArea / (report.boundingRectWidth * report.boundingRectHeight);<a name="line.437"></a>
+<span class="sourceLineNo">438</span>        } else<a name="line.438"></a>
+<span class="sourceLineNo">439</span>        {<a name="line.439"></a>
+<span class="sourceLineNo">440</span>            return 0;<a name="line.440"></a>
+<span class="sourceLineNo">441</span>        }<a name="line.441"></a>
+<span class="sourceLineNo">442</span>    }<a name="line.442"></a>
+<span class="sourceLineNo">443</span><a name="line.443"></a>
+<span class="sourceLineNo">444</span>    /**<a name="line.444"></a>
+<span class="sourceLineNo">445</span>     * Converts a ratio with ideal value of 1 to a score. The resulting function<a name="line.445"></a>
+<span class="sourceLineNo">446</span>     * is piecewise linear going from (0,0) to (1,100) to (2,0) and is 0 for all<a name="line.446"></a>
+<span class="sourceLineNo">447</span>     * inputs outside the range 0-2<a name="line.447"></a>
+<span class="sourceLineNo">448</span>     */<a name="line.448"></a>
+<span class="sourceLineNo">449</span>    double ratioToScore(double ratio)<a name="line.449"></a>
+<span class="sourceLineNo">450</span>    {<a name="line.450"></a>
+<span class="sourceLineNo">451</span>        return (Math.max(0, Math.min(100 * (1 - Math.abs(1 - ratio)), 100)));<a name="line.451"></a>
+<span class="sourceLineNo">452</span>    }<a name="line.452"></a>
+<span class="sourceLineNo">453</span><a name="line.453"></a>
+<span class="sourceLineNo">454</span>    /**<a name="line.454"></a>
+<span class="sourceLineNo">455</span>     * Takes in a report on a target and compares the scores to the defined<a name="line.455"></a>
+<span class="sourceLineNo">456</span>     * score limits to evaluate if the target is a hot target or not.<a name="line.456"></a>
+<span class="sourceLineNo">457</span>     *<a name="line.457"></a>
+<span class="sourceLineNo">458</span>     * Returns True if the target is hot. False if it is not.<a name="line.458"></a>
+<span class="sourceLineNo">459</span>     */<a name="line.459"></a>
+<span class="sourceLineNo">460</span>    boolean hotOrNot(TargetReport target)<a name="line.460"></a>
+<span class="sourceLineNo">461</span>    {<a name="line.461"></a>
+<span class="sourceLineNo">462</span>        boolean isHot = true;<a name="line.462"></a>
+<span class="sourceLineNo">463</span><a name="line.463"></a>
+<span class="sourceLineNo">464</span>        isHot &amp;= target.tapeWidthScore &gt;= TAPE_WIDTH_LIMIT;<a name="line.464"></a>
+<span class="sourceLineNo">465</span>        isHot &amp;= target.verticalScore &gt;= VERTICAL_SCORE_LIMIT;<a name="line.465"></a>
+<span class="sourceLineNo">466</span>        isHot &amp;= (target.leftScore &gt; LR_SCORE_LIMIT) | (target.rightScore &gt; LR_SCORE_LIMIT);<a name="line.466"></a>
+<span class="sourceLineNo">467</span><a name="line.467"></a>
+<span class="sourceLineNo">468</span>        return isHot;<a name="line.468"></a>
+<span class="sourceLineNo">469</span>    }<a name="line.469"></a>
+<span class="sourceLineNo">470</span>}<a name="line.470"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
