@@ -27,10 +27,15 @@ public class HardwarePorts
     final static int DISTANCE_SENSOR = 2;
     // Analogs
     final static int SHOOTER_POT = 1;
-    final static int ACCELEROMETER = 4;
-    final static int GYRO = 5;
+    final static int ACCELEROMETER = 8;
+    final static int GYRO = 3;
+    final static int TEMPERATURE = 4;
     // Joysticks
     final static int LEFT_JOYSTICK = 1;
     final static int RIGHT_JOYSTICK = 2;
     final static int GAMEPAD_JOYSTICK = 3;
+    // LEDs
+    final static int LED_ONE = 7;
+    final static int LED_TWO = 8;
+    final static int LED_THREE = 9;
 }

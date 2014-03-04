@@ -92,6 +92,10 @@ public class VisionProcessingSample
         int horizontalTargets[] = new int[MAX_PARTICLES];
         int verticalTargetCount, horizontalTargetCount;
 
+        System.out.println("Image finding on");
+
+        LEDs.getInstance().RedSet(true);
+
         try
         {
             /**
@@ -107,7 +111,7 @@ public class VisionProcessingSample
             //ColorImage image;                           // next 2 lines read image from flash on cRIO
             //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
             // BinaryImage thresholdImage = image.thresholdRGB(0, 255, 200, 255, 0, 255);   // keep only green objects
-            BinaryImage thresholdImage = image.thresholdHSL(0, 255, 0, 255, 245, 255); // HSV values need to be tuned
+            BinaryImage thresholdImage = image.thresholdHSL(0, 255, 0, 255, 240, 255); // HSV values need to be tuned
 //            thresholdImage.write("/threshold.bmp");
             BinaryImage filteredImage = thresholdImage.particleFilter(cc);           // filter out small particles
             filteredImage.write("/filteredImageHotGoal.bmp");
@@ -143,12 +147,12 @@ public class VisionProcessingSample
 
                         System.out.println("particle: " + i + "is a Horizontal Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
                         horizontalTargets[horizontalTargetCount++] = i; //Add particle to target array and increment count
+                        LEDs.getInstance().BlueFlash();
                         return true;
                     } else if (scoreCompareTarget(scores[i], true))
                     {
                         System.out.println("particle: " + i + "is a Vertical Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
                         verticalTargets[verticalTargetCount++] = i;  //Add particle to target array and increment count
-                        return true;
                     } else
                     {
                         System.out.println("particle: " + i + "is not a Target centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
@@ -164,6 +168,9 @@ public class VisionProcessingSample
                 target.verticalIndex = verticalTargets[0];
                 for (int i = 0; i < verticalTargetCount; i++)
                 {
+
+                    System.out.println("Image finding Vertical Target");
+
                     ParticleAnalysisReport verticalReport = filteredImage.getParticleAnalysisReport(verticalTargets[i]);
                     for (int j = 0; j < horizontalTargetCount; j++)
                     {
@@ -238,6 +245,8 @@ public class VisionProcessingSample
         {
             ex.printStackTrace();
         }
+
+        LEDs.getInstance().RedSet(false);
 
         return false;
 

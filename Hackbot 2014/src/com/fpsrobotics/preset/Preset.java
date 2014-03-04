@@ -4,6 +4,7 @@
  */
 package com.fpsrobotics.preset;
 
+import java.util.Enumeration;
 import java.util.Vector;
 
 /**
@@ -14,8 +15,8 @@ import java.util.Vector;
 public abstract class Preset
 {
     protected Vector preset = null;
-    protected final double GO_HOME = -0.1;              // 40% reverse thrust to go home
-    protected final double STOP_SHOOTER = 0.0;
+    protected final double GO_HOME = -0.2;              // 40% reverse thrust to go home
+    public final static double STOP_SHOOTER = 0.0;
     protected final double _1_PERCENT_THRUST = 0.01;    // 1% forward thrust
     protected final double _2_PERCENT_THRUST = 0.02;
     protected final double _5_PERCENT_THRUST = 0.05;    // 5% forward thrust
@@ -38,25 +39,14 @@ public abstract class Preset
     
     protected void addValue(PresetValue value)
     {
-       
        this.preset.addElement(value);
+       
     }
-
-    public double presetSpeed(double potValue)
+    public Enumeration getElements()
     {
-        /*
-         * this is not efficient!!
-         */
-        double speed = 0;
-        for (int index = 0; index < this.preset.size(); index++)
-        {
-            PresetValue value = (PresetValue)this.preset.elementAt(index);
-            if (potValue >= value.getAngle())
-            {
-                speed = value.getSpeed();
-                break;
-            }
-        }
-        return speed;
+        return preset.elements();
     }
+    
+    
+   
 }

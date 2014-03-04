@@ -23,10 +23,10 @@ public class TwinMotor implements Motor
         motorTwo.stop();
     }
 
-    public void forward(double speed)
+    public void backward(double speed)
     {
-        motorOne.forward(speed);
-        motorTwo.forward(speed);
+        motorOne.backward(speed);
+        motorTwo.backward(speed);
     }
 
     public void forward(double speed, int motorStep)
@@ -35,10 +35,10 @@ public class TwinMotor implements Motor
         motorTwo.forward(speed, motorStep);
     }
 
-    public void backward(double speed)
+    public void forward(double speed)
     {
-        motorOne.backward(speed);
-        motorTwo.backward(speed);
+        motorOne.forward(speed);
+        motorTwo.forward(speed);
     }
 
     public void backward(double speed, int motorStep)

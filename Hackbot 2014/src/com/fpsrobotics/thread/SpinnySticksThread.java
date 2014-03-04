@@ -1,6 +1,7 @@
 package com.fpsrobotics.thread;
 
-import com.fpsrobotics.SpinnySticksObject;
+import com.fpsrobotics.LEDs;
+import com.fpsrobotics.SpinnySticks;
 import com.fpsrobotics.TwoSolenoids;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
@@ -14,7 +15,7 @@ import com.fpsrobotics.hardware.*;
 public class SpinnySticksThread extends Thread
 {
 
-    SpinnySticksObject spinnyStick = new SpinnySticksObject(Motors.SPINNY_MOTOR, new TwoSolenoids(Solenoids.SPINNY_SHIFTER));
+    SpinnySticks spinnyStick = SpinnySticks.createInstance(Motors.SPINNY_MOTOR, new TwoSolenoids(Solenoids.SPINNY_SHIFTER));
 
     boolean isInterrupted = false;
 
@@ -39,35 +40,42 @@ public class SpinnySticksThread extends Thread
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_EXTEND))
                 {
 //                    pneumatics.spinnySticksMovement(spinnySolenoid, true);
-                    spinnyStick.solenoidOn();
+                    LEDs.getInstance().RedSet(true);
+                    spinnyStick.spinnySticksUp();
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_RETRACT))
                 {
 //                    pneumatics.spinnySticksMovement(spinnySolenoid, false);
-                    spinnyStick.solenoidOff();
+                    LEDs.getInstance().RedSet(true);
+                    spinnyStick.spinnySticksDown();
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_BACKWARD_TOGGLE))
                 {
 //                    controlSpinSticks.spinSticks(spinnyMotor, -0.25);
 //                    spinnySimpleMotor.backward(0.25);
-                    spinnyStick.forward(-0.35);
+                    LEDs.getInstance().RedSet(true);
+                    spinnyStick.backward(-0.35);
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_FORWARD_TOGGLE))
                 {
 //                    controlSpinSticks.spinSticks(spinnyMotor, 0.25);
 //                    spinnySimpleMotor.forward(0.25);
-                    spinnyStick.backward(0.35);
+                    LEDs.getInstance().RedSet(true);
+                    spinnyStick.forward(0.35);
                 }
 
                 if (!Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_FORWARD_TOGGLE) && !Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_BACKWARD_TOGGLE))
                 {
 //                    controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
 //                    spinnySimpleMotor.stop();
+                    LEDs.getInstance().RedSet(true);
                     spinnyStick.stop();
                 }
+                
+                LEDs.getInstance().RedSet(false);
 
 //                previousButtonValueBwd = gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE);
                 previousTime = System.currentTimeMillis();
@@ -78,10 +86,5 @@ public class SpinnySticksThread extends Thread
     public void interrupt()
     {
         isInterrupted = true;
-    }
-
-    public boolean getSpinnySticks()
-    {
-        return spinnyStick.solenoidGet();
     }
 }

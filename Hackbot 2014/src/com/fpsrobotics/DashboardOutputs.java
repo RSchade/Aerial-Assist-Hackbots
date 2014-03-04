@@ -1,10 +1,12 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.hardware.Analogs;
 import com.fpsrobotics.thread.CatapultThread;
 import com.fpsrobotics.thread.SpinnySticksThread;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.DriverStationLCD;
@@ -15,7 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DashboardOutputs
 {
-    int compressorCutoff;
 //    DriverStationLCD userMessages = DriverStationLCD.getInstance();
 
     /**
@@ -24,22 +25,28 @@ public class DashboardOutputs
      * @param leftJoystick
      * @param rightJoystick
      * @param encoder
-     * @param shooter
-     * @param spinnySticks
-     * @param distanceSensor
+     * @param dynamicDistance
+     * @param dynamicSpeed
+     * @param ultraDistance
      */
-    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, CatapultThread shooter, SpinnySticksThread spinnySticks, AnalogChannel distanceSensor, AnalogChannel shooterPot)
+    public void outputToDashboard(Joystick leftJoystick, Joystick rightJoystick, Encoder encoder, double dynamicDistance, double dynamicSpeed, Ultrasonic ultraDistance, AnalogChannel shooterPot, AnalogChannel gyro)
     {
         // Variable outputs to dashboard
         SmartDashboard.putNumber("Right Drive Train Speed", rightJoystick.getRawAxis(2));
         SmartDashboard.putNumber("Left Drive Train Speed", leftJoystick.getRawAxis(2));
         SmartDashboard.putNumber("Threads Currently Running", Thread.activeCount());
-        SmartDashboard.putNumber("Encoder Rate", encoder.getRate());
-        SmartDashboard.putNumber("Encoder Value", encoder.getRaw());
-        SmartDashboard.putNumber("Dynamic Preset Distance", shooter.getDynamicPresetDistance());
-        SmartDashboard.putNumber("Dynamic Preset Speed", shooter.getDynamicPresetSpeed());
-        SmartDashboard.putNumber("Ultrasonic Distance (ft)", distanceSensor.getVoltage()/.1176);
+        SmartDashboard.putNumber("Left Encoder Count", encoder.get());
+        SmartDashboard.putNumber("Left Encoder Raw Count", encoder.getRaw());
+        SmartDashboard.putNumber("Left Encoder Distance", encoder.getDistance());
+        SmartDashboard.putNumber("Left Encoder Value", encoder.getRate());
+        SmartDashboard.putNumber("Dynamic Preset Distance", dynamicDistance);
+        SmartDashboard.putNumber("Dynamic Preset Speed", dynamicSpeed);
+        SmartDashboard.putNumber("Ultrasonic Distance (ft)", ultraDistance.getDistanceFt());
         SmartDashboard.putNumber("Shooter Pot", shooterPot.getValue());
+        SmartDashboard.putNumber("Shooter Pot Average", shooterPot.getAverageValue());
+        SmartDashboard.putNumber("Gyro Value", gyro.getValue());
+//        SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
+//        SmartDashboard.putNumber("Temperature Gyro", temp.getValue());
     }
 
     public void teamOutput()

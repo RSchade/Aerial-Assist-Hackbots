@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hackbots;
+package com.fpsrobotics;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 

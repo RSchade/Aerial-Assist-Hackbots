@@ -24,7 +24,7 @@ public class SimpleMotor implements Motor
         motor.set(0.0);
     }
 
-    public void forward(double speed)
+    public void backward(double speed)
     {
         double actualSpeed = inverseDirection ? -Math.abs(speed) : Math.abs(speed);
         motor.set(-actualSpeed);
@@ -48,7 +48,7 @@ public class SimpleMotor implements Motor
         }
     }
 
-    public void backward(double speed)
+    public void forward(double speed)
     {
         double actualSpeed = inverseDirection ? -Math.abs(speed) : Math.abs(speed);
         motor.set(actualSpeed);
@@ -62,7 +62,7 @@ public class SimpleMotor implements Motor
         {
             double nextSpeed = increment * currentStep;
 
-            backward(nextSpeed);
+            forward(nextSpeed);
         }
     }
 

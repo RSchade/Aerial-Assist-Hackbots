@@ -1,6 +1,8 @@
 package com.fpsrobotics.thread;
 
-import com.fpsrobotics.CatapultObject;
+import com.fpsrobotics.Catapult;
+import com.fpsrobotics.Dashboard;
+import com.fpsrobotics.LEDs;
 import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.TwinMotor;
 import com.fpsrobotics.constants.*;
@@ -20,8 +22,10 @@ public class CatapultThread extends Thread
     Preset highGoal;
     Preset pass;
     Preset truss;
-    Preset dynamic;
-    CatapultObject shoot;
+    Preset tenft;
+    Preset sixft;
+
+    Catapult shoot;
     double dynamicPresetDistance = 0;
     double dynamicPresetSpeed = 0;
     boolean isInterrupted = false;
@@ -38,64 +42,91 @@ public class CatapultThread extends Thread
         highGoal = new PresetHighGoal();
         pass = new PresetPass();
         truss = new PresetTruss();
+        tenft = new TenFt();
+        sixft = new SixFt();
+
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
-        TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Motors.SHOOTER_ONE, false), new SimpleMotor(Motors.SHOOTER_TWO, true));
 
+        TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Motors.SHOOTER_ONE, false), new SimpleMotor(Motors.SHOOTER_TWO, true));
+        shoot = Catapult.createInstance(Analogs.SHOOTER_POTENTIOMETER, shooterTwinMotor);
 
         while (!isInterrupted)
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= Constants.THREAD_REFRESH_RATE)
             {
-                dynamicPresetDistance += -Joysticks.GAMEPAD.getRawAxis(2);
-                dynamicPresetSpeed += Joysticks.GAMEPAD.getRawAxis(1);
+                dynamicPresetDistance += -Joysticks.GAMEPAD.getRawAxis(2) * 6;
+                dynamicPresetSpeed += Joysticks.GAMEPAD.getRawAxis(1) * 5;
 
-                if (ThreadsAndClasses.spinnySticks.getSpinnySticks())
+                Dashboard.setDynamicDistance(dynamicPresetDistance);
+                Dashboard.setDynamicSpeed(dynamicPresetSpeed);
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_ONE))
                 {
-                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_ONE))
+//                    double currentTime = Timer.getFPGATimestamp();
+//                    Dashboard.setCurrentLaunchTime(currentTime);
+                    LEDs.getInstance().BlueSet(true);
+//                    shoot.shoot(pass);
+                    shoot.shoot(truss);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_TWO))
+                {
+//                    double currentTime = Timer.getFPGATimestamp();
+//                    Dashboard.setCurrentLaunchTime(currentTime);
+                    LEDs.getInstance().BlueSet(true);
+//                    shoot.shoot(truss);
+                    shoot.shoot(highGoal);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
+                {
+//                    double currentTime = Timer.getFPGATimestamp();
+//                    Dashboard.setCurrentLaunchTime(currentTime);
+                    LEDs.getInstance().BlueSet(true);
+//                    shoot.shoot(highGoal);
+                    shoot.shoot(tenft);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
+                {
+//                    double currentTime = Timer.getFPGATimestamp();
+//                    Dashboard.setCurrentLaunchTime(currentTime);
+                    LEDs.getInstance().BlueSet(true);
+//                    shoot.shoot(highGoal);
+                    shoot.shoot(sixft);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_SIX))
+                {
+//                    double currentTime = Timer.getFPGATimestamp();
+//                    Dashboard.setCurrentLaunchTime(currentTime);
+                    LEDs.getInstance().BlueSet(true);
+//                    shoot.shoot(highGoal);
+                    shoot.shoot(pass);
+                }
+
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_DYNAMIC))
+                {
+                    if (dynamicPresetDistance <= Constants.HIGH_POT_VALUE && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
                     {
-                        shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, highGoal, shooterTwinMotor);
-
-                    }
-
-                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_TWO))
-                    {
-                        shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, pass, shooterTwinMotor);
-
-                    }
-
-                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
-                    {
-                        shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, pass, shooterTwinMotor);
-
-                    }
-
-
-                    if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
-                    {
-                        if (dynamicPresetDistance <= 800 && (dynamicPresetSpeed / 100) <= Constants.SHOOTER_MAX_SPEED && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
+                        if ((dynamicPresetSpeed / 100) <= Constants.SHOOTER_MAX_SPEED)
                         {
-                            shoot.presetShoot(Analogs.SHOOTER_POTENTIOMETER, dynamic, shooterTwinMotor);
+                            dynamicPresetSpeed = 100;
                         }
+//                        double currentTime = Timer.getFPGATimestamp();
+//                        Dashboard.setCurrentLaunchTime(currentTime);
+                        LEDs.getInstance().BlueSet(true);
+                        Preset dynamic = new PresetDynamic();
+                        shoot.shoot(dynamic);
                     }
-
-
-
                 }
 
                 previousTime = System.currentTimeMillis();
+
+                LEDs.getInstance().BlueSet(false);
             }
         }
-    }
-
-    public double getDynamicPresetDistance()
-    {
-        return dynamicPresetDistance;
-    }
-
-    public double getDynamicPresetSpeed()
-    {
-        return dynamicPresetSpeed;
     }
 
     public void interrupt()

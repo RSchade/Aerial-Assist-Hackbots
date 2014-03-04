@@ -1,6 +1,7 @@
 package com.fpsrobotics.thread;
 
 import com.fpsrobotics.DriveObject;
+import com.fpsrobotics.LEDs;
 import com.fpsrobotics.SimpleMotor;
 import com.fpsrobotics.SingleSolenoid;
 import com.fpsrobotics.constants.*;
@@ -13,6 +14,7 @@ import com.fpsrobotics.hardware.*;
  */
 public class DriveThread extends Thread
 {
+
     boolean isInterrupted = false;
 
     /**
@@ -32,20 +34,24 @@ public class DriveThread extends Thread
         {
             if (Math.abs(previousTime - System.currentTimeMillis()) >= Constants.THREAD_REFRESH_RATE)
             {
-                driveMotor.set(ThreadsAndClasses.constrain.deadzoneConstrain(Joysticks.LEFT), ThreadsAndClasses.constrain.deadzoneConstrain(Joysticks.RIGHT));
+//                driveMotor.set(ThreadsAndClasses.constrain.deadzoneConstrain(Joysticks.LEFT), ThreadsAndClasses.constrain.deadzoneConstrain(Joysticks.RIGHT));
+                driveMotor.setWithDeadzones(Joysticks.LEFT.getRawAxis(2), Joysticks.RIGHT.getRawAxis(2));
 //                driveControl.accelSwitchGears(leftJoystick, rightJoystick, accel);
 
                 // Switch if we hold the button
-                if (Joysticks.LEFT.getRawButton(JoystickButtons.GEAR_SWITCH_ONE) || Joysticks.RIGHT.getRawButton(JoystickButtons.GEAR_SWITCH_TWO))
+                if (Joysticks.LEFT.getRawButton(JoystickButtons.GEAR_SWITCH) || Joysticks.RIGHT.getRawButton(JoystickButtons.GEAR_SWITCH))
                 {
+                    LEDs.getInstance().GreenSet(true);
                     driveMotor.shift(true);
                 } else
                 {
+                    LEDs.getInstance().GreenSet(false);
                     driveMotor.shift(false);
                 }
 
                 previousTime = System.currentTimeMillis();
             }
+            DigitalIOs.LEFT_DRIVE_ENCODER.stop();
         }
     }
 
