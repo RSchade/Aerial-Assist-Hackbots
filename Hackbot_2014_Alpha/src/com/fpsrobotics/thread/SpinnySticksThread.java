@@ -48,17 +48,19 @@ public class SpinnySticksThread extends Thread
                 } else
                 {
 //                    LEDs.getInstance().RedSet(false);
+                    spinnyStick.spinnySticksIn();
                     spinnyStick.stop();
                 }
 
-                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_RETRACT))
-                {
-//                    pneumatics.spinnySticksMovement(spinnySolenoid, false);
-//                    LEDs.getInstance().RedSet(true);
-                    spinnyStick.spinnySticksIn();
-                }
+//                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_RETRACT))
+//                {
+////                    pneumatics.spinnySticksMovement(spinnySolenoid, false);
+////                    LEDs.getInstance().RedSet(true);
+//                    spinnyStick.spinnySticksIn();
+//                }
                 
-                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_BACKWARD_TOGGLE)) {
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_RETRACT)) 
+                {
 //                    LEDs.getInstance().RedSet(true);
                     spinnyStick.backward(-0.35);
                 }

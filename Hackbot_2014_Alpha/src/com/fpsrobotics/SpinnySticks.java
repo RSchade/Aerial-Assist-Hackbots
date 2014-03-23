@@ -39,19 +39,30 @@ public class SpinnySticks extends SimpleMotor
         return singleton;
     }
 
-    public void spinnySticksOut()
+    /**
+     * "OUT IS IN," MECHANICALLY.
+     * Default Position is currently illegal with this error... :/
+     */
+    public void spinnySticksIn()
     {
         if (!Catapult.getInstance().isFiring())
         {
-            spinnySolenoid.set(true);
+            spinnySolenoid.set(false);
         }
     }
 
-    public void spinnySticksIn()
+    /**
+     * "OUT IS IN," MECHANICALLY.
+     */
+    public void spinnySticksOut()
     {
-        spinnySolenoid.set(false);
+        spinnySolenoid.set(true);
     }
 
+    /**
+     * "OUT IS IN," MECHANICALLY.
+     * The '!' is there to make the statement "is out" accurate with the error
+     */
     public boolean areSpinnySticksOut()
     {
         return spinnySolenoid.get();

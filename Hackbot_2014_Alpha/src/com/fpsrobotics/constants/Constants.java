@@ -17,7 +17,9 @@ public class Constants
     final static int ORIGINAL_HOME = Analogs.SHOOTER_POTENTIOMETER.getAverageValue();
     
     //ALPHA = 0
+    //ALPHA HOME USUALLY ____________
     //BETA = -225
+    //BETA HOME USUALLY 150
     public final static int ALPHA_BETA = -225;
     
     // public static final int HOME_POT_VALUE = 175;

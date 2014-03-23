@@ -25,7 +25,9 @@ public class SixFt extends Preset
 //        addValue(new PresetValue(_100_PERCENT_THRUST, 765));
         
 //        addValue(new PresetValue(_100_PERCENT_THRUST, 765-((90.0)*(DriverStation.getInstance().getBatteryVoltage()-11.6)) + Constants.ALPHA_BETA));
-        addValue(new PresetValue(_100_PERCENT_THRUST, 765 + Constants.ALPHA_BETA));
+        
+        // 765
+        addValue(new PresetValue(_100_PERCENT_THRUST, 600 + Constants.ALPHA_BETA));
         addValue(new PresetValue(GO_HOME, Constants.HOME_POT_VALUE));
         addValue(new PresetValue(STOP_SHOOTER, Constants.HOME_POT_VALUE));
     }

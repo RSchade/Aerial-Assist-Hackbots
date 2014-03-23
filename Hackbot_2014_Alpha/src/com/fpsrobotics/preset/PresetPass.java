@@ -22,7 +22,8 @@ public class PresetPass extends Preset
 
         //        addValue(new PresetValue(_90_PERCENT_THRUST, 600));      // Full thrust
 //        addValue(new PresetValue(_100_PERCENT_THRUST, 600 - ((90.0) * (DriverStation.getInstance().getBatteryVoltage() - 11.6)) + Constants.ALPHA_BETA));
-        addValue(new PresetValue(_100_PERCENT_THRUST, 600 + Constants.ALPHA_BETA));
+        //600
+        addValue(new PresetValue(_100_PERCENT_THRUST, 765 + Constants.ALPHA_BETA));
         addValue(new PresetValue(GO_HOME, Constants.HOME_POT_VALUE));
         addValue(new PresetValue(STOP_SHOOTER, Constants.HOME_POT_VALUE));
 

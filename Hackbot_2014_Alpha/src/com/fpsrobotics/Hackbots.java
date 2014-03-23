@@ -441,11 +441,11 @@ public class Hackbots extends IterativeRobot
 
     private void auto()
     {
-        spinnyStick.spinnySticksIn();
+        spinnyStick.spinnySticksOut();
 
         autonomous.autoTimer(750, hackbotWatch);
 
-        spinnyStick.spinnySticksOut();
+        spinnyStick.spinnySticksIn();
 
         autonomous.autoTimer(200, hackbotWatch);
 
@@ -459,7 +459,7 @@ public class Hackbots extends IterativeRobot
 
         hackbotWatch.feed();
 
-        spinnyStick.spinnySticksIn();
+        spinnyStick.spinnySticksOut();
 
         autonomous.autoTimer(1500, hackbotWatch);
 

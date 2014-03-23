@@ -2,6 +2,7 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.constants.Constants;
 import com.fpsrobotics.hardware.Analogs;
+import com.fpsrobotics.hardware.DigitalIOs;
 import com.fpsrobotics.preset.*;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -24,8 +25,8 @@ public class Catapult
         this.shooterPot = pot;
         this.shooterMotor = shooterMotor;
         Analogs.SHOOTER_POTENTIOMETER.setAverageBits(5);
-        
-        if(Constants.HOME_POT_VALUE > 500)
+
+        if (Constants.HOME_POT_VALUE > 500)
         {
             System.out.println("hey your home is too hi!!gh");
             Constants.HOME_POT_VALUE = 450;
@@ -49,39 +50,56 @@ public class Catapult
         {
             throw new NullPointerException("Catapult Instance isn't Defined and is null");
         }
-        
+
         return singleton;
     }
 
     public void shoot(Preset preset)
     {
-        isFiring = true;
-
-        if (!SpinnySticks.getInstance().areSpinnySticksOut() && DriverStation.getInstance().getBatteryVoltage() >= 10.3)
+        try
         {
-            Enumeration presetValues = preset.getElements();
-            while (presetValues.hasMoreElements())
+
+            isFiring = true;
+
+            DigitalIOs.COMPRESSOR.stop();
+            SpinnySticks.getInstance().spinnySticksOut();
+
+            Thread.sleep(750);
+
+            if (SpinnySticks.getInstance().areSpinnySticksOut() && DriverStation.getInstance().getBatteryVoltage() >= 10.3)
             {
-                PresetValue nextElement = (PresetValue) presetValues.nextElement();
+                Enumeration presetValues = preset.getElements();
+                while (presetValues.hasMoreElements())
+                {
+                    PresetValue nextElement = (PresetValue) presetValues.nextElement();
 
-                if (nextElement.getSpeed() == Preset.STOP_SHOOTER)
-                {
-                    shooterMotor.stop();
-                } else if (nextElement.getAngle() > shooterPot.getAverageValue())
-                {
-                    moveCatapultForward(nextElement);
-                } else if (nextElement.getAngle() < shooterPot.getAverageValue())
-                {
-                    moveCatapultBackward(nextElement);
-                } else
-                {
-                    // The value is equal move to next element
+                    if (nextElement.getSpeed() == Preset.STOP_SHOOTER)
+                    {
+                        shooterMotor.stop();
+                    } else if (nextElement.getAngle() > shooterPot.getAverageValue())
+                    {
+                        moveCatapultForward(nextElement);
+                    } else if (nextElement.getAngle() < shooterPot.getAverageValue())
+                    {
+                        moveCatapultBackward(nextElement);
+                    } else
+                    {
+                        // The value is equal move to next element
+                    }
                 }
-
             }
-        }
 
-        isFiring = false;
+            DigitalIOs.COMPRESSOR.start();
+            Thread.sleep(1000);
+
+            isFiring = false;
+
+            SpinnySticks.getInstance().spinnySticksIn();
+
+        } catch (InterruptedException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     public void moveCatapultForward(PresetValue nextElement)

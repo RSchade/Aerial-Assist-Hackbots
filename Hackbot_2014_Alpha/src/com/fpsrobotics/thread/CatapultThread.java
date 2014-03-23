@@ -94,7 +94,7 @@ public class CatapultThread extends Thread
 //                    Dashboard.setCurrentLaunchTime(currentTime);
 //                    LEDs.getInstance().BlueSet(true);
 //                    shoot.shoot(highGoal);
-                    shoot.shoot(sixft);
+                    shoot.shoot(pass);
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_SIX))
@@ -103,7 +103,7 @@ public class CatapultThread extends Thread
 //                    Dashboard.setCurrentLaunchTime(currentTime);
 //                    LEDs.getInstance().BlueSet(true);
 //                    shoot.shoot(highGoal);
-                    shoot.shoot(pass);
+                    shoot.shoot(sixft);
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_DYNAMIC))
@@ -124,23 +124,22 @@ public class CatapultThread extends Thread
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_SONAR))
                 {
-                    if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 12)
+                    if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 12 && Analogs.ULTRA_DISTANCE.getDistanceFt() <= 18)
                     {
                         shoot.shoot(highGoal);
                         System.out.println("12ft");
-                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 10)
+                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 10 && Analogs.ULTRA_DISTANCE.getDistanceFt() <= 12)
                     {
                         shoot.shoot(tenft);
 
                         System.out.println("Tenft");
-                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() <= 6)
+                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() > 4 && Analogs.ULTRA_DISTANCE.getDistanceFt() <= 10)
                     {
                         shoot.shoot(sixft);
                         System.out.println("Sixft");
-                    } else
+                    } else 
                     {
-                        shoot.shoot(highGoal);
-                        System.out.println("else");
+                        System.out.println("nope! Too close or too far!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     }
                 }
 
