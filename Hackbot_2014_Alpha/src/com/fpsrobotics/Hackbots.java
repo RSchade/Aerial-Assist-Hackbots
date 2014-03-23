@@ -14,7 +14,10 @@ import com.fpsrobotics.preset.PresetHighGoal;
 import com.fpsrobotics.preset.SixFt;
 import com.fpsrobotics.preset.TenFt;
 import com.fpsrobotics.thread.*;
+import com.ni.rio.NiRioStatus;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.camera.AxisCameraException;
+import edu.wpi.first.wpilibj.fpga.tSystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -65,11 +68,18 @@ public class Hackbots extends IterativeRobot
 
         // Camera settings init
         robotCamera.init();
-        
+
+        Analogs.DISTANCE_SENSOR.setAverageBits(5);
         Analogs.SHOOTER_POTENTIOMETER.setAverageBits(5);
-        
-       
-        
+
+        tSystem system = new tSystem()
+        {
+        };
+
+        NiRioStatus status = new NiRioStatus();
+
+        System.out.println(system.getFpgaGuid(status).toString());
+
     }
     /**
      * Used for the autonomous code.
@@ -95,6 +105,8 @@ public class Hackbots extends IterativeRobot
     boolean isDoneAlready;
     Preset sixFt;
     Preset tenFt;
+    
+    LEDThread ledThread;
 
     /**
      * Called once when autonomous is enabled.
@@ -121,7 +133,7 @@ public class Hackbots extends IterativeRobot
         // Creates motors and other things used for autonomous
         TwinMotor shooterTwinMotor = new TwinMotor(new SimpleMotor(Motors.SHOOTER_ONE, false), new SimpleMotor(Motors.SHOOTER_TWO, true));
         shoot = Catapult.createInstance(Analogs.SHOOTER_POTENTIOMETER, shooterTwinMotor);
-        spinnyStick = SpinnySticks.createInstance(Motors.SPINNY_MOTOR, new TwoSolenoids(Solenoids.SPINNY_SHIFTER));
+        spinnyStick = SpinnySticks.createInstance(Motors.SPINNY_MOTOR, Solenoids.SPINNY_SHIFTER);
         leds = LEDs.createInstance(DigitalIOs.LED_RED, DigitalIOs.LED_GREEN, DigitalIOs.LED_BLUE);
         drive = DriveObject.createInstance(new SimpleMotor(Motors.LEFT_DRIVE, true), new SimpleMotor(Motors.RIGHT_DRIVE, false), new SingleSolenoid(Solenoids.GEAR_SHIFTER));
         previousTime = System.currentTimeMillis();
@@ -362,144 +374,201 @@ public class Hackbots extends IterativeRobot
 //        System.out.println("autonomousPeriodic");
 
         hackbotWatch.feed();
+        
+        previousTime = System.currentTimeMillis();
 
         if (!isDoneAlready)
         {
+            try
+            {
 
-            
-            spinnyStick.spinnySticksDown();
+                if (visionSample.autoImageFind())
+                {
+                    goodImageCounter++;
 
-            autonomous.autoTimer(750, hackbotWatch);
-            
-            spinnyStick.spinnySticksUp();
-            
-            autonomous.autoTimer(200, hackbotWatch);
-            
-            drive.forward(driveSpeed);
+                    hackbotWatch.feed();
 
-            autonomous.autoTimer(500, hackbotWatch);
+                    System.out.println("New Image");
+                }
 
-            drive.stop();
+                if (goodImageCounter >= 3)
+                {
+                    auto();
+                    
+                    goodImageCounter = 0;
+                    isDoneAlready = true;
+                }
 
-            autonomous.autoTimer(1000, hackbotWatch);
+                if (System.currentTimeMillis() - previousTime < 3000 && isDoneAlready)
+                {
+                    auto();
+                }
+                
+//                spinnyStick.spinnySticksIn();
+//                
+//                autonomous.autoTimer(750, hackbotWatch);
+//                
+//                spinnyStick.spinnySticksOut();
+//                
+//                autonomous.autoTimer(200, hackbotWatch);
+//                
+//                drive.forward(driveSpeed);
+//                
+//                autonomous.autoTimer(500, hackbotWatch);
+//                
+//                drive.stop();
+//                
+//                autonomous.autoTimer(1000, hackbotWatch);
+//                
+//                hackbotWatch.feed();
+//                
+//                spinnyStick.spinnySticksIn();
+//                
+//                autonomous.autoTimer(1500, hackbotWatch);
+//                
+//                // Shoot
+//                shoot.shoot(presetAuto);
 
-            hackbotWatch.feed();
-            
-            spinnyStick.spinnySticksDown();
-
-            autonomous.autoTimer(1500, hackbotWatch);
-
-            // Shoot
-            shoot.shoot(presetAuto);
-            
-//            try
-//            {
-//
-//                while (!autonDone)
-//                {
-//                    hackbotWatch.feed();
-//
-//                    if (visionSample.autoImageFind())
-//                    {
-//                        goodImageCounter++;
-//
-//                        hackbotWatch.feed();
-//                    }
-//
-//                    if (goodImageCounter >= 3)
-//                    {
-//                        hackbotWatch.feed();
-//                        autonDone = true;
-//                        if (System.currentTimeMillis() - previousTime < 5000)
-//                        {
-//                            autonDone = true;
-//                        }
-//                    }
-
-
-//                autonomous.autoTimer(600, hackbotWatch);
-//                spinnyStick.spinnySticksUp();
-//                previousTime = System.currentTimeMillis();
-//                // Only run in the first five seconds, otherwise run the other code 
-//                while ((System.currentTimeMillis() - previousTime < 5000) && !autonDone)
-//                {
-//                    hackbotWatch.feed();
-//
-//                    if (visionSample.autoImageFind())
-//                    {
-//                        goodImageCounter++;
-//
-//                        hackbotWatch.feed();
-//
-//                        System.out.println("New Image");
-//                    }
-//
-//                    if (goodImageCounter >= 3)
-//                    {
-////                        hackbotWatch.feed();
-////
-////                        spinnyStick.spinnySticksDown();
-////
-////                        autonomous.autoTimer(400, hackbotWatch);
-////
-////                        System.out.println("Shooting Not Hot");
-////
-////                        // Shoot
-////                        shoot.shoot(tenFt);
-////
-////                        // Sets the autonomous done flag to true so it doesn't poison teleop
-////                        autonDone = true;
-//
-//                        hackbotWatch.feed();
-//
-//                        spinnyStick.spinnySticksDown();
-//
-//                        autonomous.autoTimer(400, hackbotWatch);
-//
-//                        System.out.println("Shooting Hot");
-//
-//                        // Shoot
-//                        shoot.shoot(tenFt);
-//
-//                        // Sets the autonomous done flag to true so it doesn't poison teleop
-//                    autonDone = true;
-//                    }
-//
-//                    hackbotWatch.feed();
-//                }
-//
-//                if (!autonDone)
-//                {
-////                    hackbotWatch.feed();
-////
-////                    spinnyStick.spinnySticksDown();
-////
-////                    autonomous.autoTimer(400, hackbotWatch);
-////
-////                    System.out.println("Shooting Hot");
-////                    
-////                    // Shoot
-////                    shoot.shoot(tenFt);
-//                    LEDs.getInstance().RedSet(false);
-//                    System.out.println("Shooting Not Hot");
-//                }
-//            autonomous.autoTimer(150, hackbotWatch);
-//
-//            drive.forward(driveSpeed);
-//
-//            autonomous.autoTimer(500, hackbotWatch);
-//
-//            drive.stop();
-//            } catch (AxisCameraException ex)
-//            {
-//                ex.printStackTrace();
-//            }
-            isDoneAlready = true;
+                isDoneAlready = true;
+            } catch (AxisCameraException ex)
+            {
+                ex.printStackTrace();
+            }
         }
 
         hackbotWatch.feed();
     }
 
+    private void auto()
+    {
+        spinnyStick.spinnySticksIn();
+
+        autonomous.autoTimer(750, hackbotWatch);
+
+        spinnyStick.spinnySticksOut();
+
+        autonomous.autoTimer(200, hackbotWatch);
+
+        drive.forward(driveSpeed);
+
+        autonomous.autoTimer(500, hackbotWatch);
+
+        drive.stop();
+
+        autonomous.autoTimer(1000, hackbotWatch);
+
+        hackbotWatch.feed();
+
+        spinnyStick.spinnySticksIn();
+
+        autonomous.autoTimer(1500, hackbotWatch);
+
+        // Shoot
+        shoot.shoot(presetAuto);
+    }
+
+//        try{
+//              DO DRIVE FORWARD STUFF
+//                while (!autonDone)
+//        {
+//            hackbotWatch.feed();
+//
+//            if (visionSample.autoImageFind())
+//            {
+//                goodImageCounter++;
+//
+//            }
+//
+//            if (goodImageCounter >= 3)
+//            {
+//                autonDone = true;
+//            }
+//            if (System.currentTimeMillis() - previousTime < 5000)
+//            {
+//                autonDone = true;
+//            }
+//              }//DO SHOOT STUFF
+//        }catch (AxisCameraException ex)
+//            {
+//                ex.printStackTrace();
+//            }
+        //                autonomous.autoTimer(600, hackbotWatch);
+    //                spinnyStick.spinnySticksUp();
+    //                previousTime = System.currentTimeMillis();
+    //                // Only run in the first five seconds, otherwise run the other code 
+    //                while ((System.currentTimeMillis() - previousTime < 5000) && !autonDone)
+    //                {
+    //                    hackbotWatch.feed();
+    //
+    //                    if (visionSample.autoImageFind())
+    //                    {
+    //                        goodImageCounter++;
+    //
+    //                        hackbotWatch.feed();
+    //
+    //                        System.out.println("New Image");
+    //                    }
+    //
+    //                    if (goodImageCounter >= 3)
+    //                    {
+    ////                        hackbotWatch.feed();
+    ////
+    ////                        spinnyStick.spinnySticksDown();
+    ////
+    ////                        autonomous.autoTimer(400, hackbotWatch);
+    ////
+    ////                        System.out.println("Shooting Not Hot");
+    ////
+    ////                        // Shoot
+    ////                        shoot.shoot(tenFt);
+    ////
+    ////                        // Sets the autonomous done flag to true so it doesn't poison teleop
+    ////                        autonDone = true;
+    //
+    //                        hackbotWatch.feed();
+    //
+    //                        spinnyStick.spinnySticksDown();
+    //
+    //                        autonomous.autoTimer(400, hackbotWatch);
+    //
+    //                        System.out.println("Shooting Hot");
+    //
+    //                        // Shoot
+    //                        shoot.shoot(tenFt);
+    //
+    //                        // Sets the autonomous done flag to true so it doesn't poison teleop
+    //                    autonDone = true;
+    //                    }
+    //
+    //                    hackbotWatch.feed();
+    //                }
+    //
+    //                if (!autonDone)
+    //                {
+    ////                    hackbotWatch.feed();
+    ////
+    ////                    spinnyStick.spinnySticksDown();
+    ////
+    ////                    autonomous.autoTimer(400, hackbotWatch);
+    ////
+    ////                    System.out.println("Shooting Hot");
+    ////                    
+    ////                    // Shoot
+    ////                    shoot.shoot(tenFt);
+    //                    LEDs.getInstance().RedSet(false);
+    //                    System.out.println("Shooting Not Hot");
+    //                }
+    //            autonomous.autoTimer(150, hackbotWatch);
+    //
+    //            drive.forward(driveSpeed);
+    //
+    //            autonomous.autoTimer(500, hackbotWatch);
+    //
+    //            drive.stop();
+    //            } catch (AxisCameraException ex)
+    //            {
+    //                ex.printStackTrace();
+    //            }
     public void teleopInit()
     {
 //        System.out.println("teleopInit");
@@ -508,7 +577,8 @@ public class Hackbots extends IterativeRobot
         shooterThread = new CatapultThread();
         driveThread = new DriveThread();
         hackbotStationThread = new HackbotStationThread();
-
+        ledThread = new LEDThread();
+        
 //        autonThread.interrupt();
 //        try
 //        {
@@ -541,7 +611,8 @@ public class Hackbots extends IterativeRobot
             hackbotStationThread.start();
             shooterThread.start();
             spinnySticksThread.start();
-
+            ledThread.start();
+            
             doneAlready = true;
         }
         // Feed the watchdog
@@ -585,6 +656,10 @@ public class Hackbots extends IterativeRobot
         {
             spinnySticksThread.interrupt();
         }
+        if(ledThread != null)
+        {
+            ledThread.interrupt();
+        }
 
 //        if (leftPID != null)
 //        {
@@ -603,9 +678,10 @@ public class Hackbots extends IterativeRobot
         hackbotStationThread = null;
         shooterThread = null;
         spinnySticksThread = null;
+        ledThread = null;
 
         doneAlready = false;
-        
+
         hackbotWatch.feed();
 
     }

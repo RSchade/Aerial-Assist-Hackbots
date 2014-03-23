@@ -16,7 +16,7 @@ public class DigitalIOs
     public final static Compressor COMPRESSOR = new Compressor(HardwarePorts.COMPRESSOR, HardwarePorts.COMPRESSOR_SPIKE_RELAY);
 
     // LEDs
-    public final static DigitalOutput LED_RED = new DigitalOutput(HardwarePorts.LED_ONE);
-    public final static DigitalOutput LED_BLUE = new DigitalOutput(HardwarePorts.LED_TWO);
-    public final static DigitalOutput LED_GREEN = new DigitalOutput(HardwarePorts.LED_THREE);
+    public final static DigitalOutput LED_RED = new DigitalOutput(HardwarePorts.LED_RED);
+    public final static DigitalOutput LED_BLUE = new DigitalOutput(HardwarePorts.LED_BLUE);
+    public final static DigitalOutput LED_GREEN = new DigitalOutput(HardwarePorts.LED_GREEN);
 }

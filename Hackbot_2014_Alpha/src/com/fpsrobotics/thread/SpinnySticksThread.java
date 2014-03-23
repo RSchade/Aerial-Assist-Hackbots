@@ -5,6 +5,7 @@ import com.fpsrobotics.SpinnySticks;
 import com.fpsrobotics.TwoSolenoids;
 import com.fpsrobotics.constants.*;
 import com.fpsrobotics.hardware.*;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * Controls the spinny sticks either with an object oriented class or the spinny
@@ -15,7 +16,7 @@ import com.fpsrobotics.hardware.*;
 public class SpinnySticksThread extends Thread
 {
 
-    SpinnySticks spinnyStick = SpinnySticks.createInstance(Motors.SPINNY_MOTOR, new TwoSolenoids(Solenoids.SPINNY_SHIFTER));
+    SpinnySticks spinnyStick = SpinnySticks.createInstance(Motors.SPINNY_MOTOR, Solenoids.SPINNY_SHIFTER);
 
     boolean isInterrupted = false;
 
@@ -40,42 +41,37 @@ public class SpinnySticksThread extends Thread
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_EXTEND))
                 {
 //                    pneumatics.spinnySticksMovement(spinnySolenoid, true);
-                    LEDs.getInstance().RedSet(true);
-                    spinnyStick.spinnySticksUp();
+//                    LEDs.getInstance().RedSet(true);
+                    spinnyStick.spinnySticksOut();
+
+                    spinnyStick.forward(0.35);
+                } else
+                {
+//                    LEDs.getInstance().RedSet(false);
+                    spinnyStick.stop();
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_RETRACT))
                 {
 //                    pneumatics.spinnySticksMovement(spinnySolenoid, false);
-                    LEDs.getInstance().RedSet(true);
-                    spinnyStick.spinnySticksDown();
-                }
-
-                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_BACKWARD_TOGGLE))
-                {
-//                    controlSpinSticks.spinSticks(spinnyMotor, -0.25);
-//                    spinnySimpleMotor.backward(0.25);
-                    LEDs.getInstance().RedSet(true);
-                    spinnyStick.backward(-0.35);
-                }
-
-                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_FORWARD_TOGGLE))
-                {
-//                    controlSpinSticks.spinSticks(spinnyMotor, 0.25);
-//                    spinnySimpleMotor.forward(0.25);
-                    LEDs.getInstance().RedSet(true);
-                    spinnyStick.forward(0.35);
-                }
-
-                if (!Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_FORWARD_TOGGLE) && !Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_BACKWARD_TOGGLE))
-                {
-//                    controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
-//                    spinnySimpleMotor.stop();
-                    LEDs.getInstance().RedSet(true);
-                    spinnyStick.stop();
+//                    LEDs.getInstance().RedSet(true);
+                    spinnyStick.spinnySticksIn();
                 }
                 
-                LEDs.getInstance().RedSet(false);
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_BACKWARD_TOGGLE)) {
+//                    LEDs.getInstance().RedSet(true);
+                    spinnyStick.backward(-0.35);
+                }
+//
+//                if (!Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_FORWARD_TOGGLE) && !Joysticks.GAMEPAD.getRawButton(JoystickButtons.SPINNY_BACKWARD_TOGGLE))
+//                {
+////                    controlSpinSticks.spinSticks(spinnyMotor, NO_SPEED);
+////                    spinnySimpleMotor.stop();
+//                    LEDs.getInstance().RedSet(true);
+//                    spinnyStick.stop();
+//                }
+
+//                LEDs.getInstance().RedSet(false);
 
 //                previousButtonValueBwd = gamepadJoystick.getRawButton(SPINNY_BACKWARD_TOGGLE);
                 previousTime = System.currentTimeMillis();

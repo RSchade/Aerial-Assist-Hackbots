@@ -14,8 +14,6 @@ public class Dashboard
 
     private static double dynamicDistance;
     private static double dynamicSpeed;
-//    private static double currentSetSpeed;
-//    private static double currentLaunchTime;
 
     public static double getDynamicDistance()
     {
@@ -26,16 +24,6 @@ public class Dashboard
     {
         return dynamicSpeed;
     }
-    
-//    public static double getCurrentSetSpeed()
-//    {
-//        return currentSetSpeed;
-//    }
-//    
-//    public static double getCurrentLaunchTime()
-//    {
-//        return currentLaunchTime;
-//    }
 
     public static void setDynamicSpeed(double dynamicSpeed)
     {
@@ -47,14 +35,5 @@ public class Dashboard
         Dashboard.dynamicDistance = dynamicDistance;
     }
     
-//    public static void setCurrentSetSpeed(double currentSetSpeed)
-//    {
-//        Dashboard.currentSetSpeed = currentSetSpeed;
-//    }
-//    
-//    public static void setCurrentLaunchTime(double currentLaunchTime)
-//    {
-//        Dashboard.currentLaunchTime = currentLaunchTime;
-//    }
-
+    
 }

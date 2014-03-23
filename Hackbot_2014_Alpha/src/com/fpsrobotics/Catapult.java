@@ -4,6 +4,7 @@ import com.fpsrobotics.constants.Constants;
 import com.fpsrobotics.hardware.Analogs;
 import com.fpsrobotics.preset.*;
 import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.DriverStation;
 import java.util.Enumeration;
 
 /**
@@ -56,7 +57,7 @@ public class Catapult
     {
         isFiring = true;
 
-        if (!SpinnySticks.getInstance().areSpinnySticksUp())
+        if (!SpinnySticks.getInstance().areSpinnySticksOut() && DriverStation.getInstance().getBatteryVoltage() >= 10.3)
         {
             Enumeration presetValues = preset.getElements();
             while (presetValues.hasMoreElements())

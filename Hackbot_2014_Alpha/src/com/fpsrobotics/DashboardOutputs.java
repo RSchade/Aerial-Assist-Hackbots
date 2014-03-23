@@ -1,5 +1,6 @@
 package com.fpsrobotics;
 
+import com.fpsrobotics.constants.Constants;
 import com.fpsrobotics.hardware.Analogs;
 import com.fpsrobotics.thread.CatapultThread;
 import com.fpsrobotics.thread.SpinnySticksThread;
@@ -42,9 +43,23 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Dynamic Preset Distance", dynamicDistance);
         SmartDashboard.putNumber("Dynamic Preset Speed", dynamicSpeed);
         SmartDashboard.putNumber("Ultrasonic Distance (ft)", ultraDistance.getDistanceFt());
-        SmartDashboard.putNumber("Shooter Pot", shooterPot.getValue());
+        SmartDashboard.putNumber("Shooter Pot", shooterPot.getAverageValue());
         SmartDashboard.putNumber("Shooter Pot Average", shooterPot.getAverageValue());
         SmartDashboard.putNumber("Gyro Value", gyro.getValue());
+        
+        if (DriverStation.getInstance().getBatteryVoltage() <= 10.3)
+        {
+            SmartDashboard.putBoolean("Can You Shoot?", false);
+        } else
+        {
+            SmartDashboard.putBoolean("Can You Shoot?", true);
+        }
+        if (Constants.ALPHA_BETA != 0) {
+            SmartDashboard.putBoolean("BETA BOT ACTIVATED", true);
+        } else {
+            SmartDashboard.putBoolean("ALPHA BOT ACTIVATED", true);
+        }
+        
 //        SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
 //        SmartDashboard.putNumber("Temperature Gyro", temp.getValue());
     }

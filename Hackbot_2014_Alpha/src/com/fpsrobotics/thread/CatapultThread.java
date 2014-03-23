@@ -65,7 +65,7 @@ public class CatapultThread extends Thread
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
-                    LEDs.getInstance().BlueSet(true);
+//                    LEDs.getInstance().BlueSet(true);
 //                    shoot.shoot(pass);
                     shoot.shoot(truss);
                 }
@@ -74,7 +74,7 @@ public class CatapultThread extends Thread
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
-                    LEDs.getInstance().BlueSet(true);
+//                    LEDs.getInstance().BlueSet(true);
 //                    shoot.shoot(truss);
                     shoot.shoot(highGoal);
                 }
@@ -83,7 +83,7 @@ public class CatapultThread extends Thread
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
-                    LEDs.getInstance().BlueSet(true);
+//                    LEDs.getInstance().BlueSet(true);
 //                    shoot.shoot(highGoal);
                     shoot.shoot(tenft);
                 }
@@ -92,7 +92,7 @@ public class CatapultThread extends Thread
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
-                    LEDs.getInstance().BlueSet(true);
+//                    LEDs.getInstance().BlueSet(true);
 //                    shoot.shoot(highGoal);
                     shoot.shoot(sixft);
                 }
@@ -101,14 +101,14 @@ public class CatapultThread extends Thread
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
-                    LEDs.getInstance().BlueSet(true);
+//                    LEDs.getInstance().BlueSet(true);
 //                    shoot.shoot(highGoal);
                     shoot.shoot(pass);
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_DYNAMIC))
                 {
-                    if (dynamicPresetDistance <= Constants.HIGH_POT_VALUE && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
+                    if (dynamicPresetDistance <= Constants.HIGH_POT_VALUE && dynamicPresetDistance >= Constants.HOME_POT_VALUE && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
                     {
                         if ((dynamicPresetSpeed / 100) <= Constants.SHOOTER_MAX_SPEED)
                         {
@@ -116,15 +116,37 @@ public class CatapultThread extends Thread
                         }
 //                        double currentTime = Timer.getFPGATimestamp();
 //                        Dashboard.setCurrentLaunchTime(currentTime);
-                        LEDs.getInstance().BlueSet(true);
+//                        LEDs.getInstance().BlueSet(true);
                         Preset dynamic = new PresetDynamic();
                         shoot.shoot(dynamic);
                     }
                 }
 
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_SONAR))
+                {
+                    if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 12)
+                    {
+                        shoot.shoot(highGoal);
+                        System.out.println("12ft");
+                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 10)
+                    {
+                        shoot.shoot(tenft);
+
+                        System.out.println("Tenft");
+                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() <= 6)
+                    {
+                        shoot.shoot(sixft);
+                        System.out.println("Sixft");
+                    } else
+                    {
+                        shoot.shoot(highGoal);
+                        System.out.println("else");
+                    }
+                }
+
                 previousTime = System.currentTimeMillis();
 
-                LEDs.getInstance().BlueSet(false);
+//                LEDs.getInstance().BlueSet(false);
             }
         }
     }

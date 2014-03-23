@@ -1,5 +1,6 @@
 package com.fpsrobotics;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 
 /**
@@ -9,16 +10,16 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class SpinnySticks extends SimpleMotor
 {
 
-    private final TwoSolenoids spinnySolenoid;
+    private final Solenoid spinnySolenoid;
     private static SpinnySticks singleton = null;
 
-    private SpinnySticks(SpeedController spinnyMotor, TwoSolenoids spinnySolenoid)
+    private SpinnySticks(SpeedController spinnyMotor, Solenoid spinnySolenoid)
     {
         super(spinnyMotor, false);
         this.spinnySolenoid = spinnySolenoid;
     }
 
-    public static SpinnySticks createInstance(SpeedController spinnyMotor, TwoSolenoids spinnySolenoid)
+    public static SpinnySticks createInstance(SpeedController spinnyMotor, Solenoid spinnySolenoid)
     {
         if (singleton == null)
         {
@@ -38,21 +39,21 @@ public class SpinnySticks extends SimpleMotor
         return singleton;
     }
 
-    public void spinnySticksUp()
+    public void spinnySticksOut()
     {
         if (!Catapult.getInstance().isFiring())
         {
-            spinnySolenoid.solenoidOn();
+            spinnySolenoid.set(true);
         }
     }
 
-    public void spinnySticksDown()
+    public void spinnySticksIn()
     {
-        spinnySolenoid.solenoidOff();
+        spinnySolenoid.set(false);
     }
 
-    public boolean areSpinnySticksUp()
+    public boolean areSpinnySticksOut()
     {
-        return spinnySolenoid.solenoidGet();
+        return spinnySolenoid.get();
     }
 }

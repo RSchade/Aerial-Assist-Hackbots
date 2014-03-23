@@ -14,11 +14,12 @@ public class Ultrasonic
     public Ultrasonic(AnalogChannel ultrasonic)
     {
         this.ultrasonic = ultrasonic;
+        ultrasonic.setAverageBits(30);
     }
 
     public double getDistanceFt()
     {
-        return ultrasonic.getVoltage() / .1176;
+        return ultrasonic.getAverageVoltage()/ .1176;
     }
 
     public double getDistanceIn()

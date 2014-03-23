@@ -1,6 +1,6 @@
-int redIn = 4;
-int blueIn = 5;
-int greenIn = 6;
+int redIn = 9;
+int blueIn = 10;
+int greenIn = 11;
 
 int redOut = 6;
 int blueOut = 5;
