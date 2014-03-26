@@ -22,7 +22,8 @@ public class PresetTruss extends Preset
 //        addValue(new PresetValue(_90_PERCENT_THRUST, 535));      // Full thrust
 //        addValue(new PresetValue(_90_PERCENT_THRUST, Constants.HOME_POT_VALUE + 85));
 //        addValue(new PresetValue(_90_PERCENT_THRUST, 535-((90.0)*(DriverStation.getInstance().getBatteryVoltage()-11.6)) + Constants.ALPHA_BETA));
-        addValue(new PresetValue(_90_PERCENT_THRUST, 535 + Constants.ALPHA_BETA));
+//        addValue(new PresetValue(_90_PERCENT_THRUST, 535 + Constants.ALPHA_BETA));
+        addValue(new PresetValue(_90_PERCENT_THRUST, 300 + Constants.ALPHA_BETA));
         addValue(new PresetValue(GO_HOME, Constants.HOME_POT_VALUE));
         addValue(new PresetValue(STOP_SHOOTER, Constants.HOME_POT_VALUE));
     }

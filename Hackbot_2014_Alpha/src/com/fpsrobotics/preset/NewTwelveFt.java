@@ -11,13 +11,12 @@ import edu.wpi.first.wpilibj.DriverStation;
  *
  * @author Matthew
  */
-public class PresetHighGoal extends Preset
+public class NewTwelveFt extends Preset
 {
 
     private final DriverStation battery = DriverStation.getInstance();
 
-    public PresetHighGoal()
-    {
+    public NewTwelveFt()    {
 //        addValue(new PresetValue(_50_PERCENT_THRUST, 250.0));       // Start shot
 //        addValue(new PresetValue(_70_PERCENT_THRUST, 400.0));       // accelerate
         //   addValue(new PresetValue(_100_PERCENT_THRUST, 450.0));      // Full thrust
@@ -25,8 +24,8 @@ public class PresetHighGoal extends Preset
         //addValue(new PresetValue(_100_PERCENT_THRUST, 730.0 + Constants.ALPHA_BETA));
 //        addValue(new PresetValue(_100_PERCENT_THRUST, 750-((90.0)*(DriverStation.getInstance().getBatteryVoltage()-11.6)) + Constants.ALPHA_BETA));
         
-        addValue(new PresetValue(_100_PERCENT_THRUST, this.getValue() + Constants.ALPHA_BETA));
-//        addValue(new PresetValue(_100_PERCENT_THRUST, this.equation() + Constants.ALPHA_BETA));
+//        addValue(new PresetValue(_100_PERCENT_THRUST, this.getValue() + Constants.ALPHA_BETA));
+        addValue(new PresetValue(_100_PERCENT_THRUST, this.getValue()+ Constants.ALPHA_BETA));
         addValue(new PresetValue(GO_HOME, Constants.HOME_POT_VALUE));
         addValue(new PresetValue(STOP_SHOOTER, Constants.HOME_POT_VALUE));
     }

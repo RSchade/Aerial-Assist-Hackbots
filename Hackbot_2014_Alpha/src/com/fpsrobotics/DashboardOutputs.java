@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Outputs variables and other information to the smart dashboard and printlns.
+ *
  * @author ray
  */
 public class DashboardOutputs
@@ -40,13 +41,13 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Left Encoder Raw Count", encoder.getRaw());
         SmartDashboard.putNumber("Left Encoder Distance", encoder.getDistance());
         SmartDashboard.putNumber("Left Encoder Value", encoder.getRate());
-        SmartDashboard.putNumber("Dynamic Preset Distance", dynamicDistance);
+        SmartDashboard.putNumber("Dynamic Preset Distance", dynamicDistance + 225 + Constants.ALPHA_BETA);
         SmartDashboard.putNumber("Dynamic Preset Speed", dynamicSpeed);
         SmartDashboard.putNumber("Ultrasonic Distance (ft)", ultraDistance.getDistanceFt());
         SmartDashboard.putNumber("Shooter Pot", shooterPot.getAverageValue());
         SmartDashboard.putNumber("Shooter Pot Average", shooterPot.getAverageValue());
         SmartDashboard.putNumber("Gyro Value", gyro.getValue());
-        
+
         if (DriverStation.getInstance().getBatteryVoltage() <= 10.3)
         {
             SmartDashboard.putBoolean("Can You Shoot?", false);
@@ -54,12 +55,39 @@ public class DashboardOutputs
         {
             SmartDashboard.putBoolean("Can You Shoot?", true);
         }
-        if (Constants.ALPHA_BETA != 0) {
-            SmartDashboard.putBoolean("BETA BOT ACTIVATED", true);
-        } else {
-            SmartDashboard.putBoolean("ALPHA BOT ACTIVATED", true);
-        }
         
+        if (Constants.ALPHA_BETA == -225)
+        {
+            SmartDashboard.putBoolean("BETA BOT ACTIVATED", true);
+            SmartDashboard.putBoolean("ALPHA BOT ACTIVATED", false);
+        } else
+        {
+            SmartDashboard.putBoolean("ALPHA BOT ACTIVATED", true);
+            SmartDashboard.putBoolean("BETA BOT ACTIVATED", false);
+        }
+
+        if (ultraDistance.getDistanceFt() >= 11 && ultraDistance.getDistanceFt() <= 13)
+        {
+            SmartDashboard.putBoolean("12 FEET IN RANGE", true);
+        } else
+        {
+            SmartDashboard.putBoolean("12 FEET IN RANGE", false);
+        }
+        if (ultraDistance.getDistanceFt() >= 7 && ultraDistance.getDistanceFt() <= 9)
+        {
+            SmartDashboard.putBoolean("8 FEET IN RANGE", true);
+        } else
+        {
+            SmartDashboard.putBoolean("8 FEET IN RANGE", false);
+        }
+        if (ultraDistance.getDistanceFt() >= 2 && ultraDistance.getDistanceFt() <= 4)
+        {
+            SmartDashboard.putBoolean("3 FEET IN RANGE", true);
+        } else
+        {
+            SmartDashboard.putBoolean("3 FEET IN RANGE", false);
+        }
+
 //        SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
 //        SmartDashboard.putNumber("Temperature Gyro", temp.getValue());
     }
@@ -72,7 +100,7 @@ public class DashboardOutputs
             System.out.println("Come on, don't steal our code!");
         }
     }
-    
+
 //    public void driverComments() {
 //        userMessages.println(DriverStationLCD.Line.kUser1, 1, "Hackbots Aerial Assist Code");
 //    }

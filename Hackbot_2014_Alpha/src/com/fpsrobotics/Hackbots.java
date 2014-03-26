@@ -10,7 +10,7 @@ import com.fpsrobotics.thread.SpinnySticksThread;
 import com.fpsrobotics.hardware.*;
 import com.fpsrobotics.preset.Preset;
 import com.fpsrobotics.preset.PresetAuto;
-import com.fpsrobotics.preset.PresetHighGoal;
+import com.fpsrobotics.preset.NewTwelveFt;
 import com.fpsrobotics.preset.SixFt;
 import com.fpsrobotics.preset.TenFt;
 import com.fpsrobotics.thread.*;
@@ -87,7 +87,7 @@ public class Hackbots extends IterativeRobot
     //PIDController leftPID;
     //PIDController rightPID;
     PresetAuto presetAuto;
-    PresetHighGoal presetHighGoal;
+    Preset newTwelveFt;
     Autonomous autonomous = new Autonomous();
     int goodImageCounter = 1;
     boolean autonDone = false;
@@ -126,7 +126,7 @@ public class Hackbots extends IterativeRobot
 
         // Creates the presets used for autonomous shooting
         presetAuto = new PresetAuto();
-        presetHighGoal = new PresetHighGoal();
+        newTwelveFt = new NewTwelveFt();
         sixFt = new SixFt();
         tenFt = new TenFt();
 
@@ -377,6 +377,24 @@ public class Hackbots extends IterativeRobot
         
         previousTime = System.currentTimeMillis();
 
+        spinnyStick.spinnySticksOut();
+
+        autonomous.autoTimer(750, hackbotWatch);
+
+        spinnyStick.spinnySticksIn();
+
+        autonomous.autoTimer(200, hackbotWatch);
+
+        drive.forward(driveSpeed);
+
+        autonomous.autoTimer(500, hackbotWatch);
+
+        drive.stop();
+
+        autonomous.autoTimer(1000, hackbotWatch);
+
+        hackbotWatch.feed();
+        
         if (!isDoneAlready)
         {
             try
@@ -441,23 +459,23 @@ public class Hackbots extends IterativeRobot
 
     private void auto()
     {
-        spinnyStick.spinnySticksOut();
-
-        autonomous.autoTimer(750, hackbotWatch);
-
-        spinnyStick.spinnySticksIn();
-
-        autonomous.autoTimer(200, hackbotWatch);
-
-        drive.forward(driveSpeed);
-
-        autonomous.autoTimer(500, hackbotWatch);
-
-        drive.stop();
-
-        autonomous.autoTimer(1000, hackbotWatch);
-
-        hackbotWatch.feed();
+//        spinnyStick.spinnySticksOut();
+//
+//        autonomous.autoTimer(750, hackbotWatch);
+//
+//        spinnyStick.spinnySticksIn();
+//
+//        autonomous.autoTimer(200, hackbotWatch);
+//
+//        drive.forward(driveSpeed);
+//
+//        autonomous.autoTimer(500, hackbotWatch);
+//
+//        drive.stop();
+//
+//        autonomous.autoTimer(1000, hackbotWatch);
+//
+//        hackbotWatch.feed();
 
         spinnyStick.spinnySticksOut();
 

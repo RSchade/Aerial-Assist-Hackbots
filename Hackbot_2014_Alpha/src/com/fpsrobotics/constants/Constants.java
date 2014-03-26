@@ -16,15 +16,19 @@ public class Constants
     
     final static int ORIGINAL_HOME = Analogs.SHOOTER_POTENTIOMETER.getAverageValue();
     
-    //ALPHA = 0
-    //ALPHA HOME USUALLY ____________
-    //BETA = -225
+    // HIGH VALUE = 500
+    //ALPHA PRESET = -220
+    //ALPHA HOME USUALLY 155
+    //BETA PRESET = -225
     //BETA HOME USUALLY 150
-    public final static int ALPHA_BETA = -225;
+//    public final static int ALPHA_BETA = -225; // BETA
+  public final static int ALPHA_BETA = -220; // ALPHA
     
     // public static final int HOME_POT_VALUE = 175;
     //public static final int HOME_POT_VALUE = 440;
-    public static final int HIGH_POT_VALUE = 1000;
+//    public static final int HIGH_POT_VALUE = 1000;
+     public static final int HIGH_POT_VALUE = 1000;
+     
     // public static final int HIGH_POT_VALUE = 800;
     
     public static int HOME_POT_VALUE = ORIGINAL_HOME + 50;

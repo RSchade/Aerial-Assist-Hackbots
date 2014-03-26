@@ -73,18 +73,26 @@ public class Catapult
                 {
                     PresetValue nextElement = (PresetValue) presetValues.nextElement();
 
-                    if (nextElement.getSpeed() == Preset.STOP_SHOOTER)
+                    if (nextElement.getAngle() <= Constants.HIGH_POT_VALUE && nextElement.getAngle() >= Constants.HOME_POT_VALUE)
                     {
-                        shooterMotor.stop();
-                    } else if (nextElement.getAngle() > shooterPot.getAverageValue())
-                    {
-                        moveCatapultForward(nextElement);
-                    } else if (nextElement.getAngle() < shooterPot.getAverageValue())
-                    {
-                        moveCatapultBackward(nextElement);
+
+                        if (nextElement.getSpeed() == Preset.STOP_SHOOTER)
+                        {
+                            shooterMotor.stop();
+                        } else if (nextElement.getAngle() > shooterPot.getAverageValue())
+                        {
+                            moveCatapultForward(nextElement);
+                        } else if (nextElement.getAngle() < shooterPot.getAverageValue())
+                        {
+                            moveCatapultBackward(nextElement);
+                        } else
+                        {
+                            // The value is equal move to next element
+                        }
                     } else
                     {
-                        // The value is equal move to next element
+                        shooterMotor.stop();
+                        break;
                     }
                 }
             }

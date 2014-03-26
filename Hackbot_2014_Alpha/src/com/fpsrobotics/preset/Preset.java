@@ -15,7 +15,7 @@ import java.util.Vector;
 public abstract class Preset
 {
     protected Vector preset = null;
-    protected final double GO_HOME = -0.2;              // 40% reverse thrust to go home
+    protected final double GO_HOME = -0.20;              // 20% reverse thrust to go home
     public final static double STOP_SHOOTER = 0.0;
     protected final double _1_PERCENT_THRUST = 0.01;    // 1% forward thrust
     protected final double _2_PERCENT_THRUST = 0.02;

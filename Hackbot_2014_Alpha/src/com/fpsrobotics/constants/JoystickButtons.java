@@ -22,6 +22,7 @@ public class JoystickButtons
     public static final int SHOOTER_PRESET_SIX = 6;
     public static final int SHOOTER_PRESET_DYNAMIC = 10;
     public static final int SHOOTER_PRESET_SONAR = 5;
+    public static final int SHOOTER_PRESET_THREE_FT = 9;
     // Spinny Sticks
     public static final int SPINNY_EXTEND = 7;
     public static final int SPINNY_RETRACT = 8;

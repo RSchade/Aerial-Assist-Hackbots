@@ -19,11 +19,13 @@ import com.fpsrobotics.preset.*;
 public class CatapultThread extends Thread
 {
 
-    Preset highGoal;
+    Preset twelveft;
     Preset pass;
     Preset truss;
     Preset tenft;
     Preset sixft;
+    Preset eightft;
+    Preset threeft;
 
     Catapult shoot;
     double dynamicPresetDistance = 0;
@@ -39,11 +41,13 @@ public class CatapultThread extends Thread
      */
     public void run()
     {
-        highGoal = new PresetHighGoal();
+        twelveft = new NewTwelveFt();
         pass = new PresetPass();
         truss = new PresetTruss();
         tenft = new TenFt();
         sixft = new SixFt();
+        threeft = new NewThreeFt();
+        eightft = new NewEightFt();
 
         long previousTime = System.currentTimeMillis();
         isInterrupted = false;
@@ -61,7 +65,7 @@ public class CatapultThread extends Thread
                 Dashboard.setDynamicDistance(dynamicPresetDistance);
                 Dashboard.setDynamicSpeed(dynamicPresetSpeed);
 
-                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_ONE))
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
@@ -70,43 +74,53 @@ public class CatapultThread extends Thread
                     shoot.shoot(truss);
                 }
 
-                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_TWO))
-                {
-//                    double currentTime = Timer.getFPGATimestamp();
-//                    Dashboard.setCurrentLaunchTime(currentTime);
-//                    LEDs.getInstance().BlueSet(true);
-//                    shoot.shoot(truss);
-                    shoot.shoot(highGoal);
-                }
-
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
                 {
 //                    double currentTime = Timer.getFPGATimestamp();
 //                    Dashboard.setCurrentLaunchTime(currentTime);
 //                    LEDs.getInstance().BlueSet(true);
-//                    shoot.shoot(highGoal);
-                    shoot.shoot(tenft);
+//                    shoot.shoot(truss);
+                    shoot.shoot(twelveft);
                 }
 
-                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
+//                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
+//                {
+////                    double currentTime = Timer.getFPGATimestamp();
+////                    Dashboard.setCurrentLaunchTime(currentTime);
+////                    LEDs.getInstance().BlueSet(true);
+////                    shoot.shoot(highGoal);
+//                    shoot.shoot(tenft);
+//                }
+
+//                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_FOUR))
+//                {
+////                    double currentTime = Timer.getFPGATimestamp();
+////                    Dashboard.setCurrentLaunchTime(currentTime);
+////                    LEDs.getInstance().BlueSet(true);
+////                    shoot.shoot(highGoal);
+//                    shoot.shoot(pass);
+//                }
+
+//                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_SIX))
+//                {
+////                    double currentTime = Timer.getFPGATimestamp();
+////                    Dashboard.setCurrentLaunchTime(currentTime);
+////                    LEDs.getInstance().BlueSet(true);
+////                    shoot.shoot(highGoal);
+//                    shoot.shoot(sixft);
+//                }
+                
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_TWO))
                 {
-//                    double currentTime = Timer.getFPGATimestamp();
-//                    Dashboard.setCurrentLaunchTime(currentTime);
-//                    LEDs.getInstance().BlueSet(true);
-//                    shoot.shoot(highGoal);
-                    shoot.shoot(pass);
+                    shoot.shoot(eightft);
+                }
+                
+                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_ONE))
+                {
+                    shoot.shoot(threeft);
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_SIX))
-                {
-//                    double currentTime = Timer.getFPGATimestamp();
-//                    Dashboard.setCurrentLaunchTime(currentTime);
-//                    LEDs.getInstance().BlueSet(true);
-//                    shoot.shoot(highGoal);
-                    shoot.shoot(sixft);
-                }
-
-                if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_DYNAMIC))
                 {
                     if (dynamicPresetDistance <= Constants.HIGH_POT_VALUE && dynamicPresetDistance >= Constants.HOME_POT_VALUE && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
                     {
@@ -119,24 +133,25 @@ public class CatapultThread extends Thread
 //                        LEDs.getInstance().BlueSet(true);
                         Preset dynamic = new PresetDynamic();
                         shoot.shoot(dynamic);
+//                        dynamic = null;
                     }
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_SONAR))
                 {
-                    if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 12 && Analogs.ULTRA_DISTANCE.getDistanceFt() <= 18)
+                    if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 11 && Analogs.ULTRA_DISTANCE.getDistanceFt() <= 18)
                     {
-                        shoot.shoot(highGoal);
+                        shoot.shoot(twelveft);
                         System.out.println("12ft");
-                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 10 && Analogs.ULTRA_DISTANCE.getDistanceFt() <= 12)
+                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 7 && Analogs.ULTRA_DISTANCE.getDistanceFt() <= 9)
                     {
-                        shoot.shoot(tenft);
+                        shoot.shoot(eightft);
 
-                        System.out.println("Tenft");
-                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() > 4 && Analogs.ULTRA_DISTANCE.getDistanceFt() <= 10)
+                        System.out.println("Eightft");
+                    } else if (Analogs.ULTRA_DISTANCE.getDistanceFt() >= 2 && Analogs.ULTRA_DISTANCE.getDistanceFt() <= 4)
                     {
-                        shoot.shoot(sixft);
-                        System.out.println("Sixft");
+                        shoot.shoot(threeft);
+                        System.out.println("Threeft");
                     } else 
                     {
                         System.out.println("nope! Too close or too far!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
