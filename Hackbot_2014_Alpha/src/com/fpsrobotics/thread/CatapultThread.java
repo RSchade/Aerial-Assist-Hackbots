@@ -22,6 +22,7 @@ public class CatapultThread extends Thread
     Preset twelveft;
     Preset pass;
     Preset truss;
+    Preset boxShot;
     Preset tenft;
     Preset sixft;
     Preset eightft;
@@ -44,6 +45,7 @@ public class CatapultThread extends Thread
         twelveft = new NewTwelveFt();
         pass = new PresetPass();
         truss = new PresetTruss();
+        boxShot = new BoxShot();
         tenft = new TenFt();
         sixft = new SixFt();
         threeft = new NewThreeFt();
@@ -71,7 +73,8 @@ public class CatapultThread extends Thread
 //                    Dashboard.setCurrentLaunchTime(currentTime);
 //                    LEDs.getInstance().BlueSet(true);
 //                    shoot.shoot(pass);
-                    shoot.shoot(truss);
+//                    shoot.shoot(truss);
+                    shoot.shoot(boxShot);
                 }
 
                 if (Joysticks.GAMEPAD.getRawButton(JoystickButtons.SHOOTER_PRESET_THREE))
@@ -124,7 +127,7 @@ public class CatapultThread extends Thread
                 {
                     if (dynamicPresetDistance <= Constants.HIGH_POT_VALUE && dynamicPresetDistance >= Constants.HOME_POT_VALUE && (dynamicPresetSpeed / 100) >= Constants.SHOOTER_MIN_SPEED)
                     {
-                        if ((dynamicPresetSpeed / 100) <= Constants.SHOOTER_MAX_SPEED)
+                        if ((dynamicPresetSpeed / 100) >= Constants.SHOOTER_MAX_SPEED)
                         {
                             dynamicPresetSpeed = 100;
                         }

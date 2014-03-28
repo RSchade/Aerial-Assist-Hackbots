@@ -8,11 +8,7 @@ package com.fpsrobotics;
 
 import com.fpsrobotics.thread.SpinnySticksThread;
 import com.fpsrobotics.hardware.*;
-import com.fpsrobotics.preset.Preset;
-import com.fpsrobotics.preset.PresetAuto;
-import com.fpsrobotics.preset.NewTwelveFt;
-import com.fpsrobotics.preset.SixFt;
-import com.fpsrobotics.preset.TenFt;
+import com.fpsrobotics.preset.*;
 import com.fpsrobotics.thread.*;
 import com.ni.rio.NiRioStatus;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -86,8 +82,11 @@ public class Hackbots extends IterativeRobot
      */
     //PIDController leftPID;
     //PIDController rightPID;
-    PresetAuto presetAuto;
+
+    //PresetAuto presetAuto; // For Auto Preset Autonomous
+    Preset presetAuto;
     Preset newTwelveFt;
+
     Autonomous autonomous = new Autonomous();
     int goodImageCounter = 1;
     boolean autonDone = false;
@@ -105,7 +104,7 @@ public class Hackbots extends IterativeRobot
     boolean isDoneAlready;
     Preset sixFt;
     Preset tenFt;
-    
+
     LEDThread ledThread;
 
     /**
@@ -125,7 +124,15 @@ public class Hackbots extends IterativeRobot
         visionSample.imageFindInit();
 
         // Creates the presets used for autonomous shooting
-        presetAuto = new PresetAuto();
+        
+        
+        
+        //presetAuto = new PresetAuto(); // For Auto preset Autonomous
+        presetAuto = new NewThreeFt(); // For 15 ft autonomous
+
+        
+        
+        
         newTwelveFt = new NewTwelveFt();
         sixFt = new SixFt();
         tenFt = new TenFt();
@@ -138,7 +145,10 @@ public class Hackbots extends IterativeRobot
         drive = DriveObject.createInstance(new SimpleMotor(Motors.LEFT_DRIVE, true), new SimpleMotor(Motors.RIGHT_DRIVE, false), new SingleSolenoid(Solenoids.GEAR_SHIFTER));
         previousTime = System.currentTimeMillis();
 
+        // Re Usable Autonomous Variables
+        goodImageCounter = 1;
         isDoneAlready = false;
+        
 
 //        autonThread = new AutonThread();
     }
@@ -370,12 +380,10 @@ public class Hackbots extends IterativeRobot
 //        hackbotWatch.feed();
 //    }
     public void autonomousPeriodic()
-    {
-//        System.out.println("autonomousPeriodic");
-
-        hackbotWatch.feed();
-        
+    {   
         previousTime = System.currentTimeMillis();
+        
+        hackbotWatch.feed();
 
         spinnyStick.spinnySticksOut();
 
@@ -387,41 +395,53 @@ public class Hackbots extends IterativeRobot
 
         drive.forward(driveSpeed);
 
-        autonomous.autoTimer(500, hackbotWatch);
+//        autonomous.autoTimer(1500, hackbotWatch);
+        autonomous.autoTimer(4000, hackbotWatch);
+//        autonomous.autoTimer(3600, hackbotWatch);
 
         drive.stop();
 
-        autonomous.autoTimer(1000, hackbotWatch);
+        autonomous.autoTimer(500, hackbotWatch);
 
         hackbotWatch.feed();
         
-        if (!isDoneAlready)
+        System.out.println("First Auton Part Done!");
+
+        //if (!isDoneAlready)
+        while (!isDoneAlready)
         {
-            try
-            {
-
-                if (visionSample.autoImageFind())
-                {
-                    goodImageCounter++;
-
+//            try
+//            {
+//
+//                if (visionSample.autoImageFind())
+//                {
+//                    goodImageCounter++;
+//
                     hackbotWatch.feed();
-
-                    System.out.println("New Image");
-                }
-
-                if (goodImageCounter >= 3)
-                {
+//
+//                    System.out.println("Good Image Found!");
+//                }
+//
+//                if (goodImageCounter >= 3)
+//                {
+//                    auto();
+//
+//                    System.out.println("Sufficient Images");
+//                    
+//                    goodImageCounter = 0;
+//                    isDoneAlready = true;
+//                }
+//
+//                if (System.currentTimeMillis() - previousTime >= 5000 && !isDoneAlready)
+//                {
                     auto();
                     
-                    goodImageCounter = 0;
+                    System.out.println("Insufficient Images");
+                    
+                    
                     isDoneAlready = true;
-                }
+//                }
 
-                if (System.currentTimeMillis() - previousTime < 3000 && isDoneAlready)
-                {
-                    auto();
-                }
-                
 //                spinnyStick.spinnySticksIn();
 //                
 //                autonomous.autoTimer(750, hackbotWatch);
@@ -446,15 +466,29 @@ public class Hackbots extends IterativeRobot
 //                
 //                // Shoot
 //                shoot.shoot(presetAuto);
-
-                isDoneAlready = true;
-            } catch (AxisCameraException ex)
-            {
-                ex.printStackTrace();
-            }
+                
+                
+                
+//                isDoneAlready = true;
+                
+                
+                
+                
+//            } catch (AxisCameraException ex)
+//            {
+//                ex.printStackTrace();
+//            }
         }
+        
+        while (isDoneAlready && super.isAutonomous())
+        {
+            System.out.println("Done Early!!!");
+            hackbotWatch.feed();
+        }
+        
+        System.out.println("Done As Scheduled!");
 
-        hackbotWatch.feed();
+        
     }
 
     private void auto()
@@ -510,7 +544,7 @@ public class Hackbots extends IterativeRobot
 //            {
 //                ex.printStackTrace();
 //            }
-        //                autonomous.autoTimer(600, hackbotWatch);
+    //                autonomous.autoTimer(600, hackbotWatch);
     //                spinnyStick.spinnySticksUp();
     //                previousTime = System.currentTimeMillis();
     //                // Only run in the first five seconds, otherwise run the other code 
@@ -596,7 +630,7 @@ public class Hackbots extends IterativeRobot
         driveThread = new DriveThread();
         hackbotStationThread = new HackbotStationThread();
         ledThread = new LEDThread();
-        
+
 //        autonThread.interrupt();
 //        try
 //        {
@@ -630,21 +664,46 @@ public class Hackbots extends IterativeRobot
             shooterThread.start();
             spinnySticksThread.start();
             ledThread.start();
-            
+
             doneAlready = true;
         }
         // Feed the watchdog
         hackbotWatch.feed();
     }
 
+    VisionProcessingSample testImage;
+    
+    // Called before test, Vision processing setup here!
     public void testInit()
     {
+        testImage = new VisionProcessingSample();
+        testImage.imageFindInit();
     }
 
+    // Called during test, Vision processing here!
     public void testPeriodic()
     {
-        // Feed watchdog during test
-        hackbotWatch.feed();
+        try
+        {
+            // Continous Stream of Vision Tests
+            System.out.println(testImage.autoImageFind());
+            
+            // Wait for stress relievance
+            try
+            {
+                Thread.sleep(500);
+            } catch (InterruptedException ex)
+            {
+                ex.printStackTrace();
+            }
+            
+            // Feed watchdog during test
+            hackbotWatch.feed();
+            
+        } catch (AxisCameraException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     public void disabledInit()
@@ -674,7 +733,7 @@ public class Hackbots extends IterativeRobot
         {
             spinnySticksThread.interrupt();
         }
-        if(ledThread != null)
+        if (ledThread != null)
         {
             ledThread.interrupt();
         }

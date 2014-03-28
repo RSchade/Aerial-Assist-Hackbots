@@ -48,7 +48,7 @@ public class DashboardOutputs
         SmartDashboard.putNumber("Shooter Pot Average", shooterPot.getAverageValue());
         SmartDashboard.putNumber("Gyro Value", gyro.getValue());
 
-        if (DriverStation.getInstance().getBatteryVoltage() <= 10.3)
+        if (DriverStation.getInstance().getBatteryVoltage() <= 11.4)
         {
             SmartDashboard.putBoolean("Can You Shoot?", false);
         } else

@@ -27,7 +27,7 @@ public class Constants
     // public static final int HOME_POT_VALUE = 175;
     //public static final int HOME_POT_VALUE = 440;
 //    public static final int HIGH_POT_VALUE = 1000;
-     public static final int HIGH_POT_VALUE = 1000;
+     public static final int HIGH_POT_VALUE = 1000; // Saftey Release!
      
     // public static final int HIGH_POT_VALUE = 800;
     

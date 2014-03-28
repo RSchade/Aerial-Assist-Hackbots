@@ -25,46 +25,40 @@ public class NewTwelveFt extends Preset
 //        addValue(new PresetValue(_100_PERCENT_THRUST, 750-((90.0)*(DriverStation.getInstance().getBatteryVoltage()-11.6)) + Constants.ALPHA_BETA));
         
 //        addValue(new PresetValue(_100_PERCENT_THRUST, this.getValue() + Constants.ALPHA_BETA));
-        addValue(new PresetValue(_100_PERCENT_THRUST, this.getValue()+ Constants.ALPHA_BETA));
+        addValue(new PresetValue(battery.getBatteryVoltage()> 12.3 ? _90_PERCENT_THRUST: 0.94, this.getValue()+Constants.ALPHA_BETA));
         addValue(new PresetValue(GO_HOME, Constants.HOME_POT_VALUE));
         addValue(new PresetValue(STOP_SHOOTER, Constants.HOME_POT_VALUE));
     }
 
     private int getValue()
     {
-        if (battery.getBatteryVoltage() > 10.3 && battery.getBatteryVoltage() <= 10.8)
+        if (battery.getBatteryVoltage() <= 11.65)
         {
-            return 824;
-        } else if (battery.getBatteryVoltage() > 10.8 && battery.getBatteryVoltage() <= 11.2)
-        {
-            return 785;
-        } else if (battery.getBatteryVoltage() > 11.2 && battery.getBatteryVoltage() <= 11.65)
-        {
-            return 762;
+            return 780;
         } else if (battery.getBatteryVoltage() > 11.65 && battery.getBatteryVoltage() <= 11.9)
         {
-            return 768;
+            return 775;
         } else if (battery.getBatteryVoltage() > 11.9 && battery.getBatteryVoltage() <= 12.1)
         {
-            return 714;
+            return 770;
         } else if (battery.getBatteryVoltage() > 12.1 && battery.getBatteryVoltage() <= 12.3)
         {
-            return 696;
+            return 765;
         } else if (battery.getBatteryVoltage() > 12.3 && battery.getBatteryVoltage() <= 12.5)
         {
-            return 700;
+            return 760;
         } else if (battery.getBatteryVoltage() > 12.5 && battery.getBatteryVoltage() <= 12.6)
         {
-            return 678;
+            return 755;
         } else if (battery.getBatteryVoltage() > 12.6 && battery.getBatteryVoltage() <= 12.75)
         {
-            return 624;
-        } else if (battery.getBatteryVoltage() > 12.75 && battery.getBatteryVoltage() <= 13.0)
+            return 750;
+        } else if (battery.getBatteryVoltage() > 12.75)
         {
-            return 622;
+            return 740;
         } else
         {
-            return 622;
+            return 740;
         }
     }
 

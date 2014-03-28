@@ -66,7 +66,7 @@ public class Catapult
 
             Thread.sleep(750);
 
-            if (SpinnySticks.getInstance().areSpinnySticksOut() && DriverStation.getInstance().getBatteryVoltage() >= 10.3)
+            if (SpinnySticks.getInstance().areSpinnySticksOut() && DriverStation.getInstance().getBatteryVoltage() >= 11.4)
             {
                 Enumeration presetValues = preset.getElements();
                 while (presetValues.hasMoreElements())
