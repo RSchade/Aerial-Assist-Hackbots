@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
 /**
  * Camera settings, called in robot init.
  *
- * @author ray
+ * @author ray - Big Boy
  */
 public class RobotCamera
 {
